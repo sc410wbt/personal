@@ -1,6 +1,5 @@
 {
   "name": "web",
-  "homepage": "https://sc410wbt.github.io/work",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

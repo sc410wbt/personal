@@ -75,40 +75,47 @@ export default function Environment() {
 		console.log('materials', materials)
 
 
-		let loader = new OBJLoader()
-		loader.setMaterials(materials)
-
-		let model = 'models/cartier_room.obj'
-		loader.load(model, (object) => {
-			object.scale.set(0.01,0.01,0.01)
-			object.position.set(0, -20, 0)
-			object.rotation.y = Math.PI / 12
-			console.log('loaded', object.children)
-			scene.add(object)
-		}, () => {
-			console.log('error')
-		})
-
-		// let loader = new GLTFLoader()
+		// let loader = new OBJLoader()
+		// loader.setMaterials(materials)
 		//
-		// loader.load(
-		// 	'models/gears/scene.gltf',
-		// 	(object) => {
-		// 		// let scale = 0.7;
-		// 		// object.scene.position.set(11, 0.2, 23);
-		// 		// object.scene.scale.set(gearScale, gearScale, gearScale);
-		// 		// object.scene.traverse( function( child ) {
-		// 		// 	if ( child.isMesh ) {
-		// 		// 		child.castShadow = true;
-		// 		// 		child.receiveShadow = true;
-		// 		// 		child.material.metalness = 0.5;
-		// 		// 		// child.material.roughness = 0.5;
-		// 		// 	}
-		// 		// } );
-		// 		// object.scene.rotation.set(0, Math.PI / 3, 0);
-		// 		// scene.add(object.scene)
-		// 	}
-		// )
+		// let model = '/models/cartier_room.obj'
+		// loader.load(model, (object) => {
+		// 	object.scale.set(0.01,0.01,0.01)
+		// 	object.position.set(0, -20, 0)
+		// 	object.rotation.y = Math.PI / 12
+		// 	console.log('loaded', object.children)
+		// 	scene.add(object)
+		// }, () => {
+		// 	console.log('error')
+		// })
+
+		let loader = new GLTFLoader()
+
+		loader.load(
+			'/models/gears/scene.gltf',
+			(object) => {
+				console.log('success')
+				let scale = 2;
+				// object.scene.position.set(11, 0.2, 23);
+				object.scene.scale.set(scale, scale, scale);
+				object.scene.traverse( function( child ) {
+					if ( child.isMesh ) {
+						child.castShadow = true;
+						child.receiveShadow = true;
+						child.material.metalness = 0.5;
+						// child.material.roughness = 0.5;
+					}
+				} );
+				object.scene.rotation.set(0, Math.PI / 3, 0);
+				scene.add(object.scene)
+			},
+			() => {
+
+			},
+			(error) => {
+				console.log(error)
+			}
+		)
 	}
 
 	function light() {
