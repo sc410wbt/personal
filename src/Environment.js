@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react'
 import * as THREE from 'three'
 import * as TWEEN from 'tween'
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
+import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
+import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
 import s from './Environment.module.sass'
@@ -60,11 +63,52 @@ export default function Environment() {
 
 
 
-	function populate() {
+	async function populate() {
 		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
 		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 		scene.add(cube)
+
+		let mtlFile = '/models/cartier_room.mtl'
+		let mtlLoader = new MTLLoader()
+		let materials = await mtlLoader.loadAsync(mtlFile)
+		console.log('materials', materials)
+
+
+		let loader = new OBJLoader()
+		loader.setMaterials(materials)
+
+		let model = './models/cartier_room.obj'
+		loader.load(model, (object) => {
+			object.scale.set(0.01,0.01,0.01)
+			object.position.set(0, -20, 0)
+			object.rotation.y = Math.PI / 12
+			console.log('loaded', object.children)
+			scene.add(object)
+		}, () => {
+			console.log('error')
+		})
+
+		// let loader = new GLTFLoader()
+		//
+		// loader.load(
+		// 	'models/gears/scene.gltf',
+		// 	(object) => {
+		// 		// let scale = 0.7;
+		// 		// object.scene.position.set(11, 0.2, 23);
+		// 		// object.scene.scale.set(gearScale, gearScale, gearScale);
+		// 		// object.scene.traverse( function( child ) {
+		// 		// 	if ( child.isMesh ) {
+		// 		// 		child.castShadow = true;
+		// 		// 		child.receiveShadow = true;
+		// 		// 		child.material.metalness = 0.5;
+		// 		// 		// child.material.roughness = 0.5;
+		// 		// 	}
+		// 		// } );
+		// 		// object.scene.rotation.set(0, Math.PI / 3, 0);
+		// 		// scene.add(object.scene)
+		// 	}
+		// )
 	}
 
 	function light() {
