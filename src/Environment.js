@@ -78,7 +78,7 @@ export default function Environment() {
 		let loader = new OBJLoader()
 		loader.setMaterials(materials)
 
-		let model = './models/cartier_room.obj'
+		let model = '/work/models/cartier_room.obj'
 		loader.load(model, (object) => {
 			object.scale.set(0.01,0.01,0.01)
 			object.position.set(0, -20, 0)
