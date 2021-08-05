@@ -66,14 +66,15 @@ export default function Environment() {
 
 
 	async function populate() {
+		addGuides()
 		addStardust()
 
-		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
-		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
-
-		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-		cube.position.set(0, 0, 0)
-		scene.add(cube)
+		// let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
+		// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
+		//
+		// let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+		// cube.position.set(0, 0, 0)
+		// scene.add(cube)
 		// console.log(cubeGeometry.attributes.position)
 
 		let mtlFile = '/models/cartier_room.mtl'
@@ -133,17 +134,62 @@ export default function Environment() {
 
 	}
 
+	function addGuides() {
+		const lineMaterial = new THREE.LineBasicMaterial({
+			color: 0xd81921,
+			transparent: true,
+			opacity: 0.5
+		});
+
+		const points = [];
+		points.push( new THREE.Vector3( 0, 0, 0 ) );
+		points.push( new THREE.Vector3( 0, 0, 20 ) );
+
+		const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+		const line = new THREE.Line( geometry, new THREE.LineBasicMaterial({
+			color: 0xd81921,
+			transparent: true,
+			opacity: 0.5
+		}))
+		scene.add( line );
+
+		const pointsY = [];
+		pointsY.push( new THREE.Vector3( 0, 0, 0 ) );
+		pointsY.push( new THREE.Vector3( 0, 20, 0 ) );
+
+		const geometryY = new THREE.BufferGeometry().setFromPoints( pointsY );
+
+		const lineY = new THREE.Line( geometryY, new THREE.LineBasicMaterial({
+			color: 0x6cbd38,
+			transparent: true,
+			opacity: 0.5
+		}) )
+		scene.add( lineY );
+
+		lineMaterial.color.set(0x69FFFF)
+
+		const pointsZ = [];
+		pointsZ.push( new THREE.Vector3( 0, 0, 0 ) );
+		pointsZ.push( new THREE.Vector3( 20, 0, 0 ) );
+
+		const geometryZ = new THREE.BufferGeometry().setFromPoints( pointsZ );
+
+		const lineZ = new THREE.Line( geometryZ, lineMaterial );
+		scene.add( lineZ );
+	}
+
 	function addStardust() {
 		let spriteScale = 0.05
-		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		const map = new THREE.TextureLoader().load( '/images/sprite-blurred.png' )
 		const material = new THREE.SpriteMaterial({ map: map })
 
 		let max = 20
 
-		for (let x = 0; x <= 100; x++) {
+		for (let x = 0; x <= 300; x++) {
 			const sprite = new THREE.Sprite(material)
 			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
-			let randomScale = spriteScale + Math.random() * 0.1
+			let randomScale = spriteScale + Math.random() * 0.25
 			sprite.scale.set(randomScale, randomScale, randomScale)
 			scene.add(sprite)
 		}
@@ -169,11 +215,11 @@ export default function Environment() {
 		let lastZ
 
 
-		const lineMaterial = new THREE.LineBasicMaterial({
-			color: 0x69ffff,
-			transparent: true,
-			opacity: 0.2
-		});
+		// const lineMaterial = new THREE.LineBasicMaterial({
+		// 	color: 0x69ffff,
+		// 	transparent: true,
+		// 	opacity: 0.2
+		// });
 
 
 
