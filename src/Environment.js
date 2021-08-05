@@ -141,8 +141,10 @@ export default function Environment() {
 
 		let spriteScale = 0.1
 		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
-		// console.log('sprite map', map)
+		console.log('sprite map', map)
 		const material = new THREE.SpriteMaterial({ map: map })
+		const tempMaterial = new THREE.SpriteMaterial({ map: map, transparent: true, opacity: 0.5 })
+
 
 		let lastX
 		let lastY
@@ -190,7 +192,7 @@ export default function Environment() {
 					let newX = (x - (x - lastX / 2))
 					let newY = (y - (y - lastY / 2))
 					let newZ = (z - (z - lastZ / 2))
-					const sprite = new THREE.Sprite(material)
+					const sprite = new THREE.Sprite(tempMaterial)
 					let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0.5)
 					sprite.position.set(rnX, rnY, rnZ)
 					sprite.scale.set(spriteScale, spriteScale, spriteScale)
@@ -229,6 +231,7 @@ export default function Environment() {
 
 	function randomizePoints(x, y, z, intensity = 0.1) {
 		// if (!intensity._emval_is_number) intensity = 0.1
+		intensity = 0
 		x = x - intensity + Math.random() * intensity * 2
 		y = y - intensity + Math.random() * intensity * 2
 		z = z - intensity + Math.random() * intensity * 2
