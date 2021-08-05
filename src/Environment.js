@@ -95,7 +95,7 @@ export default function Environment() {
 		let loader = new GLTFLoader()
 
 		loader.load(
-			'/models/gears/scene.gltf',
+			'/models/android/scene.gltf',
 			(object) => {
 				console.log('success')
 				let scale = 2;
@@ -112,7 +112,6 @@ export default function Environment() {
 				} );
 				object.scene.rotation.set(0, Math.PI / 3, 0);
 				scene.add(object.scene)
-				console.log(renderer.render)
 			},
 			() => {
 
