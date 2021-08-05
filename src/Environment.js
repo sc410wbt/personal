@@ -131,14 +131,22 @@ export default function Environment() {
 
 	async function placeSprites(position) {
 		console.log(position)
-		let threshhold = 0.2
+		let threshhold = 0.15
+		let upperThreshold = 0.5
 		let multiplier = 3
 		let group = new THREE.Group()
+		group.rotation.set(0 - Math.PI / 2, 0, 0)
+
+		let spriteScale = 0.1
+		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
+		// console.log('sprite map', map)
+		const material = new THREE.SpriteMaterial({ map: map })
+
 		let lastX
 		let lastY
 		let lastZ
 
-		for (let i = 0; i < 9000; i += 3) {
+		for (let i = 0; i < position.length; i += 3) {
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
@@ -154,25 +162,41 @@ export default function Environment() {
 				}
 			}
 
-			lastX = x
-			lastY = y
-			lastZ = z
 
-			const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
-			// console.log('sprite map', map)
-			const material = new THREE.SpriteMaterial({ map: map })
 
-			let spriteScale = 0.1
+
 			const sprite = new THREE.Sprite(material)
 			sprite.position.set(x, y, z)
 			sprite.scale.set(spriteScale, spriteScale, spriteScale)
 			console.log(sprite)
 			group.add(sprite);
 
-			group.rotation.set(0 - Math.PI / 2, 0, 0)
+			if (lastX) {
+				if (Math.abs(x - lastX) > upperThreshold * multiplier ||
+					Math.abs(y - lastY) > upperThreshold * multiplier ||
+					Math.abs(z - lastZ) > upperThreshold * multiplier) {
+					// not enough distance, skip
+
+
+
+					let newX = (x - (x - lastX / 2))
+					let newY = (y - (y - lastY / 2))
+					let newZ = (z - (z - lastZ / 2))
+					const sprite = new THREE.Sprite(material)
+					sprite.position.set(newX, newY, newZ)
+					sprite.scale.set(spriteScale, spriteScale, spriteScale)
+					group.add(sprite)
+					console.log('adding')
+				}
+			}
+
 			scene.add(group)
 			console.log(group.children)
 
+
+			lastX = x
+			lastY = y
+			lastZ = z
 
 			// let cubeGeometry = new THREE.BoxBufferGeometry(0.05, 0.05, 0.05)
 			// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
