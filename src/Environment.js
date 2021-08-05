@@ -46,7 +46,7 @@ export default function Environment() {
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
 		camera.position.set(0,0, cameraZ)
 		renderer.setClearColor(0x333333, 1)
-		renderer.setPixelRatio(1) //window.devicePixelRatio)
+		renderer.setPixelRatio(0.8) //window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -66,6 +66,8 @@ export default function Environment() {
 
 
 	async function populate() {
+		addStardust()
+
 		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
 
@@ -100,7 +102,7 @@ export default function Environment() {
 		let loader = new GLTFLoader()
 
 		loader.load(
-			'/models/android/scene.gltf',
+			'/models/rhino/scene.gltf',
 			(object) => {
 				console.log('success')
 				let scale = 1;
@@ -131,10 +133,26 @@ export default function Environment() {
 
 	}
 
+	function addStardust() {
+		let spriteScale = 0.05
+		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		const material = new THREE.SpriteMaterial({ map: map })
+
+		let max = 20
+
+		for (let x = 0; x <= 100; x++) {
+			const sprite = new THREE.Sprite(material)
+			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
+			let randomScale = spriteScale + Math.random() * 0.1
+			sprite.scale.set(randomScale, randomScale, randomScale)
+			scene.add(sprite)
+		}
+	}
+
 	async function placeSprites(position) {
 		console.log(position)
-		let threshhold = 0.3
-		let upperThreshold = 0.5
+		let threshhold = 0.1
+		let upperThreshold = 1.5
 		let multiplier = 3
 		let group = new THREE.Group()
 		group.rotation.set(0 - Math.PI / 2, 0, 0)
@@ -250,12 +268,12 @@ export default function Environment() {
 	}
 
 	function light() {
-		let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5)
-		scene.add(ambientLight)
-
-		let dLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
-		dLight.position.set(3, 2, 3)
-		scene.add(dLight)
+		// let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5)
+		// scene.add(ambientLight)
+		//
+		// let dLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
+		// dLight.position.set(3, 2, 3)
+		// scene.add(dLight)
 	}
 
 	function animate() {
