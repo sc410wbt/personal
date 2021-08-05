@@ -131,17 +131,32 @@ export default function Environment() {
 
 	async function placeSprites(position) {
 		console.log(position)
+		let threshhold = 0.2
+		let multiplier = 3
 		let group = new THREE.Group()
+		let lastX
+		let lastY
+		let lastZ
+
 		for (let i = 0; i < 9000; i += 3) {
-			let multiplier = 3
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
 
-			if (i > 2 && (Math.abs(x) - Math.abs(position[i - 3]) < 0.15 && Math.abs(y) - Math.abs(position[i - 2]) < 0.15 && Math.abs(z) - Math.abs(position[i - 1]) < 0.15 )) {
-				// This is too close
-				continue
+			// Space them out
+			if (lastX) {
+				// console.log('compare', lastX, x)
+				if (Math.abs(Math.abs(x) - Math.abs(lastX)) < threshhold * multiplier &&
+					Math.abs(Math.abs(y) - Math.abs(lastY)) < threshhold * multiplier &&
+					Math.abs(Math.abs(z) - Math.abs(lastZ)) < threshhold * multiplier) {
+					// not enough distance, skip
+					continue
+				}
 			}
+
+			lastX = x
+			lastY = y
+			lastZ = z
 
 			const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
 			// console.log('sprite map', map)
@@ -156,6 +171,7 @@ export default function Environment() {
 
 			group.rotation.set(0 - Math.PI / 2, 0, 0)
 			scene.add(group)
+			console.log(group.children)
 
 
 			// let cubeGeometry = new THREE.BoxBufferGeometry(0.05, 0.05, 0.05)
