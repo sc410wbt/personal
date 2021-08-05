@@ -184,7 +184,7 @@ export default function Environment() {
 					let newY = (y - (y - lastY / 2))
 					let newZ = (z - (z - lastZ / 2))
 					const sprite = new THREE.Sprite(material)
-					let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0)
+					let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0.5)
 					sprite.position.set(rnX, rnY, rnZ)
 					sprite.scale.set(spriteScale, spriteScale, spriteScale)
 					group.add(sprite)
@@ -193,8 +193,6 @@ export default function Environment() {
 			}
 
 			scene.add(group)
-			console.log(group.children)
-
 
 			lastX = x
 			lastY = y
