@@ -166,7 +166,8 @@ export default function Environment() {
 
 
 			const sprite = new THREE.Sprite(material)
-			sprite.position.set(x, y, z)
+			let [rX, rY, rZ] = randomizePoints(x, y, z)
+			sprite.position.set(rX, rY, rZ)
 			sprite.scale.set(spriteScale, spriteScale, spriteScale)
 			console.log(sprite)
 			group.add(sprite);
@@ -183,7 +184,8 @@ export default function Environment() {
 					let newY = (y - (y - lastY / 2))
 					let newZ = (z - (z - lastZ / 2))
 					const sprite = new THREE.Sprite(material)
-					sprite.position.set(newX, newY, newZ)
+					let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0)
+					sprite.position.set(rnX, rnY, rnZ)
 					sprite.scale.set(spriteScale, spriteScale, spriteScale)
 					group.add(sprite)
 					console.log('adding')
@@ -205,6 +207,14 @@ export default function Environment() {
 			// cube.position.set(x, y, z)
 			// scene.add(cube)
 		}
+	}
+
+	function randomizePoints(x, y, z, intensity = 0.1) {
+		// if (!intensity._emval_is_number) intensity = 0.1
+		x = x - intensity + Math.random() * intensity * 2
+		y = y - intensity + Math.random() * intensity * 2
+		z = z - intensity + Math.random() * intensity * 2
+		return [x, y, z]
 	}
 
 	function light() {
