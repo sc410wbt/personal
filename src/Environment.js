@@ -40,7 +40,7 @@ export default function Environment() {
 	useEffect(() => {
 
 		const appWrapper = document.querySelector('.' + s.webgl)
-		console.log(appWrapper)
+		// console.log(appWrapper)
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
@@ -80,7 +80,7 @@ export default function Environment() {
 		let mtlFile = '/models/cartier_room.mtl'
 		let mtlLoader = new MTLLoader()
 		let materials = await mtlLoader.loadAsync(mtlFile)
-		console.log('materials', materials)
+		// console.log('materials', materials)
 
 
 		// let loader = new OBJLoader()
@@ -111,7 +111,7 @@ export default function Environment() {
 				object.scene.scale.set(scale, scale, scale);
 				object.scene.traverse( function( child ) {
 					if ( child.isMesh ) {
-						console.log('child', child.geometry)
+						// console.log('child', child.geometry)
 						child.castShadow = true;
 						child.receiveShadow = true;
 						child.material.metalness = 0.5;
@@ -196,7 +196,7 @@ export default function Environment() {
 	}
 
 	async function placeSprites(position) {
-		console.log(position)
+		// console.log(position)
 		let threshhold = 0.1
 		let upperThreshold = 1.5
 		let multiplier = 3
@@ -205,7 +205,7 @@ export default function Environment() {
 
 		let spriteScale = 0.05
 		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
-		console.log('sprite map', map)
+		// console.log('sprite map', map)
 		const material = new THREE.SpriteMaterial({ map: map })
 		const tempMaterial = new THREE.SpriteMaterial({ map: map })
 
@@ -271,7 +271,7 @@ export default function Environment() {
 						let randomScale = spriteScale + Math.random() * 0.2
 						sprite.scale.set(randomScale, randomScale, randomScale)
 						group.add(sprite)
-						console.log('adding', x, lastX, y, lastY, z, lastZ)
+						// console.log('adding', x, lastX, y, lastY, z, lastZ)
 					}
 
 
@@ -290,7 +290,7 @@ export default function Environment() {
 				}
 			}
 
-			console.log('sprite placement', x,y,x)
+			// console.log('sprite placement', x,y,x)
 			lastX = x
 			lastY = y
 			lastZ = z
