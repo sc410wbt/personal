@@ -43,7 +43,7 @@ export default function Environment() {
 
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
 		camera.position.set(0,0, cameraZ)
-		renderer.setClearColor(0xFFFFFF, 1)
+		renderer.setClearColor(0x333333, 1)
 		renderer.setPixelRatio(1.5) //window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
@@ -64,10 +64,13 @@ export default function Environment() {
 
 
 	async function populate() {
-		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
+		let cubeGeometry = new THREE.PlaneBufferGeometry(1, 1)
 		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
+
 		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+		cube.position.set(10, 10, 10)
 		scene.add(cube)
+		console.log(cubeGeometry.attributes.position)
 
 		let mtlFile = '/models/cartier_room.mtl'
 		let mtlLoader = new MTLLoader()
@@ -100,6 +103,7 @@ export default function Environment() {
 				object.scene.scale.set(scale, scale, scale);
 				object.scene.traverse( function( child ) {
 					if ( child.isMesh ) {
+						console.log('child', child.geometry)
 						child.castShadow = true;
 						child.receiveShadow = true;
 						child.material.metalness = 0.5;
@@ -108,6 +112,7 @@ export default function Environment() {
 				} );
 				object.scene.rotation.set(0, Math.PI / 3, 0);
 				scene.add(object.scene)
+				console.log(renderer.render)
 			},
 			() => {
 
