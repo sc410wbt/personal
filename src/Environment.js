@@ -244,8 +244,6 @@ export default function Environment() {
 				}
 			}
 
-			scene.add(group)
-
 			console.log('sprite placement', x,y,x)
 			lastX = x
 			lastY = y
@@ -258,6 +256,7 @@ export default function Environment() {
 			// cube.position.set(x, y, z)
 			// scene.add(cube)
 		}
+		scene.add(group)
 	}
 
 	function randomizePoints(x, y, z, intensity = 0.1) {
@@ -278,7 +277,7 @@ export default function Environment() {
 
 	function animate() {
 		frames++
-		scene.rotation.y += 0.001
+		scene.rotation.y += 0.005
 
 		TWEEN.update()
 		renderer.render(scene, camera)
