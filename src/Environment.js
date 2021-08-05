@@ -6,6 +6,8 @@ import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
+import spriteImg from './images/sprite.png'
+
 import s from './Environment.module.sass'
 
 const scene = new THREE.Scene()
@@ -64,13 +66,13 @@ export default function Environment() {
 
 
 	async function populate() {
-		let cubeGeometry = new THREE.PlaneBufferGeometry(1, 1)
+		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
 
 		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-		cube.position.set(10, 10, 10)
+		cube.position.set(0, 0, 10)
 		scene.add(cube)
-		console.log(cubeGeometry.attributes.position)
+		// console.log(cubeGeometry.attributes.position)
 
 		let mtlFile = '/models/cartier_room.mtl'
 		let mtlLoader = new MTLLoader()
@@ -92,13 +94,22 @@ export default function Environment() {
 		// 	console.log('error')
 		// })
 
+		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
+		console.log('sprite map', map)
+		const material = new THREE.SpriteMaterial({ map: map })
+
+		const sprite = new THREE.Sprite(material)
+		sprite.position.set(0, 2, 11)
+		scene.add(sprite);
+
+
 		let loader = new GLTFLoader()
 
 		loader.load(
 			'/models/android/scene.gltf',
 			(object) => {
 				console.log('success')
-				let scale = 2;
+				let scale = 1;
 				// object.scene.position.set(11, 0.2, 23);
 				object.scene.scale.set(scale, scale, scale);
 				object.scene.traverse( function( child ) {
