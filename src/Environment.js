@@ -46,7 +46,7 @@ export default function Environment() {
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
 		camera.position.set(0,0, cameraZ)
 		renderer.setClearColor(0x333333, 1)
-		renderer.setPixelRatio(1.5) //window.devicePixelRatio)
+		renderer.setPixelRatio(1) //window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -67,10 +67,10 @@ export default function Environment() {
 
 	async function populate() {
 		let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
-		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
+		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
 
 		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-		cube.position.set(0, 0, 5)
+		cube.position.set(0, 0, 0)
 		scene.add(cube)
 		// console.log(cubeGeometry.attributes.position)
 
@@ -117,7 +117,8 @@ export default function Environment() {
 					}
 				} );
 				object.scene.rotation.set(0, Math.PI / 3, 0);
-				// scene.add(object.scene)
+				object.scene.position.set(10, 0, 0)
+				scene.add(object.scene)
 			},
 			() => {
 
@@ -130,11 +131,17 @@ export default function Environment() {
 
 	async function placeSprites(position) {
 		console.log(position)
-		for (let i = 0; i < position.length; i += 3) {
+		let group = new THREE.Group()
+		for (let i = 0; i < 9000; i += 3) {
 			let multiplier = 3
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
+
+			if (i > 2 && (Math.abs(x) - Math.abs(position[i - 3]) < 0.15 && Math.abs(y) - Math.abs(position[i - 2]) < 0.15 && Math.abs(z) - Math.abs(position[i - 1]) < 0.15 )) {
+				// This is too close
+				continue
+			}
 
 			const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
 			// console.log('sprite map', map)
@@ -145,7 +152,18 @@ export default function Environment() {
 			sprite.position.set(x, y, z)
 			sprite.scale.set(spriteScale, spriteScale, spriteScale)
 			console.log(sprite)
-			scene.add(sprite);
+			group.add(sprite);
+
+			group.rotation.set(0 - Math.PI / 2, 0, 0)
+			scene.add(group)
+
+
+			// let cubeGeometry = new THREE.BoxBufferGeometry(0.05, 0.05, 0.05)
+			// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
+			//
+			// let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+			// cube.position.set(x, y, z)
+			// scene.add(cube)
 		}
 	}
 
@@ -160,7 +178,7 @@ export default function Environment() {
 
 	function animate() {
 		frames++
-		scene.rotation.y += 0.001
+		// scene.rotation.y += 0.001
 
 		TWEEN.update()
 		renderer.render(scene, camera)
