@@ -118,7 +118,7 @@ export default function Environment() {
 				} );
 				object.scene.rotation.set(0, Math.PI / 3, 0);
 				object.scene.position.set(10, 0, 0)
-				scene.add(object.scene)
+				// scene.add(object.scene)
 			},
 			() => {
 
@@ -133,17 +133,17 @@ export default function Environment() {
 
 	async function placeSprites(position) {
 		console.log(position)
-		let threshhold = 0.2
+		let threshhold = 0.3
 		let upperThreshold = 0.5
 		let multiplier = 3
 		let group = new THREE.Group()
 		group.rotation.set(0 - Math.PI / 2, 0, 0)
 
-		let spriteScale = 0.1
+		let spriteScale = 0.05
 		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
 		console.log('sprite map', map)
 		const material = new THREE.SpriteMaterial({ map: map })
-		const tempMaterial = new THREE.SpriteMaterial({ map: map, transparent: true, opacity: 0.5 })
+		const tempMaterial = new THREE.SpriteMaterial({ map: map })
 
 
 		let lastX
@@ -152,12 +152,14 @@ export default function Environment() {
 
 
 		const lineMaterial = new THREE.LineBasicMaterial({
-			color: 0xFFFFFF
+			color: 0x69ffff,
+			transparent: true,
+			opacity: 0.2
 		});
 
 
 
-		for (let i = 0; i < position.length; i += 3) {
+		for (let i = 0; i < position.length; i += 6) {
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
@@ -179,36 +181,47 @@ export default function Environment() {
 			const sprite = new THREE.Sprite(material)
 			let [rX, rY, rZ] = randomizePoints(x, y, z)
 			sprite.position.set(rX, rY, rZ)
-			sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			let randomScale = spriteScale + Math.random() * 0.1
+			sprite.scale.set(randomScale, randomScale, randomScale)
 			// console.log(sprite)
 			group.add(sprite)
 
 			if (lastX) {
+				// Keep this if statement in, might be more efficient before getting to distance calc
 				if (Math.abs(x - lastX) > upperThreshold * multiplier ||
 					Math.abs(y - lastY) > upperThreshold * multiplier ||
 					Math.abs(z - lastZ) > upperThreshold * multiplier) {
-					// not enough distance, skip
+					// too far, add stuff in between
 
-					let newX = (x - (x - lastX / 2))
-					let newY = (y - (y - lastY / 2))
-					let newZ = (z - (z - lastZ / 2))
-					const sprite = new THREE.Sprite(tempMaterial)
-					let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0.5)
-					sprite.position.set(rnX, rnY, rnZ)
-					sprite.scale.set(spriteScale, spriteScale, spriteScale)
-					group.add(sprite)
-					console.log('adding', x, lastX, y, lastY, z, lastZ)
+					let distance = Math.sqrt(Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2) + Math.pow(z - lastZ, 2))
+					let iterations = Math.ceil(distance)
+
+					for (let i = 1; i < iterations; i++) {
+						let newX = lastX + ((x - lastX) / iterations) * i
+						let newY = lastY + ((y - lastY) / iterations) * i
+						let newZ = lastZ + ((z - lastZ) / iterations) * i
+						const sprite = new THREE.Sprite(tempMaterial)
+						let [rnX, rnY, rnZ] = randomizePoints(newX, newY, newZ, 0.5)
+						sprite.position.set(rnX, rnY, rnZ)
+						// sprite.position.set(x + 0.1, y + 0.1, z + 0.1)
+						let randomScale = spriteScale + Math.random() * 0.2
+						sprite.scale.set(randomScale, randomScale, randomScale)
+						group.add(sprite)
+						console.log('adding', x, lastX, y, lastY, z, lastZ)
+					}
 
 
 
-					const points = [];
-					points.push( new THREE.Vector3( x, y, z ) );
-					points.push( new THREE.Vector3( lastX, lastY, lastZ ) );
 
-					const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
-					const line = new THREE.Line( geometry, lineMaterial );
-					group.add( line );
+					// const points = [];
+					// points.push( new THREE.Vector3( x, y, z ) );
+					// points.push( new THREE.Vector3( lastX, lastY, lastZ ) );
+					//
+					// const geometry = new THREE.BufferGeometry().setFromPoints( points );
+					//
+					// const line = new THREE.Line( geometry, lineMaterial );
+					// group.add( line );
 
 				}
 			}
@@ -230,8 +243,6 @@ export default function Environment() {
 	}
 
 	function randomizePoints(x, y, z, intensity = 0.1) {
-		// if (!intensity._emval_is_number) intensity = 0.1
-		intensity = 0
 		x = x - intensity + Math.random() * intensity * 2
 		y = y - intensity + Math.random() * intensity * 2
 		z = z - intensity + Math.random() * intensity * 2
@@ -249,7 +260,7 @@ export default function Environment() {
 
 	function animate() {
 		frames++
-		// scene.rotation.y += 0.001
+		scene.rotation.y += 0.001
 
 		TWEEN.update()
 		renderer.render(scene, camera)
