@@ -127,11 +127,13 @@ export default function Environment() {
 				console.log(error)
 			}
 		)
+
+
 	}
 
 	async function placeSprites(position) {
 		console.log(position)
-		let threshhold = 0.15
+		let threshhold = 0.2
 		let upperThreshold = 0.5
 		let multiplier = 3
 		let group = new THREE.Group()
@@ -146,6 +148,13 @@ export default function Environment() {
 		let lastY
 		let lastZ
 
+
+		const lineMaterial = new THREE.LineBasicMaterial({
+			color: 0xFFFFFF
+		});
+
+
+
 		for (let i = 0; i < position.length; i += 3) {
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
@@ -154,9 +163,9 @@ export default function Environment() {
 			// Space them out
 			if (lastX) {
 				// console.log('compare', lastX, x)
-				if (Math.abs(Math.abs(x) - Math.abs(lastX)) < threshhold * multiplier &&
-					Math.abs(Math.abs(y) - Math.abs(lastY)) < threshhold * multiplier &&
-					Math.abs(Math.abs(z) - Math.abs(lastZ)) < threshhold * multiplier) {
+				if (Math.abs(x - lastX) < threshhold * multiplier &&
+					Math.abs(y - lastY) < threshhold * multiplier &&
+					Math.abs(z - lastZ) < threshhold * multiplier) {
 					// not enough distance, skip
 					continue
 				}
@@ -169,16 +178,14 @@ export default function Environment() {
 			let [rX, rY, rZ] = randomizePoints(x, y, z)
 			sprite.position.set(rX, rY, rZ)
 			sprite.scale.set(spriteScale, spriteScale, spriteScale)
-			console.log(sprite)
-			group.add(sprite);
+			// console.log(sprite)
+			group.add(sprite)
 
 			if (lastX) {
 				if (Math.abs(x - lastX) > upperThreshold * multiplier ||
 					Math.abs(y - lastY) > upperThreshold * multiplier ||
 					Math.abs(z - lastZ) > upperThreshold * multiplier) {
 					// not enough distance, skip
-
-
 
 					let newX = (x - (x - lastX / 2))
 					let newY = (y - (y - lastY / 2))
@@ -188,12 +195,25 @@ export default function Environment() {
 					sprite.position.set(rnX, rnY, rnZ)
 					sprite.scale.set(spriteScale, spriteScale, spriteScale)
 					group.add(sprite)
-					console.log('adding')
+					console.log('adding', x, lastX, y, lastY, z, lastZ)
+
+
+
+					const points = [];
+					points.push( new THREE.Vector3( x, y, z ) );
+					points.push( new THREE.Vector3( lastX, lastY, lastZ ) );
+
+					const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+					const line = new THREE.Line( geometry, lineMaterial );
+					group.add( line );
+
 				}
 			}
 
 			scene.add(group)
 
+			console.log('sprite placement', x,y,x)
 			lastX = x
 			lastY = y
 			lastZ = z
