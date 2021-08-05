@@ -70,7 +70,7 @@ export default function Environment() {
 		let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0x888888 })
 
 		let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
-		cube.position.set(0, 0, 10)
+		cube.position.set(0, 0, 5)
 		scene.add(cube)
 		// console.log(cubeGeometry.attributes.position)
 
@@ -94,13 +94,7 @@ export default function Environment() {
 		// 	console.log('error')
 		// })
 
-		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
-		console.log('sprite map', map)
-		const material = new THREE.SpriteMaterial({ map: map })
 
-		const sprite = new THREE.Sprite(material)
-		sprite.position.set(0, 2, 11)
-		scene.add(sprite);
 
 
 		let loader = new GLTFLoader()
@@ -119,10 +113,11 @@ export default function Environment() {
 						child.receiveShadow = true;
 						child.material.metalness = 0.5;
 						// child.material.roughness = 0.5;
+						placeSprites(child.geometry.attributes.position.array)
 					}
 				} );
 				object.scene.rotation.set(0, Math.PI / 3, 0);
-				scene.add(object.scene)
+				// scene.add(object.scene)
 			},
 			() => {
 
@@ -131,6 +126,27 @@ export default function Environment() {
 				console.log(error)
 			}
 		)
+	}
+
+	async function placeSprites(position) {
+		console.log(position)
+		for (let i = 0; i < position.length; i += 3) {
+			let multiplier = 3
+			let x = position[i] * multiplier
+			let y = position[i + 1] * multiplier
+			let z = position[i + 2] * multiplier
+
+			const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
+			// console.log('sprite map', map)
+			const material = new THREE.SpriteMaterial({ map: map })
+
+			let spriteScale = 0.1
+			const sprite = new THREE.Sprite(material)
+			sprite.position.set(x, y, z)
+			sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			console.log(sprite)
+			scene.add(sprite);
+		}
 	}
 
 	function light() {
