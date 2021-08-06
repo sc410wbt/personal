@@ -23,11 +23,18 @@ export default async function formulateSprites(url, options = {}) {
 	if (options.position) meshGroup.position.set(...options.position)
 	if (options.rotation) meshGroup.rotation.set(...options.rotation)
 	let total = 0
+	let points = []
 	meshGroup.children.forEach(group => {
+		let target = new THREE.Vector3()
+		group.children.forEach(sprite => {
+			sprite.getWorldPosition(target)
+			// points.push([sprite.position.x, sprite.position.y, sprite.position.z])
+			points.push([target.x, target.y, target.z])
+		})
 		total += group.children.length
 	})
 	console.log('total sprites formulated', total)
-	return meshGroup
+	return points
 
 }
 

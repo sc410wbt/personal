@@ -117,36 +117,48 @@ export default function Environment() {
 			minDistance: 0.1,
 			maxDistance: 5
 		})
-		spriteMaps['ring'].visible = false
-		// spriteMaps['ring'].rotation.set(0, Math.PI, 0)
-		let testSprites = spriteMaps['ring'].children[0].children
-		let target = new THREE.Vector3()
-		for (let x = 0; x < 3; x++) {
-			console.log(testSprites[x].position)
-			testSprites[x].getWorldPosition(target)
-			console.log(target)
+		let spriteScale = 0.05
+		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
+		// console.log('sprite map', map)
+		const material = new THREE.SpriteMaterial({ map: map })
+		for (let coords of spriteMaps['ring']) {
+			console.log('add')
+			const sprite = new THREE.Sprite(material)
+			sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			sprite.position.set(...coords)
+			console.log(sprite)
+			scene.add(sprite)
 		}
-		scene.add(spriteMaps['ring'])
+		// spriteMaps['ring'].visible = false
+		// spriteMaps['ring'].rotation.set(0, Math.PI, 0)
+		// let testSprites = spriteMaps['ring'].children[0].children
+		// let target = new THREE.Vector3()
+		// for (let x = 0; x < 3; x++) {
+		// 	console.log(testSprites[x].position)
+		// 	testSprites[x].getWorldPosition(target)
+		// 	console.log(target)
+		// }
+		// scene.add(spriteMaps['ring'])
 
-		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf', {
-			scale: 4.5,
-			position: [0, -3, 0],
-			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
-			minDistance: 0.5,
-			maxDistance: 1.5
-		})
-		spriteMaps['rhino'].visible = false
-		scene.add(spriteMaps['rhino'])
-
-		spriteMaps['android'] = await formulateSprites('/models/android/scene.gltf', {
-			scale: 2.5,
-			position: [0, 2, 0],
-			rotation: [0 - Math.PI / 2, 0, 0],
-			minDistance: 0.1,
-			maxDistance: 0.7
-		})
-		// spriteMaps['android'].visible = false
-		scene.add(spriteMaps['android'])
+		// spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf', {
+		// 	scale: 4.5,
+		// 	position: [0, -3, 0],
+		// 	rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
+		// 	minDistance: 0.5,
+		// 	maxDistance: 1.5
+		// })
+		// spriteMaps['rhino'].visible = false
+		// scene.add(spriteMaps['rhino'])
+		//
+		// spriteMaps['android'] = await formulateSprites('/models/android/scene.gltf', {
+		// 	scale: 2.5,
+		// 	position: [0, 2, 0],
+		// 	rotation: [0 - Math.PI / 2, 0, 0],
+		// 	minDistance: 0.1,
+		// 	maxDistance: 0.7
+		// })
+		// // spriteMaps['android'].visible = false
+		// scene.add(spriteMaps['android'])
 
 	}
 
