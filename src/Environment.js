@@ -106,20 +106,20 @@ export default function Environment() {
 			'/models/ring/scene.gltf',
 			(object) => {
 				console.log('success')
-				let scale = 1;
-				// object.scene.position.set(11, 0.2, 23);
-				object.scene.scale.set(scale, scale, scale);
+				let scale = 1
+				// object.scene.position.set(11, 0.2, 23)
+				object.scene.scale.set(scale, scale, scale)
 				object.scene.traverse( function( child ) {
 					if ( child.isMesh ) {
 						// console.log('child', child.geometry)
-						child.castShadow = true;
-						child.receiveShadow = true;
-						child.material.metalness = 0.5;
-						// child.material.roughness = 0.5;
+						child.castShadow = true
+						child.receiveShadow = true
+						child.material.metalness = 0.5
+						// child.material.roughness = 0.5
 						placeSprites(child.geometry.attributes.position.array)
 					}
-				} );
-				object.scene.rotation.set(0, Math.PI / 3, 0);
+				} )
+				object.scene.rotation.set(0, Math.PI / 3, 0)
 				object.scene.position.set(10, 0, 0)
 				// scene.add(object.scene)
 			},
@@ -139,44 +139,44 @@ export default function Environment() {
 			color: 0xd81921,
 			transparent: true,
 			opacity: 0.5
-		});
+		})
 
-		const points = [];
-		points.push( new THREE.Vector3( 0, 0, 0 ) );
-		points.push( new THREE.Vector3( 0, 0, 20 ) );
+		const points = []
+		points.push( new THREE.Vector3( 0, 0, 0 ) )
+		points.push( new THREE.Vector3( 0, 0, 20 ) )
 
-		const geometry = new THREE.BufferGeometry().setFromPoints( points );
+		const geometry = new THREE.BufferGeometry().setFromPoints( points )
 
 		const line = new THREE.Line( geometry, new THREE.LineBasicMaterial({
 			color: 0xd81921,
 			transparent: true,
 			opacity: 0.5
 		}))
-		scene.add( line );
+		scene.add( line )
 
-		const pointsY = [];
-		pointsY.push( new THREE.Vector3( 0, 0, 0 ) );
-		pointsY.push( new THREE.Vector3( 0, 20, 0 ) );
+		const pointsY = []
+		pointsY.push( new THREE.Vector3( 0, 0, 0 ) )
+		pointsY.push( new THREE.Vector3( 0, 20, 0 ) )
 
-		const geometryY = new THREE.BufferGeometry().setFromPoints( pointsY );
+		const geometryY = new THREE.BufferGeometry().setFromPoints( pointsY )
 
 		const lineY = new THREE.Line( geometryY, new THREE.LineBasicMaterial({
 			color: 0x6cbd38,
 			transparent: true,
 			opacity: 0.5
 		}) )
-		scene.add( lineY );
+		scene.add( lineY )
 
 		lineMaterial.color.set(0x69FFFF)
 
-		const pointsZ = [];
-		pointsZ.push( new THREE.Vector3( 0, 0, 0 ) );
-		pointsZ.push( new THREE.Vector3( 20, 0, 0 ) );
+		const pointsZ = []
+		pointsZ.push( new THREE.Vector3( 0, 0, 0 ) )
+		pointsZ.push( new THREE.Vector3( 20, 0, 0 ) )
 
-		const geometryZ = new THREE.BufferGeometry().setFromPoints( pointsZ );
+		const geometryZ = new THREE.BufferGeometry().setFromPoints( pointsZ )
 
-		const lineZ = new THREE.Line( geometryZ, lineMaterial );
-		scene.add( lineZ );
+		const lineZ = new THREE.Line( geometryZ, lineMaterial )
+		scene.add( lineZ )
 	}
 
 	function addStardust() {
@@ -186,7 +186,7 @@ export default function Environment() {
 
 		let max = 20
 
-		for (let x = 0; x <= 300; x++) {
+		for (let x = 0 x <= 300 x++) {
 			const sprite = new THREE.Sprite(material)
 			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
 			let randomScale = spriteScale + Math.random() * 0.25
@@ -219,11 +219,11 @@ export default function Environment() {
 		// 	color: 0x69ffff,
 		// 	transparent: true,
 		// 	opacity: 0.2
-		// });
+		// })
 
 
 
-		for (let i = 0; i < position.length; i += 6) {
+		for (let i = 0 i < position.length i += 6) {
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
@@ -260,7 +260,7 @@ export default function Environment() {
 					let distance = Math.sqrt(Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2) + Math.pow(z - lastZ, 2))
 					let iterations = Math.ceil(distance)
 
-					for (let i = 1; i < iterations; i++) {
+					for (let i = 1 i < iterations i++) {
 						let newX = lastX + ((x - lastX) / iterations) * i
 						let newY = lastY + ((y - lastY) / iterations) * i
 						let newZ = lastZ + ((z - lastZ) / iterations) * i
@@ -278,14 +278,14 @@ export default function Environment() {
 
 
 
-					// const points = [];
-					// points.push( new THREE.Vector3( x, y, z ) );
-					// points.push( new THREE.Vector3( lastX, lastY, lastZ ) );
+					// const points = []
+					// points.push( new THREE.Vector3( x, y, z ) )
+					// points.push( new THREE.Vector3( lastX, lastY, lastZ ) )
 					//
-					// const geometry = new THREE.BufferGeometry().setFromPoints( points );
+					// const geometry = new THREE.BufferGeometry().setFromPoints( points )
 					//
-					// const line = new THREE.Line( geometry, lineMaterial );
-					// group.add( line );
+					// const line = new THREE.Line( geometry, lineMaterial )
+					// group.add( line )
 
 				}
 			}
