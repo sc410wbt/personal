@@ -117,14 +117,13 @@ export default function Environment() {
 			minDistance: 0.1,
 			maxDistance: 5
 		})
-		let spriteScale = 0.05
 		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
 		// console.log('sprite map', map)
 		const material = new THREE.SpriteMaterial({ map: map })
 		for (let coords of spriteMaps['ring']) {
 			console.log('add')
 			const sprite = new THREE.Sprite(material)
-			sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			sprite.scale.set(...randomizeSpriteScale())
 			sprite.position.set(...coords)
 			console.log(sprite)
 			scene.add(sprite)
@@ -254,4 +253,11 @@ export default function Environment() {
 		</div>
 	)
 
+}
+
+
+function randomizeSpriteScale() {
+	let baseScale = 0.02
+	let randomScale = baseScale + 0.12 * Math.random()
+	return [randomScale, randomScale, randomScale]
 }
