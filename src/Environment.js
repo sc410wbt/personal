@@ -79,7 +79,7 @@ export default function Environment() {
 
 
 	async function populate() {
-		addGuides()
+		// addGuides()
 		addStardust()
 
 		// let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
@@ -231,6 +231,7 @@ export default function Environment() {
 		frames++
 		// scene.rotation.y += 0.005
 		stardust.rotation.y += 0.001
+		// bannerGroup.rotation.y -= 0.004
 
 		TWEEN.update()
 		renderer.render(scene, camera)
