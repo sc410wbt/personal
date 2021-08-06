@@ -186,7 +186,7 @@ export default function Environment() {
 
 		let max = 20
 
-		for (let x = 0 x <= 300 x++) {
+		for (let x = 0; x <= 300; x++) {
 			const sprite = new THREE.Sprite(material)
 			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
 			let randomScale = spriteScale + Math.random() * 0.25
@@ -223,7 +223,7 @@ export default function Environment() {
 
 
 
-		for (let i = 0 i < position.length i += 6) {
+		for (let i = 0; i < position.length; i += 6) {
 			let x = position[i] * multiplier
 			let y = position[i + 1] * multiplier
 			let z = position[i + 2] * multiplier
@@ -260,7 +260,7 @@ export default function Environment() {
 					let distance = Math.sqrt(Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2) + Math.pow(z - lastZ, 2))
 					let iterations = Math.ceil(distance)
 
-					for (let i = 1 i < iterations i++) {
+					for (let i = 1; i < iterations; i++) {
 						let newX = lastX + ((x - lastX) / iterations) * i
 						let newY = lastY + ((y - lastY) / iterations) * i
 						let newZ = lastZ + ((z - lastZ) / iterations) * i
