@@ -19,6 +19,7 @@ const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
 
 let pauseAnimation = false
+let spriteMaps = []
 let clickable = []
 let lights = {}
 
@@ -97,17 +98,17 @@ export default function Environment() {
 
 
 		// let loader = new Loader()
-		let ring = await formulateSprites('/models/ring/scene.gltf')
-		ring.visible = false
-		scene.add(ring)
+		spriteMaps['ring'] = await formulateSprites('/models/ring/scene.gltf')
+		spriteMaps['ring'].visible = false
+		scene.add(spriteMaps['ring'])
 
-		let rhino = await formulateSprites('/models/rhino/scene.gltf')
-		rhino.visible = false
-		scene.add(rhino)
+		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf')
+		spriteMaps['rhino'].visible = false
+		scene.add(spriteMaps['rhino'])
 
-		let android = await formulateSprites('/models/android/scene.gltf')
-		// android.visible = false
-		scene.add(android)
+		spriteMaps['android'] = await formulateSprites('/models/android/scene.gltf')
+		// spriteMaps['android'].visible = false
+		scene.add(spriteMaps['android'])
 
 	}
 
