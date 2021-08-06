@@ -103,7 +103,7 @@ export default function Environment() {
 		let loader = new GLTFLoader()
 
 		loader.load(
-			'/models/rhino/scene.gltf',
+			'/models/ring/scene.gltf',
 			(object) => {
 				console.log('success')
 				let scale = 1;
