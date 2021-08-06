@@ -81,7 +81,7 @@ export default function Environment() {
 		if (spriteMaps[banner]) { // Make sure there have been things added to it
 
 			console.log('should rotate', bannerGroup.rotation, bannerGroup.children)
-			new TWEEN.Tween({y: 0}).to({y: Math.PI * 6}, 3000)
+			new TWEEN.Tween({y: 0}).to({y: Math.PI * 4}, 2500)
 				.easing(TWEEN.Easing.Exponential.InOut)
 				.onUpdate(function() {
 					bannerGroup.rotation.y = this.y
@@ -104,7 +104,7 @@ export default function Environment() {
 				// console.log('target', sprite, target)
 				// sprite.position.set(...target)
 				let position = sprite.position
-				new TWEEN.Tween({ x: position.x, y: position.y, z: position.z }).to({ x: target[0], y: target[1], z: target[2] }, 3000)
+				new TWEEN.Tween({ x: position.x, y: position.y, z: position.z }).to({ x: target[0], y: target[1], z: target[2] }, 2500)
 					.easing(TWEEN.Easing.Exponential.InOut)
 					.onUpdate(function() {
 						sprite.position.set(this.x, this.y, this.z)
@@ -131,7 +131,7 @@ export default function Environment() {
 						})
 						.start()
 				}
-				new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0}, 3000)
+				new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0}, 2500)
 					.easing(TWEEN.Easing.Exponential.InOut)
 					.onUpdate(function() {
 						spriteTransitionMaterial.opacity = this.opacity
@@ -152,12 +152,12 @@ export default function Environment() {
 						.onUpdate(function() {
 							sprite.position.set(this.x, this.y, this.z)
 						})
-						.onComplete(function() {
-							console.log(sprite)
+						.onComplete(() => {
+							sprite.material = spriteMaterial
 						})
 						.start()
 				}
-				new TWEEN.Tween({ opacity: 0 }).to({ opacity: 1}, 3000)
+				new TWEEN.Tween({ opacity: 0 }).to({ opacity: 1}, 2500)
 					.easing(TWEEN.Easing.Exponential.InOut)
 					.onUpdate(function() {
 						spriteTransitionMaterial.opacity = this.opacity
