@@ -34,11 +34,12 @@ let frameTimer
 
 let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
+let bannerGroup = new THREE.Group()
+
 
 export default function Environment() {
 
 	const banner = useSelector(state => state.banner)
-	let bannerGroup = new THREE.Group()
 	let stardust = new THREE.Group()
 
 	useEffect(() => {
@@ -69,11 +70,18 @@ export default function Environment() {
 
 
 	useEffect(() => {
-		if (spriteMaps[banner]) {
-			spriteMaps['rhino'].visible = false
-			spriteMaps['android'].visible = false
-			spriteMaps['ring'].visible = false
-			spriteMaps[banner].visible = true
+		if (bannerGroup.rotation) {
+			console.log('should rotate', bannerGroup.rotation, bannerGroup.children)
+			new TWEEN.Tween({y: 0}).to({y: Math.PI * 6}, 3000)
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.onUpdate(function() {
+					bannerGroup.rotation.y = this.y
+				})
+				.onComplete(function() {
+					console.log('animation completed', bannerGroup.rotation)
+					bannerGroup.rotation.set(0, 0, 0)
+				})
+				.start()
 		}
 	}, [banner])
 
@@ -87,7 +95,7 @@ export default function Environment() {
 		//
 		// let cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 		// cube.position.set(0, 0, 0)
-		// scene.add(cube)
+		// bannerGroup.add(cube)
 		// console.log(cubeGeometry.attributes.position)
 
 		let mtlFile = '/models/cartier_room.mtl'
@@ -257,6 +265,6 @@ function randn_bm() {
 function randomizeSpriteScale() {
 	let baseScale = 0.02
 	let randomScale = baseScale + 0.12 * randn_bm()
-	if (randomScale > 0.12) console.log('final scale', randomScale)
+	// if (randomScale > 0.12) console.log('final scale', randomScale)
 	return [randomScale, randomScale, randomScale]
 }
