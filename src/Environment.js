@@ -100,6 +100,14 @@ export default function Environment() {
 		// let loader = new Loader()
 		spriteMaps['ring'] = await formulateSprites('/models/ring/scene.gltf')
 		spriteMaps['ring'].visible = false
+		// spriteMaps['ring'].rotation.set(0, Math.PI, 0)
+		let testSprites = spriteMaps['ring'].children[0].children
+		let target = new THREE.Vector3()
+		for (let x = 0; x < 3; x++) {
+			console.log(testSprites[x].position)
+			testSprites[x].getWorldPosition(target)
+			console.log(target)
+		}
 		scene.add(spriteMaps['ring'])
 
 		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf')
