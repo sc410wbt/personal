@@ -19,10 +19,9 @@ export default async function formulateSprites(url, options = {}) {
 			meshGroup.add(placeSprites(child.geometry.attributes.position.array, options.scale || 1))
 		}
 	})
-	object.scene.rotation.set(0, 0, 0)
-	object.scene.position.set(0, 0, 0)
-	// scene.add(object.scene)
 	console.log(meshGroup)
+	if (options.position) meshGroup.position.set(...options.position)
+	if (options.rotation) meshGroup.rotation.set(...options.rotation)
 	let total = 0
 	meshGroup.children.forEach(group => {
 		total += group.children.length

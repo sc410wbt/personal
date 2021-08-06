@@ -111,7 +111,8 @@ export default function Environment() {
 
 		// let loader = new Loader()
 		spriteMaps['ring'] = await formulateSprites('/models/ring/scene.gltf', {
-			scale: 1
+			scale: 3,
+			rotation: [0 - Math.PI / 2, 0, 0]
 		})
 		spriteMaps['ring'].visible = false
 		// spriteMaps['ring'].rotation.set(0, Math.PI, 0)
@@ -124,12 +125,18 @@ export default function Environment() {
 		}
 		scene.add(spriteMaps['ring'])
 
-		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf')
+		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf', {
+			scale: 4.5,
+			position: [0, -3, 0],
+			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2]
+		})
 		spriteMaps['rhino'].visible = false
 		scene.add(spriteMaps['rhino'])
 
 		spriteMaps['android'] = await formulateSprites('/models/android/scene.gltf', {
-			scale: 3
+			scale: 2.5,
+			position: [0, 2, 0],
+			rotation: [0 - Math.PI / 2, 0, 0]
 		})
 		// spriteMaps['android'].visible = false
 		scene.add(spriteMaps['android'])
@@ -212,7 +219,7 @@ export default function Environment() {
 
 	function animate() {
 		frames++
-		scene.rotation.y += 0.005
+		// scene.rotation.y += 0.005
 
 		TWEEN.update()
 		renderer.render(scene, camera)
