@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
-export default async function formulateSprites(url, scale = 1) {
+export default async function formulateSprites(url, options = {}) {
 
 	let loader = new GLTFLoader()
 	let object = await loader.loadAsync(url)
@@ -15,11 +15,12 @@ export default async function formulateSprites(url, scale = 1) {
 			child.receiveShadow = true
 			child.material.metalness = 0.5
 			// child.material.roughness = 0.5
-			meshGroup.add(placeSprites(child.geometry.attributes.position.array))
+			console.log('scale', options.scale)
+			meshGroup.add(placeSprites(child.geometry.attributes.position.array, options.scale || 1))
 		}
 	})
-	object.scene.rotation.set(0, Math.PI / 3, 0)
-	object.scene.position.set(10, 0, 0)
+	object.scene.rotation.set(0, 0, 0)
+	object.scene.position.set(0, 0, 0)
 	// scene.add(object.scene)
 	console.log(meshGroup)
 	let total = 0
@@ -31,13 +32,13 @@ export default async function formulateSprites(url, scale = 1) {
 
 }
 
-function placeSprites(position) {
+function placeSprites(position, scale) {
 	// console.log(position)
 	let threshhold = 0.1
 	let upperThreshold = 1.5
-	let multiplier = 3
+	let multiplier = scale
 	let group = new THREE.Group()
-	group.rotation.set(0 - Math.PI / 2, 0, 0)
+	group.rotation.set(0, 0, 0)
 
 	let spriteScale = 0.05
 	const map = new THREE.TextureLoader().load( '/images/sprite.png' )
