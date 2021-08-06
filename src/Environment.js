@@ -38,6 +38,7 @@ let cameraZ = 20
 export default function Environment() {
 
 	const banner = useSelector(state => state.banner)
+	let stardust = new THREE.Group()
 
 	useEffect(() => {
 
@@ -189,6 +190,7 @@ export default function Environment() {
 	}
 
 	function addStardust() {
+		stardust = new THREE.Group()
 		let spriteScale = 0.05
 		const map = new THREE.TextureLoader().load( '/images/sprite-blurred.png' )
 		const material = new THREE.SpriteMaterial({ map: map })
@@ -200,8 +202,9 @@ export default function Environment() {
 			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
 			let randomScale = spriteScale + Math.random() * 0.25
 			sprite.scale.set(randomScale, randomScale, randomScale)
-			scene.add(sprite)
+			stardust.add(sprite)
 		}
+		scene.add(stardust)
 	}
 
 
@@ -220,6 +223,7 @@ export default function Environment() {
 	function animate() {
 		frames++
 		// scene.rotation.y += 0.005
+		stardust.rotation.y += 0.001
 
 		TWEEN.update()
 		renderer.render(scene, camera)
