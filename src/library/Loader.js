@@ -1,36 +1,33 @@
 import * as THREE from 'three'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
-export default function Loader(url) {
+export default async function formulateSprites(url, scale = 1) {
 
-	this.url = url
-	this.load = async function() {
+	let loader = new GLTFLoader()
+	let object = await loader.loadAsync(url)
 
-
-		let loader = new GLTFLoader()
-		let object = await loader.loadAsync(url)
-
-		let scale = 1
-		// object.scene.position.set(11, 0.2, 23)
-		object.scene.scale.set(scale, scale, scale)
-		let meshGroup = new THREE.Group()
-		object.scene.traverse(function (child) {
-			if (child.isMesh) {
-				// console.log('child', child.geometry)
-				child.castShadow = true
-				child.receiveShadow = true
-				child.material.metalness = 0.5
-				// child.material.roughness = 0.5
-				meshGroup.add(placeSprites(child.geometry.attributes.position.array))
-			}
-		})
-		object.scene.rotation.set(0, Math.PI / 3, 0)
-		object.scene.position.set(10, 0, 0)
-		// scene.add(object.scene)
-		return meshGroup
-
-
-	}
+	// object.scene.position.set(11, 0.2, 23)
+	let meshGroup = new THREE.Group()
+	object.scene.traverse(function (child) {
+		if (child.isMesh) {
+			// console.log('child', child.geometry)
+			child.castShadow = true
+			child.receiveShadow = true
+			child.material.metalness = 0.5
+			// child.material.roughness = 0.5
+			meshGroup.add(placeSprites(child.geometry.attributes.position.array))
+		}
+	})
+	object.scene.rotation.set(0, Math.PI / 3, 0)
+	object.scene.position.set(10, 0, 0)
+	// scene.add(object.scene)
+	console.log(meshGroup)
+	let total = 0
+	meshGroup.children.forEach(group => {
+		total += group.children.length
+	})
+	console.log('total sprites formulated', total)
+	return meshGroup
 
 }
 

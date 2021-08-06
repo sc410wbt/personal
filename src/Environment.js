@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react'
 import * as THREE from 'three'
 import * as TWEEN from 'tween'
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
+// import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
+// import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
-import Loader from "./library/Loader"
+import formulateSprites from "./library/Loader"
 
-import spriteImg from './images/sprite.png'
 
 import s from './Environment.module.sass'
 
@@ -22,9 +21,6 @@ const mouse = new THREE.Vector2()
 let pauseAnimation = false
 let clickable = []
 let lights = {}
-let videos = []
-let categoryVideo
-let roomSelected = false
 
 let dragTimer
 let azimuthalAngle // side to side
@@ -100,10 +96,18 @@ export default function Environment() {
 		// })
 
 
-		let loader = new Loader('/models/ring/scene.gltf')
-		let object = await loader.load()
-		console.log(object)
-		scene.add(object)
+		// let loader = new Loader()
+		let ring = await formulateSprites('/models/ring/scene.gltf')
+		ring.visible = false
+		scene.add(ring)
+
+		let rhino = await formulateSprites('/models/rhino/scene.gltf')
+		rhino.visible = false
+		scene.add(rhino)
+
+		let android = await formulateSprites('/models/android/scene.gltf')
+		// android.visible = false
+		scene.add(android)
 
 	}
 
