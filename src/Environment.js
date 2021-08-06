@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import {useSelector} from "react-redux"
 import * as THREE from 'three'
 import * as TWEEN from 'tween'
 // import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
@@ -32,9 +33,11 @@ let frames = 0
 let frameTimer
 
 let fov = (window.innerWidth < 760) ? 60 : 45
-let cameraZ = 10
+let cameraZ = 20
 
 export default function Environment() {
+
+	const banner = useSelector(state => state.banner)
 
 	useEffect(() => {
 
@@ -62,6 +65,15 @@ export default function Environment() {
 
 	}, [])
 
+
+	useEffect(() => {
+		if (spriteMaps[banner]) {
+			spriteMaps['rhino'].visible = false
+			spriteMaps['android'].visible = false
+			spriteMaps['ring'].visible = false
+			spriteMaps[banner].visible = true
+		}
+	}, [banner])
 
 
 	async function populate() {
