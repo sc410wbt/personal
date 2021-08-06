@@ -120,9 +120,11 @@ export default function Environment() {
 				for (let x = currentSprites - 1; x > targetSprites; x--) {
 					let sprite = bannerGroup.children[x]
 					sprite.material = spriteTransitionMaterial
-					new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0 }, 3000)
+					let pos = sprite.position
+					new TWEEN.Tween({ x: pos.x, y: pos.y, z: pos.z }).to({ ...getRandomOutwardPosition(pos.x, pos.y, pos.z) }, 2500)
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.onUpdate(function() {
+							sprite.position.set(this.x, this.y, this.z)
 						})
 						.onComplete(function() {
 							bannerGroup.remove(sprite)
@@ -143,8 +145,17 @@ export default function Environment() {
 					let coords = spriteMap[x]
 					const sprite = new THREE.Sprite(spriteTransitionMaterial)
 					sprite.scale.set(...randomizeSpriteScale())
-					sprite.position.set(...coords)
+					sprite.position.set(0, 0, 0)
 					bannerGroup.add(sprite)
+					new TWEEN.Tween({ ...getRandomOutwardPosition(coords[0], coords[1], coords[2]) }).to({ x: coords[0], y: coords[1], z: coords[2] }, 3000)
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.onUpdate(function() {
+							sprite.position.set(this.x, this.y, this.z)
+						})
+						.onComplete(function() {
+							console.log(sprite)
+						})
+						.start()
 				}
 				new TWEEN.Tween({ opacity: 0 }).to({ opacity: 1}, 3000)
 					.easing(TWEEN.Easing.Exponential.InOut)
@@ -160,6 +171,15 @@ export default function Environment() {
 
 		}
 	}, [banner])
+
+
+	function getRandomOutwardPosition(x, y, z) {
+		return {
+			x: 0,
+			y: 0,
+			z: 0
+		}
+	}
 
 
 	async function populate() {
@@ -196,7 +216,7 @@ export default function Environment() {
 
 
 		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf', {
-			scale: 4.5,
+			scale: 5.0,
 			position: [0, -3, 0],
 			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
 			minDistance: 0.5,
@@ -205,7 +225,7 @@ export default function Environment() {
 		addToBanner(spriteMaps['rhino'])
 
 		spriteMaps['ring'] = await formulateSprites('/models/ring/scene.gltf', {
-			scale: 3,
+			scale: 4.0,
 			rotation: [-0.9, 0.25, 0],
 			minDistance: 0.1,
 			maxDistance: 5
