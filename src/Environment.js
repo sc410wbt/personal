@@ -36,7 +36,14 @@ let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
 let bannerGroup = new THREE.Group()
 
-const spriteMaterial = new THREE.SpriteMaterial({ map: new THREE.TextureLoader().load('/images/sprite.png') })
+const spriteMaterial = new THREE.SpriteMaterial({
+	map: new THREE.TextureLoader().load('/images/sprite.png')
+})
+const spriteTransitionMaterial = new THREE.SpriteMaterial({
+	map: new THREE.TextureLoader().load('/images/sprite.png'),
+	transparent: true,
+	opacity: 1
+})
 
 export default function Environment() {
 
@@ -109,20 +116,42 @@ export default function Environment() {
 				// do nothing
 			} else if (currentSprites > targetSprites) { // Delete remaining
 				console.log('removing sprites')
-				for (let x = currentSprites; x > targetSprites; x--) {
-					bannerGroup.remove(bannerGroup.children[x])
+				spriteTransitionMaterial.opacity = 1
+				for (let x = currentSprites - 1; x > targetSprites; x--) {
+					let sprite = bannerGroup.children[x]
+					sprite.material = spriteTransitionMaterial
+					new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0 }, 3000)
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.onUpdate(function() {
+						})
+						.onComplete(function() {
+							bannerGroup.remove(sprite)
+						})
+						.start()
 				}
-				console.log('bannerGroup size', bannerGroup.children.length)
+				new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0}, 3000)
+					.easing(TWEEN.Easing.Exponential.InOut)
+					.onUpdate(function() {
+						spriteTransitionMaterial.opacity = this.opacity
+					})
+					.start()
+				// console.log('bannerGroup size', bannerGroup.children.length)
 			} else { // Add more
-				console.log('adding more sprites')
-
+				// console.log('adding more sprites')
+				spriteTransitionMaterial.opacity = 0
 				for (let x = currentSprites; x < targetSprites; x++) {
 					let coords = spriteMap[x]
-					const sprite = new THREE.Sprite(spriteMaterial)
+					const sprite = new THREE.Sprite(spriteTransitionMaterial)
 					sprite.scale.set(...randomizeSpriteScale())
 					sprite.position.set(...coords)
 					bannerGroup.add(sprite)
 				}
+				new TWEEN.Tween({ opacity: 0 }).to({ opacity: 1}, 3000)
+					.easing(TWEEN.Easing.Exponential.InOut)
+					.onUpdate(function() {
+						spriteTransitionMaterial.opacity = this.opacity
+					})
+					.start()
 			}
 
 
