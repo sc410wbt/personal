@@ -16,7 +16,7 @@ export default async function formulateSprites(url, options = {}) {
 			child.material.metalness = 0.5
 			// child.material.roughness = 0.5
 			console.log('scale', options.scale)
-			meshGroup.add(placeSprites(child.geometry.attributes.position.array, options.scale || 1))
+			meshGroup.add(placeSprites(child.geometry.attributes.position.array, options))
 		}
 	})
 	console.log(meshGroup)
@@ -31,11 +31,12 @@ export default async function formulateSprites(url, options = {}) {
 
 }
 
-function placeSprites(position, scale) {
+function placeSprites(position, options) {
 	// console.log(position)
-	let threshhold = 0.1
-	let upperThreshold = 1.5
-	let multiplier = scale
+	console.log(options)
+	let threshhold = options.minDistance = 0.1
+	let upperThreshold = options.maxDistance || 0.5
+	let multiplier = options.scale || 1
 	let group = new THREE.Group()
 	group.rotation.set(0, 0, 0)
 
