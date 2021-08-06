@@ -15,11 +15,11 @@ export default async function formulateSprites(url, options = {}) {
 			child.receiveShadow = true
 			child.material.metalness = 0.5
 			// child.material.roughness = 0.5
-			console.log('scale', options.scale)
+			// console.log('scale', options.scale)
 			meshGroup.add(placeSprites(child.geometry.attributes.position.array, options))
 		}
 	})
-	console.log(meshGroup)
+	// console.log(meshGroup)
 	if (options.position) meshGroup.position.set(...options.position)
 	if (options.rotation) meshGroup.rotation.set(...options.rotation)
 	let total = 0
@@ -40,7 +40,7 @@ export default async function formulateSprites(url, options = {}) {
 
 function placeSprites(position, options) {
 	// console.log(position)
-	console.log(options)
+	// console.log(options)
 	let threshhold = options.minDistance = 0.1
 	let upperThreshold = options.maxDistance || 0.5
 	let multiplier = options.scale || 1

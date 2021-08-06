@@ -36,6 +36,7 @@ let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
 let bannerGroup = new THREE.Group()
 
+const spriteMaterial = new THREE.SpriteMaterial({ map: new THREE.TextureLoader().load('/images/sprite.png') })
 
 export default function Environment() {
 
@@ -70,7 +71,8 @@ export default function Environment() {
 
 
 	useEffect(() => {
-		if (bannerGroup.rotation) {
+		if (spriteMaps[banner]) { // Make sure there have been things added to it
+
 			console.log('should rotate', bannerGroup.rotation, bannerGroup.children)
 			new TWEEN.Tween({y: 0}).to({y: Math.PI * 6}, 3000)
 				.easing(TWEEN.Easing.Exponential.InOut)
@@ -82,6 +84,51 @@ export default function Environment() {
 					bannerGroup.rotation.set(0, 0, 0)
 				})
 				.start()
+
+
+			let currentSprites = bannerGroup.children.length
+			let spriteMap = spriteMaps[banner]
+			let targetSprites = spriteMap.length
+			console.log('sprite from', currentSprites, 'to', targetSprites)
+
+			for (let x = 0; x < Math.min(currentSprites, targetSprites); x++) {
+				let sprite = bannerGroup.children[x]
+				let target = spriteMaps[banner][x]
+				// console.log('target', sprite, target)
+				// sprite.position.set(...target)
+				let position = sprite.position
+				new TWEEN.Tween({ x: position.x, y: position.y, z: position.z }).to({ x: target[0], y: target[1], z: target[2] }, 3000)
+					.easing(TWEEN.Easing.Exponential.InOut)
+					.onUpdate(function() {
+						sprite.position.set(this.x, this.y, this.z)
+					})
+					.start()
+			}
+
+			if (currentSprites === targetSprites) {
+				// do nothing
+			} else if (currentSprites > targetSprites) { // Delete remaining
+				console.log('removing sprites')
+				for (let x = currentSprites; x > targetSprites; x--) {
+					bannerGroup.remove(bannerGroup.children[x])
+				}
+				console.log('bannerGroup size', bannerGroup.children.length)
+			} else { // Add more
+				console.log('adding more sprites')
+
+				for (let x = currentSprites; x < targetSprites; x++) {
+					let coords = spriteMap[x]
+					const sprite = new THREE.Sprite(spriteMaterial)
+					sprite.scale.set(...randomizeSpriteScale())
+					sprite.position.set(...coords)
+					bannerGroup.add(sprite)
+				}
+			}
+
+
+
+
+
 		}
 	}, [banner])
 
