@@ -1,39 +1,28 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
+import cx from 'classnames'
+
+import pageData from '../library/pages.json'
 
 import s from './Nav.module.sass'
 
-const links = {
-	rhino: {
-		name: 'home'
-	},
-	ring: {
-		name: 'inspiration museum'
-	},
-	android: {
-		name: 'augmented reality'
-	}
-}
 
 function Nav(props) {
 
 	const dispatch = useDispatch()
-	const banner = useSelector(state => state.banner)
+	const page = useSelector(state => state.page)
+	console.log(page)
 
-	function switchBanner(banner) {
-		dispatch({ type: 'SET_BANNER', banner: banner})
-	}
-
-	let nav = Object.entries(links).map(([key, value]) => {
+	let nav = pageData.map(item => {
 		return (
-			<Link to={"/something"} onClick={() => switchBanner(key)}>{value.name}</Link>
+			<Link to={item.href} className={cx({ [s.active]: item.href === page })}>{item.title}</Link>
 		)
 	})
 
 	return (
 		<div className={s.wrapper}>
-			{nav}<div>{props.history.location.pathname}</div>
+			{nav}
 		</div>
 	)
 

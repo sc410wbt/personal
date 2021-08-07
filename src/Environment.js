@@ -48,6 +48,7 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 export default function Environment() {
 
 	const banner = useSelector(state => state.banner)
+	const page = useSelector(state => state.page)
 	let stardust = new THREE.Group()
 
 	useEffect(() => {
@@ -65,7 +66,7 @@ export default function Environment() {
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 		controls = new OrbitControls(camera, renderer.domElement)
-		controls.enableZoom = true
+		controls.enableZoom = false
 		controls.enableDamping = true
 		controls.dampingFactor = 0.12
 		// controls.rotateSpeed *= 0.4
@@ -76,9 +77,9 @@ export default function Environment() {
 
 	}, [])
 
-
 	useEffect(() => {
-		if (spriteMaps[banner]) { // Make sure there have been things added to it
+		console.log('page is changing', page)
+		if (spriteMaps[page]) { // Make sure there have been things added to it
 
 			console.log('should rotate', bannerGroup.rotation, bannerGroup.children)
 			new TWEEN.Tween({y: 0}).to({y: Math.PI * 4}, 2500)
@@ -94,13 +95,13 @@ export default function Environment() {
 
 
 			let currentSprites = bannerGroup.children.length
-			let spriteMap = spriteMaps[banner]
+			let spriteMap = spriteMaps[page]
 			let targetSprites = spriteMap.length
 			console.log('sprite from', currentSprites, 'to', targetSprites)
 
 			for (let x = 0; x < Math.min(currentSprites, targetSprites); x++) {
 				let sprite = bannerGroup.children[x]
-				let target = spriteMaps[banner][x]
+				let target = spriteMap[x]
 				// console.log('target', sprite, target)
 				// sprite.position.set(...target)
 				let position = sprite.position
@@ -170,7 +171,7 @@ export default function Environment() {
 
 
 		}
-	}, [banner])
+	}, [page])
 
 
 	function getRandomOutwardPosition(x, y, z) {
@@ -215,16 +216,16 @@ export default function Environment() {
 		// })
 
 
-		spriteMaps['rhino'] = await formulateSprites('/models/rhino/scene.gltf', {
+		spriteMaps['/'] = await formulateSprites('/models/rhino/scene.gltf', {
 			scale: 5.0,
 			position: [0, -3, 0],
 			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
 			minDistance: 0.5,
 			maxDistance: 1.5
 		})
-		addToBanner(spriteMaps['rhino'])
+		addToBanner(spriteMaps['/'])
 
-		spriteMaps['ring'] = await formulateSprites('/models/ring/scene.gltf', {
+		spriteMaps['/inspiration-museum'] = await formulateSprites('/models/ring/scene.gltf', {
 			scale: 4.0,
 			rotation: [-0.9, 0.25, 0],
 			minDistance: 0.1,
@@ -232,7 +233,7 @@ export default function Environment() {
 		})
 		// addToBanner(spriteMaps['ring'])
 
-		spriteMaps['android'] = await formulateSprites('/models/android/scene.gltf', {
+		spriteMaps['/ar-photos'] = await formulateSprites('/models/android/scene.gltf', {
 			scale: 2.5,
 			position: [0, 2, 0],
 			rotation: [0 - Math.PI / 2, 0, 0],

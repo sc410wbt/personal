@@ -1,5 +1,6 @@
 const defaultState = {
-	banner: 'rhino'
+	banner: 'rhino',
+	page: '/'
 }
 
 const ContentReducer = (state = defaultState, action) => {
@@ -8,6 +9,11 @@ const ContentReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				banner: action.banner
+			}
+		case 'SET_PAGE':
+			return {
+				...state,
+				page: action.page
 			}
 		default:
 			return state
