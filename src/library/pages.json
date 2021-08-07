@@ -1,17 +1,17 @@
 [
   {
     "href": "/",
-    "name": "home",
+    "subtitle": "drag to rotate",
     "title": "Untitled Project"
   },
   {
     "href": "/inspiration-museum",
-    "name": "cartier",
+    "subtitle": "with Freeman [Singapore] for Cartier",
     "title": "The Inspiration Museum"
   },
   {
-    "href": "/ar-photos",
-    "name": "google",
-    "title": "Augmented Reality Photo Booth"
+    "href": "/ar-booth",
+    "subtitle": "with Freeman [China] for Google",
+    "title": "AR Immersion Booth"
   }
 ]

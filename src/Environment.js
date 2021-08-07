@@ -233,7 +233,7 @@ export default function Environment() {
 		})
 		// addToBanner(spriteMaps['ring'])
 
-		spriteMaps['/ar-photos'] = await formulateSprites('/models/android/scene.gltf', {
+		spriteMaps['/ar-booth'] = await formulateSprites('/models/android/scene.gltf', {
 			scale: 2.5,
 			position: [0, 2, 0],
 			rotation: [0 - Math.PI / 2, 0, 0],

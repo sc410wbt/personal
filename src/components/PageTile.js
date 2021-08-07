@@ -20,7 +20,10 @@ function PageTitle(props) {
 	console.log(data)
 
 	return (
-		<div className={s.wrapper} dangerouslySetInnerHTML={{ __html: data.title }} />
+		<div className={s.wrapper}>
+			<div className={s.title} dangerouslySetInnerHTML={{ __html: data.title }} />
+			<div className={s.client}>// {data.subtitle}</div>
+		</div>
 	)
 
 }
