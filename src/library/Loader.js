@@ -90,9 +90,11 @@ function placeSprites(position, options) {
 		let [rX, rY, rZ] = randomizePoints(x, y, z)
 		sprite.position.set(rX, rY, rZ)
 		let randomScale = spriteScale + Math.random() * 0.1
-		sprite.scale.set(randomScale, randomScale, randomScale)
-		// console.log(sprite)
-		group.add(sprite)
+		if (randomScale > 0.1) {
+			sprite.scale.set(randomScale, randomScale, randomScale)
+			// console.log(sprite)
+			group.add(sprite)
+		}
 
 		if (lastX) {
 			// Keep this if statement in, might be more efficient before getting to distance calc
