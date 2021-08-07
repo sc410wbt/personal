@@ -13,7 +13,7 @@ import formulateSprites from "./library/Loader"
 import s from './Environment.module.sass'
 
 const scene = new THREE.Scene()
-const renderer = new THREE.WebGLRenderer( { antialias: true })
+const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
 let camera
 let controls
 const raycaster = new THREE.Raycaster()
@@ -58,7 +58,7 @@ export default function Environment() {
 
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
 		camera.position.set(0,0, cameraZ)
-		renderer.setClearColor(0x333333, 1)
+		renderer.setClearColor(0x222222, 0)
 		renderer.setPixelRatio(0.8) //window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
@@ -308,7 +308,7 @@ export default function Environment() {
 
 		let max = 20
 
-		for (let x = 0; x <= 300; x++) {
+		for (let x = 0; x <= 200; x++) {
 			const sprite = new THREE.Sprite(material)
 			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
 			let randomScale = spriteScale + Math.random() * 0.25

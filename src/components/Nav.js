@@ -1,21 +1,22 @@
 import React from 'react'
+import {Link, withRouter} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 
 import s from './Nav.module.sass'
 
 const links = {
 	rhino: {
-		name: 'Home'
+		name: 'home'
 	},
 	ring: {
-		name: 'Inspiration Museum'
+		name: 'inspiration museum'
 	},
 	android: {
-		name: 'Augmented Reality'
+		name: 'augmented reality'
 	}
 }
 
-export default function Nav() {
+function Nav(props) {
 
 	const dispatch = useDispatch()
 	const banner = useSelector(state => state.banner)
@@ -26,16 +27,16 @@ export default function Nav() {
 
 	let nav = Object.entries(links).map(([key, value]) => {
 		return (
-			<div onClick={() => switchBanner(key)}>{value.name}</div>
+			<Link to={"/something"} onClick={() => switchBanner(key)}>{value.name}</Link>
 		)
 	})
 
 	return (
 		<div className={s.wrapper}>
-			{nav}<div>{banner}</div>
+			{nav}<div>{props.history.location.pathname}</div>
 		</div>
 	)
 
 }
 
-
+export default withRouter(Nav)
