@@ -218,7 +218,7 @@ export default function Environment() {
 
 		spriteMaps['/'] = await formulateSprites('/models/rhino/scene.gltf', {
 			scale: 5.0,
-			position: [0, -3, 0],
+			position: [-0.5, -3, 0],
 			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
 			minDistance: 0.5,
 			maxDistance: 1.5

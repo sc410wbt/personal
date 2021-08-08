@@ -104,7 +104,7 @@ function placeSprites(position, options) {
 				// too far, add stuff in between
 
 				let distance = Math.sqrt(Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2) + Math.pow(z - lastZ, 2))
-				let iterations = Math.ceil(distance)
+				let iterations = Math.ceil(distance) / (upperThreshold * 2)
 
 				for (let i = 1; i < iterations; i++) {
 					let newX = lastX + ((x - lastX) / iterations) * i
