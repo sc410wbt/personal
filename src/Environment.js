@@ -241,6 +241,21 @@ export default function Environment() {
 			maxDistance: 0.7
 		})
 
+		// addBannerWobble()
+
+	}
+
+	function addBannerWobble() {
+		setInterval(() => {
+			let intensity = 0.1
+			new TWEEN.Tween({ x: bannerGroup.rotation.x, y: bannerGroup.rotation.y, z: bannerGroup.rotation.z })
+				.to({ x: (Math.random() - 0.5) * intensity, y: (Math.random() - 0.5) * intensity, z: (Math.random() - 0.5) * intensity }, 2000)
+				.easing(TWEEN.Easing.Quadratic.InOut)
+				.onUpdate(function() {
+					bannerGroup.rotation.set(this.x, this.y, this.z)
+				})
+				.start()
+		}, 2000)
 	}
 
 	async function addToBanner(spriteMap) {
