@@ -1,23 +1,52 @@
 .wrapper
 	position: fixed
 	z-index: -1
-	top: 50%
+	top: 0
 	right: 50px
+	height: 100vh
 	text-align: right
-	transform: translateY(-50%)
 
-	.title
-		margin: 0 0 20px
-		font-size: 200px
-		font-weight: bold
-		color: #030303
-		line-height: 80%
-		text-transform: uppercase
-		opacity: 0.5
+	.container
+		position: absolute
+		top: 50%
+		right: 0
+		transform: translateY(-50%)
 
-	.client
-		position: relative
-		z-index: 1
-		margin-right: 20px
-		color: #888
-		font-weight: bold
+		.title
+			margin: 0 0 20px
+			font-size: 200px
+			font-weight: bold
+			color: #030303
+			line-height: 80%
+			text-transform: uppercase
+			opacity: 0.5
+
+		.client
+			position: relative
+			z-index: 1
+			margin-right: 20px
+			color: #888
+			font-weight: bold
+
+		&:global(.enter)
+			transform: translate(70%, -50%)
+			opacity: 0
+
+			.client
+				transform: translateX(200px)
+				opacity: 0
+
+		&:global(.enter-active)
+			transform: translate(0%, -50%)
+			opacity: 1
+			transition: 1.5s 2.5s
+
+			.client
+				opacity: 1
+				transform: translateX(0)
+				transition: 0.7s 3.8s
+
+		&:global(.exit-active)
+			transform: translate(-70%, -50%)
+			opacity: 0
+			transition: 1.5s

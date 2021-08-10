@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import {TransitionGroup, CSSTransition} from "react-transition-group"
 import {withRouter} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux"
 
@@ -19,10 +20,24 @@ function PageTitle(props) {
 	let data = pageData.find(obj => obj.href === page)
 	console.log(data)
 
+	let titles = pageData.map(item => {
+		if (item.href === page) {
+			return (
+				<CSSTransition key={item.href} timeout={5000} className={s.container}>
+					<div>
+						<div className={s.title} dangerouslySetInnerHTML={{__html: item.title}}/>
+						<div className={s.client}>// {item.subtitle}</div>
+					</div>
+				</CSSTransition>
+			)
+		}
+	})
+
 	return (
 		<div className={s.wrapper}>
-			<div className={s.title} dangerouslySetInnerHTML={{ __html: data.title }} />
-			<div className={s.client}>// {data.subtitle}</div>
+			<TransitionGroup>
+				{titles}
+			</TransitionGroup>
 		</div>
 	)
 
