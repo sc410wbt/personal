@@ -37,7 +37,7 @@ let cameraZ = 20
 let bannerGroup = new THREE.Group()
 
 const spriteMaterial = new THREE.SpriteMaterial({
-	map: new THREE.TextureLoader().load('/images/sprite.png')
+	map: new THREE.TextureLoader().load('/images/sprite.png'),
 })
 const spriteTransitionMaterial = new THREE.SpriteMaterial({
 	map: new THREE.TextureLoader().load('/images/sprite.png'),
@@ -185,7 +185,7 @@ export default function Environment() {
 
 	async function populate() {
 		// addGuides()
-		addStardust()
+		// addStardust()
 
 		// let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
@@ -319,7 +319,7 @@ export default function Environment() {
 	function addStardust() {
 		stardust = new THREE.Group()
 		let spriteScale = 0.05
-		const map = new THREE.TextureLoader().load( '/images/sprite-blurred.png' )
+		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
 		const material = new THREE.SpriteMaterial({ map: map })
 
 		let max = 20

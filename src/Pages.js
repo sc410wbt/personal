@@ -13,7 +13,7 @@ export default function Pages() {
 				<PageTitle />
 
 				<Route path={"/"}>
-					Home Page test
+					{/*Home Page test*/}
 				</Route>
 
 			</main>
