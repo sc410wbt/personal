@@ -264,7 +264,8 @@ export default function Environment() {
 		const material = new THREE.SpriteMaterial({ map: map })
 		for (let coords of spriteMap) {
 			const sprite = new THREE.Sprite(material)
-			sprite.scale.set(...randomizeSpriteScale())
+			sprite.scale.set(0.1, 0.1, 0.1)
+			// sprite.scale.set(...randomizeSpriteScale())
 			sprite.position.set(...coords)
 			bannerGroup.add(sprite)
 		}
