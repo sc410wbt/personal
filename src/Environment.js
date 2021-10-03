@@ -61,7 +61,7 @@ export default function Environment() {
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
 		camera.position.set(0,0, cameraZ)
 		renderer.setClearColor(0x222222, 0)
-		renderer.setPixelRatio(0.8) //window.devicePixelRatio)
+		renderer.setPixelRatio(window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -245,27 +245,31 @@ export default function Environment() {
 		// addBannerWobble()
 
 		let loader = new GLTFLoader()
-		let object = await loader.loadAsync('/models/rhino/scene.gltf')
+		let object = await loader.loadAsync('/models/android/scene.gltf')
 		object.scene.scale.set(4,4,4)
 		object.scene.position.set(0, -2, 0)
 
 		// object.scene.position.set(11, 0.2, 23)
 		let meshGroup = new THREE.Group()
 		object.scene.traverse(function (child) {
-			console.log(child)
 			if (child.isMesh) {
 				// console.log('child', child.geometry)
 				child.castShadow = true
 				child.receiveShadow = true
 				child.material.metalness = 1
 				child.material.roughness = 1
-				addTriangles(child.geometry.attributes.position.array)
+				console.log(child.geometry)
+				addTriangles(child.geometry, 2)
 			}
 		})
 		// scene.add(object.scene)
 
-		let geometry = new THREE.BoxGeometry(4, 4, 4);
+		// let geometry = new THREE.BoxGeometry(4, 4, 4);
+		// addTriangles(geometry, 2)
 
+	}
+
+	function addTriangles(geometry, scale = 1) {
 		// check out the position attribute of a cube
 		let position = geometry.getAttribute('position')
 		let positions = position.array
@@ -276,11 +280,27 @@ export default function Environment() {
 		console.log( position.count * 3 === position.array.length); // true
 		console.log( position.array )
 
-		for (let i = 0; i <= index.count; i += 3) {
+		for (let i = 0; i < index.count; i += 3) {
 			let buffGeom = new THREE.BufferGeometry()
 
 			let indices = [index.array[i], index.array[i + 1], index.array[i + 2]]
 			console.log(indices)
+
+			// let verticesArray = []
+			// let firstPoint = []
+			// let j = 0
+			// indices.forEach(index => {
+			// 	let adjustedIndex = index * 3
+			// 	console.log(index, adjustedIndex)
+			// 	for (let n = 0; n < 3; n++) {
+			// 		verticesArray.push(positions[adjustedIndex] + n)
+			// 		if (j === 0) firstPoint.push(positions[adjustedIndex] + n)
+			// 	}
+			// 	j++
+			// })
+			// verticesArray.push(...firstPoint)
+			// console.log(verticesArray)
+			// let vertices = new Float32Array(verticesArray)
 
 			let x = positions[indices[0] * 3]
 			let y = positions[indices[0] * 3 + 1]
@@ -291,78 +311,22 @@ export default function Environment() {
 			let x3 = positions[indices[2] * 3]
 			let y3 = positions[indices[2] * 3 + 1]
 			let z3 = positions[indices[2] * 3 + 2]
+			// console.log(x, y, z, x2, y2, z2, x3, y3, z3, x, y, z)
+			let verticesArray = [x, y, z, x2, y2, z2, x3, y3, z3, x, y, z]
+			verticesArray.forEach((value, index) => {
+				verticesArray[index] = value * scale
+			})
 
-			let vertices = new Float32Array([
-				x, y, z, x2, y2, z2, x3, y3, z3, x, y, z
-			])
+			let vertices = new Float32Array(verticesArray)
 
 			buffGeom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
 			let line = new THREE.Line(
 				buffGeom,
-				new THREE.LineBasicMaterial({ color: 0x00ff00 })
-			);
-			// console.log(line)
+				new THREE.LineBasicMaterial({ color: 0x222222 })
+			)
 
-
-			scene.add(line);
-		}
-
-
-	}
-
-	function addTriangles(positions) {
-		let group = new THREE.Group()
-		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-		const material = new THREE.SpriteMaterial({ map: map })
-
-		let scale = 0.001
-		let multiplier = 4
-		let skip = 5
-
-		const lineMaterial = new THREE.LineBasicMaterial({
-			color: 0x000000,
-			// transparent: true,
-			opacity: 1
-		})
-
-		for (let i = 0; i < positions.length; i += 12 + (12 * skip)) {
-			let x = positions[i] * multiplier
-			let y = positions[i + 1] * multiplier
-			let z = positions[i + 2] * multiplier
-			let x1 = positions[i + 4] * multiplier
-			let y1 = positions[i + 5] * multiplier
-			let z1 = positions[i + 6] * multiplier
-			let x2 = positions[i + 7] * multiplier
-			let y2 = positions[i + 8] * multiplier
-			let z2 = positions[i + 9] * multiplier
-
-			const points = []
-			points.push(new THREE.Vector3(x, y, z))
-			points.push(new THREE.Vector3(x1, y1, z1))
-
-			const geometry = new THREE.BufferGeometry().setFromPoints(points)
-			const line = new THREE.Line(geometry, lineMaterial)
 			scene.add(line)
-
-			const points2 = []
-			points2.push(new THREE.Vector3(x2, y2, z2))
-			points2.push(new THREE.Vector3(x1, y1, z1))
-
-			const geometry2 = new THREE.BufferGeometry().setFromPoints(points2)
-			const line2 = new THREE.Line(geometry2, lineMaterial)
-			scene.add(line2)
-
-			const points3 = []
-			points3.push(new THREE.Vector3(x2, y2, z2))
-			points3.push(new THREE.Vector3(x, y, z))
-
-			const geometry3 = new THREE.BufferGeometry().setFromPoints(points3)
-			const line3 = new THREE.Line(geometry3, lineMaterial)
-			scene.add(line3)
-
-			break
 		}
-		// scene.add(rhino)
 	}
 
 	function addBannerWobble() {
