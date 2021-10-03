@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {useSelector} from "react-redux"
 import * as THREE from 'three'
+import {Geometry} from "three/examples/jsm/deprecated/Geometry";
 import * as TWEEN from 'tween'
-// import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 // import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
@@ -11,6 +11,7 @@ import formulateSprites from "./library/Loader"
 
 
 import s from './Environment.module.sass'
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -216,33 +217,152 @@ export default function Environment() {
 		// })
 
 
-		spriteMaps['/'] = await formulateSprites('/models/rhino/scene.gltf', {
-			scale: 5.0,
-			position: [-0.5, -3, 0],
-			rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
-			minDistance: 0.5,
-			maxDistance: 1.5
-		})
-		addToBanner(spriteMaps['/'])
-
-		spriteMaps['/inspiration-museum'] = await formulateSprites('/models/ring/scene.gltf', {
-			scale: 4.0,
-			rotation: [-0.9, 0.25, 0],
-			minDistance: 0.1,
-			maxDistance: 5
-		})
-		// addToBanner(spriteMaps['ring'])
-
-		spriteMaps['/ar-booth'] = await formulateSprites('/models/android/scene.gltf', {
-			scale: 2.5,
-			position: [0, 2, 0],
-			rotation: [0 - Math.PI / 2, 0, 0],
-			minDistance: 0.1,
-			maxDistance: 0.7
-		})
+		// spriteMaps['/'] = await formulateSprites('/models/rhino/scene.gltf', {
+		// 	scale: 5.0,
+		// 	position: [-0.5, -3, 0],
+		// 	rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
+		// 	minDistance: 0.5,
+		// 	maxDistance: 1.5
+		// })
+		// addToBanner(spriteMaps['/'])
+		//
+		// spriteMaps['/inspiration-museum'] = await formulateSprites('/models/ring/scene.gltf', {
+		// 	scale: 4.0,
+		// 	rotation: [-0.9, 0.25, 0],
+		// 	minDistance: 0.1,
+		// 	maxDistance: 5
+		// })
+		// // addToBanner(spriteMaps['ring'])
+		//
+		// spriteMaps['/ar-booth'] = await formulateSprites('/models/android/scene.gltf', {
+		// 	scale: 2.5,
+		// 	position: [0, 2, 0],
+		// 	rotation: [0 - Math.PI / 2, 0, 0],
+		// 	minDistance: 0.1,
+		// 	maxDistance: 0.7
+		// })
 
 		// addBannerWobble()
 
+		let loader = new GLTFLoader()
+		let object = await loader.loadAsync('/models/rhino/scene.gltf')
+		object.scene.scale.set(4,4,4)
+		object.scene.position.set(0, -2, 0)
+
+		// object.scene.position.set(11, 0.2, 23)
+		let meshGroup = new THREE.Group()
+		object.scene.traverse(function (child) {
+			console.log(child)
+			if (child.isMesh) {
+				// console.log('child', child.geometry)
+				child.castShadow = true
+				child.receiveShadow = true
+				child.material.metalness = 1
+				child.material.roughness = 1
+				addTriangles(child.geometry.attributes.position.array)
+			}
+		})
+		// scene.add(object.scene)
+
+		let geometry = new THREE.BoxGeometry(4, 4, 4);
+
+		// check out the position attribute of a cube
+		let position = geometry.getAttribute('position')
+		let positions = position.array
+		let index = geometry.getIndex()
+		console.log( 'indices', index.count, index.array )
+		console.log( position.count ); // 24
+		console.log( position.array.length ); // 72
+		console.log( position.count * 3 === position.array.length); // true
+		console.log( position.array )
+
+		for (let i = 0; i <= index.count; i += 3) {
+			let buffGeom = new THREE.BufferGeometry()
+
+			let indices = [index.array[i], index.array[i + 1], index.array[i + 2]]
+			console.log(indices)
+
+			let x = positions[indices[0] * 3]
+			let y = positions[indices[0] * 3 + 1]
+			let z = positions[indices[0] * 3 + 2]
+			let x2 = positions[indices[1] * 3]
+			let y2 = positions[indices[1] * 3 + 1]
+			let z2 = positions[indices[1] * 3 + 2]
+			let x3 = positions[indices[2] * 3]
+			let y3 = positions[indices[2] * 3 + 1]
+			let z3 = positions[indices[2] * 3 + 2]
+
+			let vertices = new Float32Array([
+				x, y, z, x2, y2, z2, x3, y3, z3, x, y, z
+			])
+
+			buffGeom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+			let line = new THREE.Line(
+				buffGeom,
+				new THREE.LineBasicMaterial({ color: 0x00ff00 })
+			);
+			// console.log(line)
+
+
+			scene.add(line);
+		}
+
+
+	}
+
+	function addTriangles(positions) {
+		let group = new THREE.Group()
+		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		const material = new THREE.SpriteMaterial({ map: map })
+
+		let scale = 0.001
+		let multiplier = 4
+		let skip = 5
+
+		const lineMaterial = new THREE.LineBasicMaterial({
+			color: 0x000000,
+			// transparent: true,
+			opacity: 1
+		})
+
+		for (let i = 0; i < positions.length; i += 12 + (12 * skip)) {
+			let x = positions[i] * multiplier
+			let y = positions[i + 1] * multiplier
+			let z = positions[i + 2] * multiplier
+			let x1 = positions[i + 4] * multiplier
+			let y1 = positions[i + 5] * multiplier
+			let z1 = positions[i + 6] * multiplier
+			let x2 = positions[i + 7] * multiplier
+			let y2 = positions[i + 8] * multiplier
+			let z2 = positions[i + 9] * multiplier
+
+			const points = []
+			points.push(new THREE.Vector3(x, y, z))
+			points.push(new THREE.Vector3(x1, y1, z1))
+
+			const geometry = new THREE.BufferGeometry().setFromPoints(points)
+			const line = new THREE.Line(geometry, lineMaterial)
+			scene.add(line)
+
+			const points2 = []
+			points2.push(new THREE.Vector3(x2, y2, z2))
+			points2.push(new THREE.Vector3(x1, y1, z1))
+
+			const geometry2 = new THREE.BufferGeometry().setFromPoints(points2)
+			const line2 = new THREE.Line(geometry2, lineMaterial)
+			scene.add(line2)
+
+			const points3 = []
+			points3.push(new THREE.Vector3(x2, y2, z2))
+			points3.push(new THREE.Vector3(x, y, z))
+
+			const geometry3 = new THREE.BufferGeometry().setFromPoints(points3)
+			const line3 = new THREE.Line(geometry3, lineMaterial)
+			scene.add(line3)
+
+			break
+		}
+		// scene.add(rhino)
 	}
 
 	function addBannerWobble() {
@@ -342,10 +462,10 @@ export default function Environment() {
 	function light() {
 		// let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5)
 		// scene.add(ambientLight)
-		//
-		// let dLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
-		// dLight.position.set(3, 2, 3)
-		// scene.add(dLight)
+
+		let dLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
+		dLight.position.set(3, 2, 3)
+		scene.add(dLight)
 	}
 
 	function animate() {
