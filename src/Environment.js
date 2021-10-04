@@ -67,7 +67,7 @@ export default function Environment() {
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 		controls = new OrbitControls(camera, renderer.domElement)
-		controls.enableZoom = false
+		controls.enableZoom = true
 		controls.enableDamping = true
 		controls.dampingFactor = 0.12
 		// controls.rotateSpeed *= 0.4
@@ -259,7 +259,7 @@ export default function Environment() {
 				child.material.metalness = 1
 				child.material.roughness = 1
 				console.log(child.geometry)
-				addTriangles(child.geometry, 2)
+				addTriangles(child.geometry, { rotation: Math.PI })
 			}
 		})
 		// scene.add(object.scene)
@@ -269,8 +269,21 @@ export default function Environment() {
 
 	}
 
-	function addTriangles(geometry, scale = 1) {
+	function crossVectors( a, b ) {
+		let ax = a.X, ay = a.Y, az = a.Z;
+		let bx = b.X, by = b.Y, bz = b.Z;
+		let P={X:ay * bz - az * by,
+			Y:az * bx - ax * bz,
+			Z:ax * by - ay * bx}
+
+		return P;
+	}
+
+	function addTriangles(geometry, options) {
 		// check out the position attribute of a cube
+		options = {scale: 1, ...options}
+		let group = new THREE.Group()
+
 		let position = geometry.getAttribute('position')
 		let positions = position.array
 		let index = geometry.getIndex()
@@ -280,11 +293,12 @@ export default function Environment() {
 		console.log( position.count * 3 === position.array.length); // true
 		console.log( position.array )
 
+		console.log('object processing: computing triangles')
 		for (let i = 0; i < index.count; i += 3) {
 			let buffGeom = new THREE.BufferGeometry()
 
 			let indices = [index.array[i], index.array[i + 1], index.array[i + 2]]
-			console.log(indices)
+			// console.log(indices)
 
 			// let verticesArray = []
 			// let firstPoint = []
@@ -311,10 +325,33 @@ export default function Environment() {
 			let x3 = positions[indices[2] * 3]
 			let y3 = positions[indices[2] * 3 + 1]
 			let z3 = positions[indices[2] * 3 + 2]
+
+			// Calculate the area of the triangle
+			let va={X:x,Y:y,Z:z};
+			let vb={X:x2,Y:y2,Z:z2};
+			let vc={X:x3,Y:y3,Z:z3};
+
+			let ab = {X:vb.X-va.X,Y:vb.Y-va.Y,Z:vb.Z-va.Z};
+			let ac = {X:vc.X-va.X,Y:vc.Y-va.Y,Z:va.Z-vc.Z};
+			let cross = new THREE.Vector3();
+			cross=crossVectors( ab, ac );
+			let area = Math.sqrt(Math.pow(cross.X,2)+Math.pow(cross.Y,2)+Math.pow(cross.Z,2))/2;
+			console.log('area', area)
+
+			// Place a single sprite
+			let spriteScale = 1 * area
+			let spritePosition = [(x + x2 + x3) / 3, (y + y2 + y3) / 3, (z + z2 + z3) / 3]
+			const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+			const material = new THREE.SpriteMaterial({ map: map })
+			let sprite = new THREE.Sprite(material)
+			sprite.position.set(...spritePosition)
+			sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			group.add(sprite)
+
 			// console.log(x, y, z, x2, y2, z2, x3, y3, z3, x, y, z)
 			let verticesArray = [x, y, z, x2, y2, z2, x3, y3, z3, x, y, z]
 			verticesArray.forEach((value, index) => {
-				verticesArray[index] = value * scale
+				verticesArray[index] = value * options.scale
 			})
 
 			let vertices = new Float32Array(verticesArray)
@@ -325,8 +362,16 @@ export default function Environment() {
 				new THREE.LineBasicMaterial({ color: 0x222222 })
 			)
 
-			scene.add(line)
+			group.add(line)
 		}
+
+
+
+
+		console.log('object processing: getting rotated positions')
+		group.rotation.set(-Math.PI / 2, 0, 0)
+
+		scene.add(group)
 	}
 
 	function addBannerWobble() {
