@@ -281,8 +281,18 @@ export default function Environment() {
 
 	function addTriangles(geometry, options) {
 		// check out the position attribute of a cube
-		options = {scale: 1, ...options}
+		options = {
+			scale: 1,
+			max: 1000,
+			...options
+		}
 		let group = new THREE.Group()
+		let triangles = []
+		let totalArea = 0
+
+		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		const material = new THREE.SpriteMaterial({ map: map })
+		const material2 = new THREE.SpriteMaterial({ map: map, transparent: true, opacity: 0.5 })
 
 		let position = geometry.getAttribute('position')
 		let positions = position.array
@@ -335,43 +345,91 @@ export default function Environment() {
 			let ac = {X:vc.X-va.X,Y:vc.Y-va.Y,Z:va.Z-vc.Z};
 			let cross = new THREE.Vector3();
 			cross=crossVectors( ab, ac );
-			let area = Math.sqrt(Math.pow(cross.X,2)+Math.pow(cross.Y,2)+Math.pow(cross.Z,2))/2;
+			let area = Math.sqrt(Math.pow(cross.X,2)+Math.pow(cross.Y,2)+Math.pow(cross.Z,2))/2
+			totalArea += area
 			console.log('area', area)
 
 			// Place a single sprite
-			let spriteScale = 1 * area
-			let spritePosition = [(x + x2 + x3) / 3, (y + y2 + y3) / 3, (z + z2 + z3) / 3]
-			const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-			const material = new THREE.SpriteMaterial({ map: map })
-			let sprite = new THREE.Sprite(material)
-			sprite.position.set(...spritePosition)
-			sprite.scale.set(spriteScale, spriteScale, spriteScale)
-			group.add(sprite)
+			// let spriteScale = 1 * area
+			// let spritePosition = [(x + x2 + x3) / 3, (y + y2 + y3) / 3, (z + z2 + z3) / 3]
+			//
+			// let sprite = new THREE.Sprite(material)
+			// sprite.position.set(...spritePosition)
+			// sprite.scale.set(spriteScale, spriteScale, spriteScale)
+			// group.add(sprite)
+
+			let triangleData = [x, y, z, x2, y2, z2, x3, y3, z3, area]
+			triangles.push(triangleData)
 
 			// console.log(x, y, z, x2, y2, z2, x3, y3, z3, x, y, z)
-			let verticesArray = [x, y, z, x2, y2, z2, x3, y3, z3, x, y, z]
-			verticesArray.forEach((value, index) => {
-				verticesArray[index] = value * options.scale
-			})
-
-			let vertices = new Float32Array(verticesArray)
-
-			buffGeom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
-			let line = new THREE.Line(
-				buffGeom,
-				new THREE.LineBasicMaterial({ color: 0x222222 })
-			)
-
-			group.add(line)
+			// let verticesArray = [x, y, z, x2, y2, z2, x3, y3, z3, x, y, z]
+			// verticesArray.forEach((value, index) => {
+			// 	verticesArray[index] = value * options.scale
+			// })
+			//
+			// let vertices = new Float32Array(verticesArray)
+			//
+			// buffGeom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+			// let line = new THREE.Line(
+			// 	buffGeom,
+			// 	new THREE.LineBasicMaterial({ color: 0x222222 })
+			// )
+			//
+			// group.add(line)
 		}
 
+		console.log('total area is', totalArea)
+		console.log(triangles, triangles.length)
 
+		let spritesPerUnit = options.max / totalArea
+		console.log('allow ', spritesPerUnit, 'sprites')
+
+		let spriteScale = 0.02
+		let totalSprites = 0
+
+		for (let triangle of triangles) {
+			console.log(triangle)
+			let allowedSprites = spritesPerUnit * triangle[9]
+			let remainder = allowedSprites % 1
+			allowedSprites = Math.floor(allowedSprites)
+			console.log(`allow ${allowedSprites} sprite(s) in this triangle with ${remainder} remainder`)
+			if (Math.random() < remainder) allowedSprites++
+			console.log('after roll', allowedSprites)
+
+			// let spriteX = triangle[0] + triangle[3] + triangle[6] / 3
+			// let spriteY = triangle[1] + triangle[4] + triangle[7] / 3
+			// let spriteZ = triangle[2] + triangle[5] + triangle[8] / 3
+			if (!allowedSprites) continue
+			for (let n = 0; n <= allowedSprites; n++) {
+				let spriteX = getRandomPointBetween(triangle[0], triangle[3], triangle[6])
+				let spriteY = getRandomPointBetween(triangle[1], triangle[4], triangle[7])
+				let spriteZ = getRandomPointBetween(triangle[2], triangle[5], triangle[8])
+				if (spriteZ < 0) console.log('heres a negative Z')
+				let sprite = new THREE.Sprite(spriteZ > 0 ? material : material2)
+
+				sprite.position.set(spriteX, spriteY, spriteZ)
+				sprite.scale.set(spriteScale, spriteScale, spriteScale)
+				group.add(sprite)
+				totalSprites++
+			}
+
+		}
+
+		console.log(`${totalSprites} total sprites added`)
 
 
 		console.log('object processing: getting rotated positions')
 		group.rotation.set(-Math.PI / 2, 0, 0)
 
+
 		scene.add(group)
+	}
+
+	function getRandomPointBetween(a, b, c) {
+		let max = Math.max(a, b, c)
+		let min = Math.min(a, b, c)
+		let random = Math.random() * (max - min) + min
+		return random
 	}
 
 	function addBannerWobble() {
