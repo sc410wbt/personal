@@ -259,7 +259,7 @@ export default function Environment() {
 				child.material.metalness = 1
 				child.material.roughness = 1
 				console.log(child.geometry)
-				addTriangles(child.geometry, { rotation: Math.PI })
+				addTriangles(child.geometry, { rotation: { x: -Math.PI / 2, y: 0, z: 0 } })
 			}
 		})
 		// scene.add(object.scene)
@@ -419,10 +419,27 @@ export default function Environment() {
 
 
 		console.log('object processing: getting rotated positions')
-		group.rotation.set(-Math.PI / 2, 0, 0)
+		group.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
+		let points = []
+		group.children.forEach(sprite => {
+			let target = new THREE.Vector3()
+			sprite.getWorldPosition(target)
+			// points.push([sprite.position.x, sprite.position.y, sprite.position.z])
+			points.push([target.x, target.y, target.z])
+		})
+		console.log('world position translated points', points)
 
 
-		scene.add(group)
+		let rotatedGroup = new THREE.Group()
+		points.forEach(point => {
+			let sprite = new THREE.Sprite(material)
+			sprite.position.set(point[0], point[1], point[2])
+			sprite.scale.set(0.1,0.1,0.1)
+			rotatedGroup.add(sprite)
+		})
+		console.log(rotatedGroup)
+
+		scene.add(rotatedGroup)
 	}
 
 	function getRandomPointBetween(a, b, c) {
