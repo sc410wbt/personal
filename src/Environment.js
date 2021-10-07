@@ -282,8 +282,8 @@ export default function Environment() {
 	function addTriangles(geometry, options) {
 		// check out the position attribute of a cube
 		options = {
-			scale: 1,
-			max: 1000,
+			scale: 2,
+			max: 500,
 			...options
 		}
 		let group = new THREE.Group()
@@ -326,15 +326,15 @@ export default function Environment() {
 			// console.log(verticesArray)
 			// let vertices = new Float32Array(verticesArray)
 
-			let x = positions[indices[0] * 3]
-			let y = positions[indices[0] * 3 + 1]
-			let z = positions[indices[0] * 3 + 2]
-			let x2 = positions[indices[1] * 3]
-			let y2 = positions[indices[1] * 3 + 1]
-			let z2 = positions[indices[1] * 3 + 2]
-			let x3 = positions[indices[2] * 3]
-			let y3 = positions[indices[2] * 3 + 1]
-			let z3 = positions[indices[2] * 3 + 2]
+			let x = positions[indices[0] * 3] * options.scale
+			let y = positions[indices[0] * 3 + 1] * options.scale
+			let z = positions[indices[0] * 3 + 2] * options.scale
+			let x2 = positions[indices[1] * 3] * options.scale
+			let y2 = positions[indices[1] * 3 + 1] * options.scale
+			let z2 = positions[indices[1] * 3 + 2] * options.scale
+			let x3 = positions[indices[2] * 3] * options.scale
+			let y3 = positions[indices[2] * 3 + 1] * options.scale
+			let z3 = positions[indices[2] * 3 + 2] * options.scale
 
 			// Calculate the area of the triangle
 			let va={X:x,Y:y,Z:z};
