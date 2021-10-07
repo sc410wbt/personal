@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useSelector} from "react-redux"
 import * as THREE from 'three'
 import {Geometry} from "three/examples/jsm/deprecated/Geometry";
@@ -48,6 +48,7 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 
 export default function Environment() {
 
+	const [map, setMap] = useState([])
 	const banner = useSelector(state => state.banner)
 	const page = useSelector(state => state.page)
 	let stardust = new THREE.Group()
@@ -418,7 +419,7 @@ export default function Environment() {
 		console.log(`${totalSprites} total sprites added`)
 
 
-		console.log('object processing: getting rotated positions')
+		console.log('objec《cessing: getting rotated positions')
 		group.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
 		let points = []
 		group.children.forEach(sprite => {
@@ -427,6 +428,7 @@ export default function Environment() {
 			// points.push([sprite.position.x, sprite.position.y, sprite.position.z])
 			points.push([target.x, target.y, target.z])
 		})
+		setMap(JSON.stringify(points))
 		console.log('world position translated points', points)
 
 
@@ -566,6 +568,9 @@ export default function Environment() {
 	return (
 		<div>
 			<div className={s.webgl} />
+			<div className={s.map}>
+				{map}
+			</div>
 		</div>
 	)
 
