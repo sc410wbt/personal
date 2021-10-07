@@ -7,11 +7,15 @@ import * as TWEEN from 'tween'
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
+import Android from './maps/android.json'
+
 import formulateSprites from "./library/Loader"
 
 
 import s from './Environment.module.sass'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+
+// const Android = require('maps/android.json')
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -245,29 +249,31 @@ export default function Environment() {
 
 		// addBannerWobble()
 
-		let loader = new GLTFLoader()
-		let object = await loader.loadAsync('/models/android/scene.gltf')
-		object.scene.scale.set(4,4,4)
-		object.scene.position.set(0, -2, 0)
-
-		// object.scene.position.set(11, 0.2, 23)
-		let meshGroup = new THREE.Group()
-		object.scene.traverse(function (child) {
-			if (child.isMesh) {
-				// console.log('child', child.geometry)
-				child.castShadow = true
-				child.receiveShadow = true
-				child.material.metalness = 1
-				child.material.roughness = 1
-				console.log(child.geometry)
-				addTriangles(child.geometry, { rotation: { x: -Math.PI / 2, y: 0, z: 0 } })
-			}
-		})
+		// let loader = new GLTFLoader()
+		// let object = await loader.loadAsync('/models/android/scene.gltf')
+		// object.scene.scale.set(4,4,4)
+		// object.scene.position.set(0, -2, 0)
+		//
+		// // object.scene.position.set(11, 0.2, 23)
+		// let meshGroup = new THREE.Group()
+		// object.scene.traverse(function (child) {
+		// 	if (child.isMesh) {
+		// 		// console.log('child', child.geometry)
+		// 		child.castShadow = true
+		// 		child.receiveShadow = true
+		// 		child.material.metalness = 1
+		// 		child.material.roughness = 1
+		// 		console.log(child.geometry)
+		// 		addTriangles(child.geometry, { rotation: { x: -Math.PI / 2, y: 0, z: 0 } })
+		// 	}
+		// })
 		// scene.add(object.scene)
 
 		// let geometry = new THREE.BoxGeometry(4, 4, 4);
 		// addTriangles(geometry, 2)
 
+
+		loadFromJson()
 	}
 
 	function crossVectors( a, b ) {
@@ -278,6 +284,23 @@ export default function Environment() {
 			Z:ax * by - ay * bx}
 
 		return P;
+	}
+
+	function loadFromJson() {
+		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		const material = new THREE.SpriteMaterial({ map: map })
+		let points = Android
+		console.log(Android)
+		let rotatedGroup = new THREE.Group()
+		points.forEach(point => {
+			let sprite = new THREE.Sprite(material)
+			sprite.position.set(point[0], point[1], point[2])
+			sprite.scale.set(0.1,0.1,0.1)
+			rotatedGroup.add(sprite)
+		})
+		console.log(rotatedGroup)
+
+		scene.add(rotatedGroup)
 	}
 
 	function addTriangles(geometry, options) {
@@ -430,18 +453,6 @@ export default function Environment() {
 		})
 		setMap(JSON.stringify(points))
 		console.log('world position translated points', points)
-
-
-		let rotatedGroup = new THREE.Group()
-		points.forEach(point => {
-			let sprite = new THREE.Sprite(material)
-			sprite.position.set(point[0], point[1], point[2])
-			sprite.scale.set(0.1,0.1,0.1)
-			rotatedGroup.add(sprite)
-		})
-		console.log(rotatedGroup)
-
-		scene.add(rotatedGroup)
 	}
 
 	function getRandomPointBetween(a, b, c) {
