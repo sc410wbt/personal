@@ -7,7 +7,9 @@ import * as TWEEN from 'tween'
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
-import Android from './maps/android.json'
+import AndroidMap from './maps/android.json'
+import ShibaMap from './maps/shiba.json'
+import RhinoMap from './maps/rhino.json'
 
 import formulateSprites from "./library/Loader"
 
@@ -249,48 +251,13 @@ export default function Environment() {
 
 		// addBannerWobble()
 
-		// let loader = new GLTFLoader()
-		// let object = await loader.loadAsync('/models/android/scene.gltf')
-		// object.scene.scale.set(4,4,4)
-		// object.scene.position.set(0, -2, 0)
-		//
-		// // object.scene.position.set(11, 0.2, 23)
-		// let meshGroup = new THREE.Group()
-		// object.scene.traverse(function (child) {
-		// 	if (child.isMesh) {
-		// 		// console.log('child', child.geometry)
-		// 		child.castShadow = true
-		// 		child.receiveShadow = true
-		// 		child.material.metalness = 1
-		// 		child.material.roughness = 1
-		// 		console.log(child.geometry)
-		// 		addTriangles(child.geometry, { rotation: { x: -Math.PI / 2, y: 0, z: 0 } })
-		// 	}
-		// })
-		// scene.add(object.scene)
-
-		// let geometry = new THREE.BoxGeometry(4, 4, 4);
-		// addTriangles(geometry, 2)
-
-
 		loadFromJson()
-	}
-
-	function crossVectors( a, b ) {
-		let ax = a.X, ay = a.Y, az = a.Z;
-		let bx = b.X, by = b.Y, bz = b.Z;
-		let P={X:ay * bz - az * by,
-			Y:az * bx - ax * bz,
-			Z:ax * by - ay * bx}
-
-		return P;
 	}
 
 	function loadFromJson() {
 		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
 		const material = new THREE.SpriteMaterial({ map: map })
-		let points = Android
-		console.log(Android)
+		let points = RhinoMap
 		let rotatedGroup = new THREE.Group()
 		points.forEach(point => {
 			let sprite = new THREE.Sprite(material)
@@ -303,164 +270,9 @@ export default function Environment() {
 		scene.add(rotatedGroup)
 	}
 
-	function addTriangles(geometry, options) {
-		// check out the position attribute of a cube
-		options = {
-			scale: 2,
-			max: 500,
-			...options
-		}
-		let group = new THREE.Group()
-		let triangles = []
-		let totalArea = 0
-
-		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-		const material = new THREE.SpriteMaterial({ map: map })
-		const material2 = new THREE.SpriteMaterial({ map: map, transparent: true, opacity: 0.5 })
-
-		let position = geometry.getAttribute('position')
-		let positions = position.array
-		let index = geometry.getIndex()
-		console.log( 'indices', index.count, index.array )
-		console.log( position.count ); // 24
-		console.log( position.array.length ); // 72
-		console.log( position.count * 3 === position.array.length); // true
-		console.log( position.array )
-
-		console.log('object processing: computing triangles')
-		for (let i = 0; i < index.count; i += 3) {
-			let buffGeom = new THREE.BufferGeometry()
-
-			let indices = [index.array[i], index.array[i + 1], index.array[i + 2]]
-			// console.log(indices)
-
-			// let verticesArray = []
-			// let firstPoint = []
-			// let j = 0
-			// indices.forEach(index => {
-			// 	let adjustedIndex = index * 3
-			// 	console.log(index, adjustedIndex)
-			// 	for (let n = 0; n < 3; n++) {
-			// 		verticesArray.push(positions[adjustedIndex] + n)
-			// 		if (j === 0) firstPoint.push(positions[adjustedIndex] + n)
-			// 	}
-			// 	j++
-			// })
-			// verticesArray.push(...firstPoint)
-			// console.log(verticesArray)
-			// let vertices = new Float32Array(verticesArray)
-
-			let x = positions[indices[0] * 3] * options.scale
-			let y = positions[indices[0] * 3 + 1] * options.scale
-			let z = positions[indices[0] * 3 + 2] * options.scale
-			let x2 = positions[indices[1] * 3] * options.scale
-			let y2 = positions[indices[1] * 3 + 1] * options.scale
-			let z2 = positions[indices[1] * 3 + 2] * options.scale
-			let x3 = positions[indices[2] * 3] * options.scale
-			let y3 = positions[indices[2] * 3 + 1] * options.scale
-			let z3 = positions[indices[2] * 3 + 2] * options.scale
-
-			// Calculate the area of the triangle
-			let va={X:x,Y:y,Z:z};
-			let vb={X:x2,Y:y2,Z:z2};
-			let vc={X:x3,Y:y3,Z:z3};
-
-			let ab = {X:vb.X-va.X,Y:vb.Y-va.Y,Z:vb.Z-va.Z};
-			let ac = {X:vc.X-va.X,Y:vc.Y-va.Y,Z:va.Z-vc.Z};
-			let cross = new THREE.Vector3();
-			cross=crossVectors( ab, ac );
-			let area = Math.sqrt(Math.pow(cross.X,2)+Math.pow(cross.Y,2)+Math.pow(cross.Z,2))/2
-			totalArea += area
-			console.log('area', area)
-
-			// Place a single sprite
-			// let spriteScale = 1 * area
-			// let spritePosition = [(x + x2 + x3) / 3, (y + y2 + y3) / 3, (z + z2 + z3) / 3]
-			//
-			// let sprite = new THREE.Sprite(material)
-			// sprite.position.set(...spritePosition)
-			// sprite.scale.set(spriteScale, spriteScale, spriteScale)
-			// group.add(sprite)
-
-			let triangleData = [x, y, z, x2, y2, z2, x3, y3, z3, area]
-			triangles.push(triangleData)
-
-			// console.log(x, y, z, x2, y2, z2, x3, y3, z3, x, y, z)
-			// let verticesArray = [x, y, z, x2, y2, z2, x3, y3, z3, x, y, z]
-			// verticesArray.forEach((value, index) => {
-			// 	verticesArray[index] = value * options.scale
-			// })
-			//
-			// let vertices = new Float32Array(verticesArray)
-			//
-			// buffGeom.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
-			// let line = new THREE.Line(
-			// 	buffGeom,
-			// 	new THREE.LineBasicMaterial({ color: 0x222222 })
-			// )
-			//
-			// group.add(line)
-		}
-
-		console.log('total area is', totalArea)
-		console.log(triangles, triangles.length)
-
-		let spritesPerUnit = options.max / totalArea
-		console.log('allow ', spritesPerUnit, 'sprites')
-
-		let spriteScale = 0.02
-		let totalSprites = 0
-
-		for (let triangle of triangles) {
-			console.log(triangle)
-			let allowedSprites = spritesPerUnit * triangle[9]
-			let remainder = allowedSprites % 1
-			allowedSprites = Math.floor(allowedSprites)
-			console.log(`allow ${allowedSprites} sprite(s) in this triangle with ${remainder} remainder`)
-			if (Math.random() < remainder) allowedSprites++
-			console.log('after roll', allowedSprites)
-
-			// let spriteX = triangle[0] + triangle[3] + triangle[6] / 3
-			// let spriteY = triangle[1] + triangle[4] + triangle[7] / 3
-			// let spriteZ = triangle[2] + triangle[5] + triangle[8] / 3
-			if (!allowedSprites) continue
-			for (let n = 0; n <= allowedSprites; n++) {
-				let spriteX = getRandomPointBetween(triangle[0], triangle[3], triangle[6])
-				let spriteY = getRandomPointBetween(triangle[1], triangle[4], triangle[7])
-				let spriteZ = getRandomPointBetween(triangle[2], triangle[5], triangle[8])
-				if (spriteZ < 0) console.log('heres a negative Z')
-				let sprite = new THREE.Sprite(spriteZ > 0 ? material : material2)
-
-				sprite.position.set(spriteX, spriteY, spriteZ)
-				sprite.scale.set(spriteScale, spriteScale, spriteScale)
-				group.add(sprite)
-				totalSprites++
-			}
-
-		}
-
-		console.log(`${totalSprites} total sprites added`)
 
 
-		console.log('objec《cessing: getting rotated positions')
-		group.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
-		let points = []
-		group.children.forEach(sprite => {
-			let target = new THREE.Vector3()
-			sprite.getWorldPosition(target)
-			// points.push([sprite.position.x, sprite.position.y, sprite.position.z])
-			points.push([target.x, target.y, target.z])
-		})
-		setMap(JSON.stringify(points))
-		console.log('world position translated points', points)
-	}
 
-	function getRandomPointBetween(a, b, c) {
-		let max = Math.max(a, b, c)
-		let min = Math.min(a, b, c)
-		let random = Math.random() * (max - min) + min
-		return random
-	}
 
 	function addBannerWobble() {
 		setInterval(() => {
@@ -579,9 +391,6 @@ export default function Environment() {
 	return (
 		<div>
 			<div className={s.webgl} />
-			<div className={s.map}>
-				{map}
-			</div>
 		</div>
 	)
 
