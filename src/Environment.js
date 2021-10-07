@@ -66,7 +66,7 @@ export default function Environment() {
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
-		camera.position.set(0,0, cameraZ)
+		camera.position.set(0,15, cameraZ)
 		renderer.setClearColor(0x222222, 0)
 		renderer.setPixelRatio(window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
@@ -193,7 +193,31 @@ export default function Environment() {
 
 	async function populate() {
 		// addGuides()
-		// addStardust()
+
+		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
+		let planeMat = new THREE.MeshPhysicalMaterial({
+			color: 0xFFFFFF,
+			transparent: true,
+			opacity: 0.9
+		})
+		let plane = new THREE.Mesh(planeGeom, planeMat)
+		plane.rotation.set(-Math.PI / 2, 0, 0)
+		plane.receiveShadow = true
+		scene.add(plane)
+
+		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
+		let borderMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+		let border = new THREE.Mesh(borderGeom, borderMat)
+		border.position.set(0, 0.1, 0)
+		border.rotation.set(-Math.PI / 2, 0, 0)
+		scene.add(border)
+
+		// let circleGeom = new THREE.CircleBufferGeometry(10, 30)
+		// let circleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+		// let circle = new THREE.Mesh(circleGeom, circleMat)
+		// circle.rotation.set(-Math.PI / 2, 0, 0)
+		// circle.position.set(0, 0.01, 0)
+		// scene.add(circle)
 
 		// let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
@@ -255,17 +279,26 @@ export default function Environment() {
 	}
 
 	function loadFromJson() {
-		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-		const material = new THREE.SpriteMaterial({ map: map })
+		// const map = new THREE.TextureLoader().load( '/images/sprite.png' )
+		// const material = new THREE.SpriteMaterial({ map: map })
 		let points = RhinoMap
 		let rotatedGroup = new THREE.Group()
+		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
+		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
 		points.forEach(point => {
-			let sprite = new THREE.Sprite(material)
-			sprite.position.set(point[0], point[1], point[2])
-			sprite.scale.set(0.1,0.1,0.1)
-			rotatedGroup.add(sprite)
+			let particle = new THREE.Mesh(particleGeom, particleMat)
+			particle.position.set(point[0], point[1], point[2])
+			particle.castShadow = true
+			rotatedGroup.add(particle)
+
+			// let sprite = new THREE.Sprite(material)
+			// sprite.position.set(point[0], point[1], point[2])
+			// sprite.scale.set(0.1,0.1,0.1)
+			// sprite.castShadow = true
+			// rotatedGroup.add(sprite)
 		})
 		console.log(rotatedGroup)
+		// rotatedGroup.position.set(0, -5, 0)
 
 		scene.add(rotatedGroup)
 	}
@@ -346,34 +379,16 @@ export default function Environment() {
 		scene.add( lineZ )
 	}
 
-	function addStardust() {
-		stardust = new THREE.Group()
-		let spriteScale = 0.05
-		const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-		const material = new THREE.SpriteMaterial({ map: map })
-
-		let max = 20
-
-		for (let x = 0; x <= 200; x++) {
-			const sprite = new THREE.Sprite(material)
-			sprite.position.set(0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2, 0 - max + Math.random() * max * 2)
-			let randomScale = spriteScale + Math.random() * 0.25
-			sprite.scale.set(randomScale, randomScale, randomScale)
-			stardust.add(sprite)
-		}
-		scene.add(stardust)
-	}
-
-
 
 
 
 	function light() {
-		// let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5)
-		// scene.add(ambientLight)
+		let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.8)
+		scene.add(ambientLight)
 
-		let dLight = new THREE.DirectionalLight(0xFFFFFF, 0.5)
-		dLight.position.set(3, 2, 3)
+		let dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
+		dLight.position.set(3, 5, 3)
+		dLight.castShadow = true
 		scene.add(dLight)
 	}
 
