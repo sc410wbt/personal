@@ -197,11 +197,11 @@ export default function Environment() {
 	}
 
 	function scatterParticles() {
-		new TWEEN.Tween({ outer: 6.25 }).to({ outer: 7 }, 1000)
-			.easing(TWEEN.Easing.Exponential.InOut)
+		new TWEEN.Tween({ inner: 6, outer: 6.25 }).to({ inner: 5.25, outer: 7 }, 1000)
+			.easing(TWEEN.Easing.Back.InOut)
 			.onUpdate(function() {
 				if (border) {
-					let newGeom = new THREE.RingBufferGeometry(6, this.outer, 100)
+					let newGeom = new THREE.RingBufferGeometry(this.inner, this.outer, 100)
 					border.geometry.dispose()
 					border.geometry = newGeom
 				}
@@ -210,7 +210,7 @@ export default function Environment() {
 
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
-			console.log(particle)
+			// console.log(particle)
 			new TWEEN.Tween({ y: particle.position.y }).to({ y: -2 }, 1000)
 				.easing(TWEEN.Easing.Exponential.InOut)
 				.onUpdate(function() {
@@ -224,11 +224,11 @@ export default function Environment() {
 	}
 
 	function formParticles() {
-		new TWEEN.Tween({ outer: 7 }).to({ outer: 6.25 }, 1000)
-			.easing(TWEEN.Easing.Exponential.InOut)
+		new TWEEN.Tween({ inner: 5.25, outer: 7 }).to({ inner: 6, outer: 6.25 }, 1000)
+			.easing(TWEEN.Easing.Back.InOut)
 			.onUpdate(function() {
 				// if (border) {
-					let newGeom = new THREE.RingBufferGeometry(6, this.outer, 100)
+					let newGeom = new THREE.RingBufferGeometry(this.inner, this.outer, 100)
 					border.geometry.dispose()
 					border.geometry = newGeom
 				// }
@@ -238,7 +238,7 @@ export default function Environment() {
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
 			let origin = RhinoMap[x]
-			console.log(particle, origin)
+			// console.log(particle, origin)
 			new TWEEN.Tween({ y: particle.position.y }).to({ y: origin[1] }, 1000)
 				.easing(TWEEN.Easing.Exponential.InOut)
 				.onUpdate(function() {
