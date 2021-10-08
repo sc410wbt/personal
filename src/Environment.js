@@ -42,6 +42,7 @@ let frameTimer
 let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
 let bannerGroup = new THREE.Group()
+let particleGroup = new THREE.Group()
 
 const spriteMaterial = new THREE.SpriteMaterial({
 	map: new THREE.TextureLoader().load('/images/sprite.png'),
@@ -54,10 +55,8 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 
 export default function Environment() {
 
-	const [map, setMap] = useState([])
 	const banner = useSelector(state => state.banner)
 	const page = useSelector(state => state.page)
-	let stardust = new THREE.Group()
 
 	useEffect(() => {
 
@@ -83,10 +82,8 @@ export default function Environment() {
 		light()
 		animate()
 
-		setInterval(() => {
-			console.log(camera.position)
-			// console.log(camera.rotation)
-			// console.log(scene.rotation)
+		setTimeout(() => {
+			scatterParticles()
 		}, 2000)
 
 	}, [])
@@ -196,6 +193,19 @@ export default function Environment() {
 		}
 	}
 
+	function scatterParticles() {
+		for (let x = 0; x < particleGroup.children.length; x++) {
+			let particle = particleGroup.children[x]
+			console.log(particle)
+			new TWEEN.Tween({ y: particle.position.y }).to({ y: -2 }, 1000)
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.onUpdate(function() {
+					particle.position.y = this.y
+				})
+				.start()
+		}
+	}
+
 
 	async function populate() {
 		// addGuides()
@@ -288,14 +298,13 @@ export default function Environment() {
 		// const map = new THREE.TextureLoader().load( '/images/sprite.png' )
 		// const material = new THREE.SpriteMaterial({ map: map })
 		let points = RhinoMap
-		let rotatedGroup = new THREE.Group()
 		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
 		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
 		points.forEach(point => {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
 			particle.position.set(point[0], point[1], point[2])
 			particle.castShadow = true
-			rotatedGroup.add(particle)
+			particleGroup.add(particle)
 
 			// let sprite = new THREE.Sprite(material)
 			// sprite.position.set(point[0], point[1], point[2])
@@ -303,10 +312,10 @@ export default function Environment() {
 			// sprite.castShadow = true
 			// rotatedGroup.add(sprite)
 		})
-		console.log(rotatedGroup)
+		console.log(particleGroup)
 		// rotatedGroup.position.set(0, -5, 0)
 
-		scene.add(rotatedGroup)
+		scene.add(particleGroup)
 	}
 
 
