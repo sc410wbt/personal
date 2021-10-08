@@ -16,6 +16,7 @@ import formulateSprites from "./library/Loader"
 
 import s from './Environment.module.sass'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+import {RingBufferGeometry} from "three";
 
 // const Android = require('maps/android.json')
 
@@ -43,6 +44,7 @@ let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
 let bannerGroup = new THREE.Group()
 let particleGroup = new THREE.Group()
+let border
 
 const spriteMaterial = new THREE.SpriteMaterial({
 	map: new THREE.TextureLoader().load('/images/sprite.png'),
@@ -191,6 +193,17 @@ export default function Environment() {
 	}
 
 	function scatterParticles() {
+		new TWEEN.Tween({ outer: 6.25 }).to({ outer: 7 }, 1000)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function() {
+				if (border) {
+					let newGeom = new THREE.RingBufferGeometry(6, this.outer, 100)
+					border.geometry.dispose()
+					border.geometry = newGeom
+				}
+			})
+			.start()
+
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
 			console.log(particle)
@@ -207,6 +220,17 @@ export default function Environment() {
 	}
 
 	function formParticles() {
+		new TWEEN.Tween({ outer: 7 }).to({ outer: 6.25 }, 1000)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function() {
+				// if (border) {
+					let newGeom = new THREE.RingBufferGeometry(6, this.outer, 100)
+					border.geometry.dispose()
+					border.geometry = newGeom
+				// }
+			})
+			.start()
+
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
 			let origin = RhinoMap[x]
@@ -220,7 +244,6 @@ export default function Environment() {
 				.start()
 		}
 	}
-
 
 	async function populate() {
 		// addGuides()
@@ -238,7 +261,7 @@ export default function Environment() {
 
 		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
 		let borderMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
-		let border = new THREE.Mesh(borderGeom, borderMat)
+		border = new THREE.Mesh(borderGeom, borderMat)
 		border.position.set(0, 0.1, 0)
 		border.rotation.set(-Math.PI / 2, 0, 0)
 		scene.add(border)
