@@ -83,6 +83,12 @@ export default function Environment() {
 		light()
 		animate()
 
+		setInterval(() => {
+			console.log(camera.position)
+			// console.log(camera.rotation)
+			// console.log(scene.rotation)
+		}, 2000)
+
 	}, [])
 
 	useEffect(() => {
@@ -194,7 +200,7 @@ export default function Environment() {
 	async function populate() {
 		// addGuides()
 
-		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
+		let planeGeom = new THREE.PlaneBufferGeometry(1000, 1000)
 		let planeMat = new THREE.MeshPhysicalMaterial({
 			color: 0xFFFFFF,
 			transparent: true,
@@ -381,13 +387,13 @@ export default function Environment() {
 
 
 
-
+	let dLight
 	function light() {
 		let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.8)
 		scene.add(ambientLight)
 
-		let dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
-		dLight.position.set(3, 5, 3)
+		dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
+		dLight.position.set(camera.position.x, 10, 2)
 		dLight.castShadow = true
 		scene.add(dLight)
 	}
@@ -395,7 +401,9 @@ export default function Environment() {
 	function animate() {
 		frames++
 		// scene.rotation.y += 0.005
-		stardust.rotation.y += 0.001
+
+		dLight.position.set(camera.position.x, 10, 2)
+
 		// bannerGroup.rotation.y -= 0.004
 
 		TWEEN.update()
