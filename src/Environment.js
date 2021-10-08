@@ -42,6 +42,10 @@ let frameTimer
 
 let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
+
+// options
+const enableShadows = false
+
 let bannerGroup = new THREE.Group()
 let particleGroup = new THREE.Group()
 let border
@@ -256,7 +260,7 @@ export default function Environment() {
 		})
 		let plane = new THREE.Mesh(planeGeom, planeMat)
 		plane.rotation.set(-Math.PI / 2, 0, 0)
-		plane.receiveShadow = true
+		plane.receiveShadow = enableShadows
 		scene.add(plane)
 
 		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
@@ -341,7 +345,7 @@ export default function Environment() {
 		points.forEach(point => {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
 			particle.position.set(point[0], point[1], point[2])
-			particle.castShadow = true
+			particle.castShadow = enableShadows
 			particleGroup.add(particle)
 
 			// let sprite = new THREE.Sprite(material)
@@ -441,7 +445,7 @@ export default function Environment() {
 
 		dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
 		dLight.position.set(camera.position.x, 10, 2)
-		dLight.castShadow = true
+		dLight.castShadow = enableShadows
 		scene.add(dLight)
 	}
 
