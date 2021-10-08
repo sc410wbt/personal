@@ -55,6 +55,7 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 
 export default function Environment() {
 
+	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.banner)
 	const page = useSelector(state => state.page)
 
@@ -81,10 +82,6 @@ export default function Environment() {
 		populate()
 		light()
 		animate()
-
-		setTimeout(() => {
-			scatterParticles()
-		}, 2000)
 
 	}, [])
 
@@ -202,6 +199,24 @@ export default function Environment() {
 				.onUpdate(function() {
 					particle.position.y = this.y
 				})
+				.onComplete(() => {
+					setActive(false)
+				})
+				.start()
+		}
+	}
+
+	function formParticles() {
+		for (let x = 0; x < particleGroup.children.length; x++) {
+			let particle = particleGroup.children[x]
+			let origin = RhinoMap[x]
+			console.log(particle, origin)
+			new TWEEN.Tween({ y: particle.position.y }).to({ y: origin[1] }, 1000)
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.onUpdate(function() {
+					particle.position.y = this.y
+				})
+				.onComplete(() => setActive(true))
 				.start()
 		}
 	}
@@ -420,9 +435,18 @@ export default function Environment() {
 		requestAnimationFrame(animate)
 	}
 
+	function handleClick(e) {
+		e.preventDefault()
+		if (active) {
+			scatterParticles()
+		} else {
+			formParticles()
+		}
+	}
+
 	return (
 		<div>
-			<div className={s.webgl} />
+			<div className={s.webgl} onClick={handleClick} />
 		</div>
 	)
 
