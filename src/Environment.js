@@ -47,6 +47,7 @@ let cameraZ = 20
 const enableShadows = false
 
 let spinningParticles = new THREE.Group()
+let spinningDormant = new THREE.Group()
 let bannerGroup = new THREE.Group()
 let particleGroup = new THREE.Group()
 let border
@@ -258,11 +259,22 @@ export default function Environment() {
 			let theta = Math.random() * Math.PI * 2
 			let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
 			let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
-			particle.position.set(x, -1 - Math.random(),  z)
+			particle.position.set(x, -0.1 - Math.random(),  z)
 			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
 			spinningParticles.add(particle)
 		}
 		scene.add(spinningParticles)
+
+		for (let x = 0; x < 100; x++) {
+			let particle = new THREE.Mesh(particleGeom, particleMat)
+			let theta = Math.random() * Math.PI * 2
+			let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
+			let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
+			particle.position.set(x, -0.1 - Math.random(),  z)
+			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
+			spinningDormant.add(particle)
+		}
+		scene.add(spinningDormant)
 	}
 
 	async function populate() {
@@ -469,7 +481,8 @@ export default function Environment() {
 	function animate() {
 		frames++
 		// scene.rotation.y += 0.005
-		spinningParticles.rotation.y += 0.01
+		spinningParticles.rotation.y += 0.005
+		spinningDormant.rotation.y += 0.001
 
 		dLight.position.set(camera.position.x, 10, 2)
 
