@@ -46,6 +46,7 @@ let cameraZ = 20
 // options
 const enableShadows = false
 
+let spinningParticles = new THREE.Group()
 let bannerGroup = new THREE.Group()
 let particleGroup = new THREE.Group()
 let border
@@ -249,8 +250,24 @@ export default function Environment() {
 		}
 	}
 
+	function addSpinning() {
+		let particleGeom = new THREE.SphereBufferGeometry(0.1, 16, 8)
+		let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+		for (let x = 0; x < 100; x++) {
+			let particle = new THREE.Mesh(particleGeom, particleMat)
+			let theta = Math.random() * Math.PI * 2
+			let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
+			let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
+			particle.position.set(x, -1 - Math.random(),  z)
+			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
+			spinningParticles.add(particle)
+		}
+		scene.add(spinningParticles)
+	}
+
 	async function populate() {
 		// addGuides()
+		addSpinning()
 
 		let planeGeom = new THREE.PlaneBufferGeometry(1000, 1000)
 		let planeMat = new THREE.MeshPhysicalMaterial({
@@ -452,6 +469,7 @@ export default function Environment() {
 	function animate() {
 		frames++
 		// scene.rotation.y += 0.005
+		spinningParticles.rotation.y += 0.01
 
 		dLight.position.set(camera.position.x, 10, 2)
 
