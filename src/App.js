@@ -6,6 +6,7 @@ import Header from "./components/Header"
 import Nav from './components/Nav'
 import Environment from "./Environment"
 import Pages from "./Pages"
+import SectionNav from "./components/SectionNav";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Nav />
                 <Environment />
                 <Pages />
+                <SectionNav />
             </BrowserRouter>
         </div>
     )
