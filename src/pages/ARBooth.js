@@ -9,6 +9,7 @@ function ARBoothPage() {
 				The summary of this. The summary of this. The summary of this. The summary of this. The summary of this. The summary of this. The summary of this.
 			</section>
 			<div className={"image"} />
+			<div className={"spacer"} />
 			<section>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vulputate, turpis vel aliquam sollicitudin, justo metus accumsan velit, nec convallis nisi nibh ac erat. Suspendisse vitae ante non metus aliquet facilisis ac nec quam. Sed cursus, quam eget faucibus consequat, felis risus rutrum diam, sodales iaculis tortor neque nec tortor. Pellentesque et erat nunc. Sed vitae rhoncus lorem. Donec augue ipsum, vestibulum quis nibh et, commodo egestas nulla. Nunc eu quam nibh. Maecenas elit diam, aliquet sed turpis ac, efficitur fermentum ipsum. Ut ut justo porttitor, blandit arcu in, elementum turpis. Duis mattis hendrerit ipsum. Nullam ullamcorper auctor quam eget tincidunt.</p>
 

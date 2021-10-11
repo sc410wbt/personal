@@ -79,7 +79,7 @@ export default function Environment() {
 		// console.log(appWrapper)
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
-		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
+		camera = new THREE.PerspectiveCamera(fov, windowWidth/ windowHeight, 0.1, 300)
 		camera.position.set(0,15, 20)
 		camera.lookAt(0, 0, 0)
 		renderer.setClearColor(0x222222, 0)
