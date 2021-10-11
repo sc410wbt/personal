@@ -40,6 +40,8 @@ let dragging = false
 
 let frames = 0
 let frameTimer
+let windowWidth
+let windowHeight
 
 let fov = (window.innerWidth < 760) ? 60 : 45
 let cameraZ = 20
@@ -69,6 +71,9 @@ export default function Environment() {
 	const page = useSelector(state => state.page)
 
 	useEffect(() => {
+
+		windowWidth = window.innerWidth
+		windowHeight = window.innerHeight
 
 		const appWrapper = document.querySelector('.' + s.webgl)
 		// console.log(appWrapper)
@@ -503,9 +508,16 @@ export default function Environment() {
 		}
 	}
 
+	function handleMouseMove(e) {
+		// console.log(e.clientX / windowWidth)
+		// console.log(e.clientY / windowHeight)
+	}
+
 	return (
 		<div>
-			<div className={s.webgl} />
+			<div className={s.webgl}
+				onMouseMove={handleMouseMove}
+				/>
 			<div className={s.dev}>
 				<button onClick={handleClick}>toggle object</button>
 			</div>
