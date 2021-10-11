@@ -292,12 +292,24 @@ export default function Environment() {
 		let planeMat = new THREE.MeshPhysicalMaterial({
 			color: 0xFFFFFF,
 			transparent: true,
-			opacity: 0.9
+			opacity: 0.8
 		})
 		let plane = new THREE.Mesh(planeGeom, planeMat)
 		plane.rotation.set(-Math.PI / 2, 0, 0)
 		plane.receiveShadow = enableShadows
 		scene.add(plane)
+
+		let shadeGeom = new THREE.PlaneBufferGeometry(400, 400)
+		let shadeMat = new THREE.MeshBasicMaterial({
+			color: 0x333333,
+			transparent: true,
+			opacity: 0.015
+		})
+		let shade = new THREE.Mesh(shadeGeom, shadeMat)
+		shade.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
+		shade.position.set(141.3, 0.01, 141.3)
+		shade.renderOrder = 1
+		scene.add(shade)
 
 		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
 		let borderMat = new THREE.MeshBasicMaterial({ color: 0x000000 })

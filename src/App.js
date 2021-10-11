@@ -14,7 +14,7 @@ function App() {
                 <Header />
                 <Nav />
                 <Environment />
-                <Pages />
+                {/*<Pages />*/}
             </BrowserRouter>
         </div>
     )
