@@ -20,7 +20,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {RingBufferGeometry} from "three";
 
 // const Android = require('maps/android.json')
-const currentMap = ShibaMap
+const currentMap = RhinoMap
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -67,8 +67,9 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 export default function Environment() {
 
 	const [active, setActive] = useState(true)
-	const banner = useSelector(state => state.banner)
-	const page = useSelector(state => state.page)
+	const banner = useSelector(state => state.content.banner)
+	const page = useSelector(state => state.content.page)
+	const sceneRotation = useSelector(state => state.system.sceneRotation)
 
 	useEffect(() => {
 
@@ -99,6 +100,26 @@ export default function Environment() {
 		animate()
 
 	}, [])
+
+	useEffect(() => {
+		scene.rotation.y = sceneRotation.y
+		scene.rotation.x = sceneRotation.x
+		// let movementTween
+		// function handleMouseMove(e) {
+		// 	let y = e.clientX / windowWidth
+		// 	let x = e.clientY / windowHeight
+		// 	// scene.rotation.y = -1 + (y * 2)
+		// 	// scene.rotation.x = -0.25 + (x * 0.5)
+		// 	if (movementTween) movementTween.stop()
+		// 	movementTween = new TWEEN.Tween({ y: scene.rotation.y, x: scene.rotation.x}).to({ y: -1 + (y * 2), x: -0.25 + (x * 0.5)}, 150)
+		// 		// .easing(TWEEN.Easing.Elastic.InOut)
+		// 		.onUpdate(function() {
+		// 			scene.rotation.y = this.y
+		// 			scene.rotation.x = this.x
+		// 		})
+		// 		.start()
+		// }
+	}, [sceneRotation])
 
 	useEffect(() => {
 		console.log('page is changing', page)
@@ -522,31 +543,10 @@ export default function Environment() {
 		}
 	}
 
-	let movementTween
-	function handleMouseMove(e) {
-		let y = e.clientX / windowWidth
-		let x = e.clientY / windowHeight
-		// scene.rotation.y = -1 + (y * 2)
-		// scene.rotation.x = -0.25 + (x * 0.5)
-		if (movementTween) movementTween.stop()
-		movementTween = new TWEEN.Tween({ y: scene.rotation.y, x: scene.rotation.x}).to({ y: -1 + (y * 2), x: -0.25 + (x * 0.5)}, 150)
-			// .easing(TWEEN.Easing.Elastic.InOut)
-			.onUpdate(function() {
-				scene.rotation.y = this.y
-				scene.rotation.x = this.x
-			})
-			.start()
-	}
-
 	return (
-		<div>
-			<div className={s.webgl}
-				onMouseMove={_.throttle(handleMouseMove, 100)}
-				/>
-			<div className={s.dev}>
-				<button onClick={handleClick}>toggle object</button>
-			</div>
-		</div>
+		<>
+			<div className={s.webgl} />
+		</>
 	)
 
 }
