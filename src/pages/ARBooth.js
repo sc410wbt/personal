@@ -1,13 +1,13 @@
 import React from 'react'
 
+import IntroTemplate from "../sections/templates/Intro"
+
 function ARBoothPage() {
 
 	return (
 		<div className={"page"}>
 			<h1>AR Immersion Booth</h1>
-			<section>
-				The summary of this. The summary of this. The summary of this. The summary of this. The summary of this. The summary of this. The summary of this.
-			</section>
+			<IntroTemplate text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vulputate, turpis vel aliquam sollicitudin, justo metus accumsan velit, nec convallis nisi nibh ac erat. Suspendisse vitae ante non metus aliquet facilisis ac nec quam. Sed cursus, quam eget faucibus consequat, felis risus rutrum diam, sodales iaculis tortor neque nec tortor."} />
 			<div className={"image"} />
 			<div className={"spacer"} />
 			<section>
@@ -19,6 +19,9 @@ function ARBoothPage() {
 
 				<p>Pellentesque facilisis mattis consequat. Ut sodales nisl nec porttitor tincidunt. Sed ultrices mollis dolor, et aliquet felis efficitur sed. Quisque faucibus purus diam, non maximus ante hendrerit nec. Vestibulum nibh nulla, sollicitudin ut risus eu, aliquam cursus turpis. Donec eu nisl venenatis, viverra nibh in, rhoncus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In sed lorem vitae mauris pretium aliquet eget eu tellus. Fusce bibendum lacus sem, at vehicula purus viverra ut. Curabitur orci purus, pellentesque sit amet turpis a, pharetra molestie nisi. Aliquam dui sem, laoreet eget auctor et, tincidunt in neque. Suspendisse interdum, sapien id ultrices condimentum, augue magna suscipit ipsum, id dignissim eros mi nec neque.</p>
 			</section>
+			<div className={"side"}>
+
+			</div>
 		</div>
 	)
 }
