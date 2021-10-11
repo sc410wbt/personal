@@ -1,4 +1,4 @@
-import './App.css'
+import './App.sass'
 
 import {BrowserRouter} from "react-router-dom"
 
@@ -14,7 +14,7 @@ function App() {
                 <Header />
                 <Nav />
                 <Environment />
-                {/*<Pages />*/}
+                <Pages />
             </BrowserRouter>
         </div>
     )
