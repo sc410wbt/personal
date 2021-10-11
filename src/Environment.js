@@ -6,6 +6,7 @@ import * as TWEEN from 'tween'
 // import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
+import * as _ from 'lodash'
 
 import AndroidMap from './maps/android.json'
 import ShibaMap from './maps/shiba.json'
@@ -44,7 +45,6 @@ let windowWidth
 let windowHeight
 
 let fov = (window.innerWidth < 760) ? 60 : 45
-let cameraZ = 20
 
 // options
 const enableShadows = false
@@ -80,17 +80,18 @@ export default function Environment() {
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
 		camera = new THREE.PerspectiveCamera(fov, window.innerWidth/window.innerHeight, 0.1, 300)
-		camera.position.set(0,15, cameraZ)
+		camera.position.set(0,15, 20)
+		camera.lookAt(0, 0, 0)
 		renderer.setClearColor(0x222222, 0)
 		renderer.setPixelRatio(window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
-		controls = new OrbitControls(camera, renderer.domElement)
-		controls.enableZoom = true
-		controls.enableDamping = true
-		controls.dampingFactor = 0.12
+		// controls = new OrbitControls(camera, renderer.domElement)
+		// controls.enableZoom = true
+		// controls.enableDamping = true
+		// controls.dampingFactor = 0.12
 		// controls.rotateSpeed *= 0.4
 
 		populate()
@@ -495,8 +496,9 @@ export default function Environment() {
 		// bannerGroup.rotation.y -= 0.004
 
 		TWEEN.update()
-		renderer.render(scene, camera)
 		requestAnimationFrame(animate)
+
+		renderer.render(scene, camera)
 	}
 
 	function handleClick(e) {
@@ -509,14 +511,16 @@ export default function Environment() {
 	}
 
 	function handleMouseMove(e) {
-		// console.log(e.clientX / windowWidth)
-		// console.log(e.clientY / windowHeight)
+		let y = e.clientX / windowWidth
+		let x = e.clientY / windowHeight
+		scene.rotation.y = -1 + (y * 2)
+		scene.rotation.x = -0.25 + (x * 0.5)
 	}
 
 	return (
 		<div>
 			<div className={s.webgl}
-				onMouseMove={handleMouseMove}
+				onMouseMove={_.throttle(handleMouseMove, 20)}
 				/>
 			<div className={s.dev}>
 				<button onClick={handleClick}>toggle object</button>
