@@ -510,17 +510,26 @@ export default function Environment() {
 		}
 	}
 
+	let movementTween
 	function handleMouseMove(e) {
 		let y = e.clientX / windowWidth
 		let x = e.clientY / windowHeight
-		scene.rotation.y = -1 + (y * 2)
-		scene.rotation.x = -0.25 + (x * 0.5)
+		// scene.rotation.y = -1 + (y * 2)
+		// scene.rotation.x = -0.25 + (x * 0.5)
+		if (movementTween) movementTween.stop()
+		movementTween = new TWEEN.Tween({ y: scene.rotation.y, x: scene.rotation.x}).to({ y: -1 + (y * 2), x: -0.25 + (x * 0.5)}, 150)
+			// .easing(TWEEN.Easing.Elastic.InOut)
+			.onUpdate(function() {
+				scene.rotation.y = this.y
+				scene.rotation.x = this.x
+			})
+			.start()
 	}
 
 	return (
 		<div>
 			<div className={s.webgl}
-				onMouseMove={_.throttle(handleMouseMove, 20)}
+				onMouseMove={_.throttle(handleMouseMove, 100)}
 				/>
 			<div className={s.dev}>
 				<button onClick={handleClick}>toggle object</button>
