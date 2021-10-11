@@ -505,7 +505,10 @@ export default function Environment() {
 
 	return (
 		<div>
-			<div className={s.webgl} onClick={handleClick} />
+			<div className={s.webgl} />
+			<div className={s.dev}>
+				<button onClick={handleClick}>toggle object</button>
+			</div>
 		</div>
 	)
 
