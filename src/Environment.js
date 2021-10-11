@@ -307,7 +307,7 @@ export default function Environment() {
 		})
 		let shade = new THREE.Mesh(shadeGeom, shadeMat)
 		shade.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
-		shade.position.set(141.3, 0.01, 141.3)
+		shade.position.set(-141.3, 0.01, -141.3)
 		shade.renderOrder = 1
 		scene.add(shade)
 
