@@ -19,6 +19,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {RingBufferGeometry} from "three";
 
 // const Android = require('maps/android.json')
+const currentMap = ShibaMap
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -239,7 +240,7 @@ export default function Environment() {
 
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
-			let origin = RhinoMap[x]
+			let origin = currentMap[x]
 			// console.log(particle, origin)
 			new TWEEN.Tween({ y: particle.position.y }).to({ y: origin[1] }, 1000)
 				.easing(TWEEN.Easing.Exponential.InOut)
@@ -252,7 +253,7 @@ export default function Environment() {
 	}
 
 	function addSpinning() {
-		let particleGeom = new THREE.SphereBufferGeometry(0.1, 16, 8)
+		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
 		let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		for (let x = 0; x < 100; x++) {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
@@ -368,7 +369,7 @@ export default function Environment() {
 	function loadFromJson() {
 		// const map = new THREE.TextureLoader().load( '/images/sprite.png' )
 		// const material = new THREE.SpriteMaterial({ map: map })
-		let points = RhinoMap
+		let points = currentMap
 		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
 		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
 		points.forEach(point => {
