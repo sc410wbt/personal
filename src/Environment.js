@@ -64,12 +64,24 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 	opacity: 1
 })
 
+export function setCameraPosition(x, y, z) {
+	let pos = camera.position
+	new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z }).to({x: x, y: y, z: z}, 1000)
+		.easing(TWEEN.Easing.Exponential.InOut)
+		.onUpdate(function () {
+			camera.position.x = this.x
+			camera.position.y = this.y
+			camera.position.z = this.z
+		})
+		.start()
+}
+
 export default function Environment() {
 
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const sceneRotation = useSelector(state => state.system.sceneRotation)
+	const { sceneRotation, cameraPosition } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -120,6 +132,18 @@ export default function Environment() {
 		// 		.start()
 		// }
 	}, [sceneRotation])
+
+	// useEffect(() => {
+	// 	if (cameraPosition.y) {
+	// 		// camera.position.y = cameraPosition.y
+	// 		new TWEEN.Tween({y: camera.position.y}).to({y: cameraPosition.y}, 1000)
+	// 			.easing(TWEEN.Easing.Exponential.InOut)
+	// 			.onUpdate(function () {
+	// 				camera.position.y = this.y
+	// 			})
+	// 			.start()
+	// 	}
+	// }, [cameraPosition])
 
 	useEffect(() => {
 		console.log('page is changing', page)
