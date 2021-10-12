@@ -10,6 +10,7 @@ import Pages from "./Pages"
 import SectionNav from "./components/SectionNav"
 
 import './App.sass'
+import ProgressBar from "./components/ProgressBar";
 
 function App() {
 
@@ -36,7 +37,8 @@ function App() {
                 <Nav />
                 <Environment />
                 <Pages />
-                <SectionNav />
+                <ProgressBar />
+                {/*<SectionNav />*/}
             </BrowserRouter>
         </div>
     )

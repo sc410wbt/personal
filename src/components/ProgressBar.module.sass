@@ -1,0 +1,41 @@
+.wrapper
+	position: fixed
+	top: 70px
+	left: 30px
+	height: calc(100% - 150px)
+
+	.inner
+		position: absolute
+		top: 5px
+		left: 0
+		height: calc(100% - 10px)
+
+	.cap
+		position: absolute
+		top: 0
+		left: 2px
+		width: 11px
+		height: 2px
+		background: black
+
+		&:nth-child(2)
+			top: auto
+			bottom: 0
+
+	.line
+		position: absolute
+		top: 0
+		left: 7px
+		width: 1px
+		height: 100%
+		background: black
+
+	.dot
+		position: absolute
+		top: 0
+		left: 0
+		width: 11px
+		height: 11px
+		background: white
+		border: solid 2px black
+		border-radius: 50%
