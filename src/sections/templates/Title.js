@@ -17,7 +17,10 @@ export default function TitleTemplate({ title, tags }) {
 	return (
 		<div className={s.wrapper}>
 			<div style={{ position: 'absolute', top: '50px' }} ref={ref} />
-			<h1>{title}</h1>
+			{/*<div className={s.bg} />*/}
+			<h1 id={"title"}>
+				{title}
+			</h1>
 		</div>
 	)
 
