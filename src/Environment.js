@@ -76,6 +76,27 @@ export function setCameraPosition(x, y, z) {
 		.start()
 }
 
+export function hideObject() {
+	transformRing(6, 6.25, 5.25, 7)
+}
+
+export function showObject() {
+	transformRing(5.25, 7, 6, 6.25)
+}
+
+function transformRing(i1, o1, i2, o2) {
+	new TWEEN.Tween({ inner: i1, outer: o1 }).to({ inner: i2, outer: o2 }, 1000)
+		.easing(TWEEN.Easing.Back.InOut)
+		.onUpdate(function() {
+			if (border) {
+				let newGeom = new THREE.RingBufferGeometry(this.inner, this.outer, 100)
+				border.geometry.dispose()
+				border.geometry = newGeom
+			}
+		})
+		.start()
+}
+
 export default function Environment() {
 
 	const [active, setActive] = useState(true)
@@ -251,17 +272,6 @@ export default function Environment() {
 	}
 
 	function scatterParticles() {
-		new TWEEN.Tween({ inner: 6, outer: 6.25 }).to({ inner: 5.25, outer: 7 }, 1000)
-			.easing(TWEEN.Easing.Back.InOut)
-			.onUpdate(function() {
-				if (border) {
-					let newGeom = new THREE.RingBufferGeometry(this.inner, this.outer, 100)
-					border.geometry.dispose()
-					border.geometry = newGeom
-				}
-			})
-			.start()
-
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
 			// console.log(particle)
@@ -278,17 +288,6 @@ export default function Environment() {
 	}
 
 	function formParticles() {
-		new TWEEN.Tween({ inner: 5.25, outer: 7 }).to({ inner: 6, outer: 6.25 }, 1000)
-			.easing(TWEEN.Easing.Back.InOut)
-			.onUpdate(function() {
-				// if (border) {
-					let newGeom = new THREE.RingBufferGeometry(this.inner, this.outer, 100)
-					border.geometry.dispose()
-					border.geometry = newGeom
-				// }
-			})
-			.start()
-
 		for (let x = 0; x < particleGroup.children.length; x++) {
 			let particle = particleGroup.children[x]
 			let origin = currentMap[x]
