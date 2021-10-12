@@ -72,6 +72,7 @@ export function setCameraPosition(x, y, z) {
 			camera.position.x = this.x
 			camera.position.y = this.y
 			camera.position.z = this.z
+			camera.lookAt(0, 0, 0)
 		})
 		.start()
 }

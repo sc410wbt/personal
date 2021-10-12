@@ -8,7 +8,7 @@ function ARBoothPage() {
 	return (
 		<div className={"page"}>
 			<TitleTemplate title={"AR Immersion Booth"} />
-			<IntroTemplate text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vulputate, turpis vel aliquam sollicitudin, justo metus accumsan velit, nec convallis nisi nibh ac erat. Suspendisse vitae ante non metus aliquet facilisis ac nec quam. Sed cursus, quam eget faucibus consequat, felis risus rutrum diam, sodales iaculis tortor neque nec tortor."} />
+			<IntroTemplate text={"Create a photo booth experience unlike any other allowing brands to drop animated objects along with the subject"} />
 			<div className={"image"} />
 			<div className={"spacer"} />
 			<section>

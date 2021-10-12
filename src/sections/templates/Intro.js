@@ -15,7 +15,7 @@ export default function IntroTemplate({ text }) {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(0,10, 13)
+			setCameraPosition(0,15, 0)
 			hideObject()
 			// dispatch({ type: 'SET_CAMERA_POSITION', position: { y: 5, z: 5 } })
 		} else {
