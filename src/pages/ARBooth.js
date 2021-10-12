@@ -1,12 +1,13 @@
 import React from 'react'
 
+import TitleTemplate from "../sections/templates/Title";
 import IntroTemplate from "../sections/templates/Intro"
 
 function ARBoothPage() {
 
 	return (
 		<div className={"page"}>
-			<h1>AR Immersion Booth</h1>
+			<TitleTemplate title={"AR Immersion Booth"} />
 			<IntroTemplate text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vulputate, turpis vel aliquam sollicitudin, justo metus accumsan velit, nec convallis nisi nibh ac erat. Suspendisse vitae ante non metus aliquet facilisis ac nec quam. Sed cursus, quam eget faucibus consequat, felis risus rutrum diam, sodales iaculis tortor neque nec tortor."} />
 			<div className={"image"} />
 			<div className={"spacer"} />
