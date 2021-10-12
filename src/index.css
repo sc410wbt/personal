@@ -1,5 +1,5 @@
 html {
-  overflow: hidden;
+  /*overflow: hidden;*/
   height: 100%;
 }
 
@@ -16,7 +16,7 @@ body {
     sans-serif;
   font-weight: 300;
   text-align: left;
-  overflow: auto;
+  /*overflow: auto;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

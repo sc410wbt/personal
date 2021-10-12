@@ -1,34 +1,24 @@
-import React, {useState, useEffect} from 'react'
-import * as _ from 'lodash'
+import React, {useEffect} from 'react'
 
 import s from './ProgressBar.module.sass'
 
 export default function ProgressBar() {
 
-	const [height, setHeight] = useState(0)
-	const [y, setY] = useState('hello')
+	let pageHeight
+	let dot
 
 	useEffect(() => {
 		let page = document.querySelector('.page')
-		let pageHeight = page.clientHeight
-		console.log('page height', pageHeight)
-		setHeight(pageHeight)
-		console.log(height)
-		// console.log('set y not doing anything')
-		// setY('world')
-
-		document.querySelector('body').addEventListener('scroll', _.throttle(handleScroll, 10))
+		dot = document.querySelector('.' + s.dot)
+		pageHeight = page.clientHeight
+		document.addEventListener('scroll', handleScroll)
 	}, [])
 
 	function handleScroll() {
-		// console.log('scrolling')
-		let height = document.querySelector('.page').clientHeight
-		let scroll = document.querySelector('body').scrollTop
-		console.log(scroll, height)
-		let computedY = scroll / (height - window.innerHeight - 80) * 100
-		console.log('y', computedY, y)
-		let dot = document.querySelector('.' + s.dot)
-		dot.style.top = computedY + '%'
+		let scroll = document.documentElement.scrollTop
+		// console.log(scroll, pageHeight, window.innerHeight)
+		let top = scroll / (pageHeight - window.innerHeight) * 100
+		dot.style.top = top + '%'
 	}
 
 	return (
