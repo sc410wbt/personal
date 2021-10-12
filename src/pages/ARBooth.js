@@ -20,7 +20,7 @@ function ARBoothPage() {
 				<p>Pellentesque facilisis mattis consequat. Ut sodales nisl nec porttitor tincidunt. Sed ultrices mollis dolor, et aliquet felis efficitur sed. Quisque faucibus purus diam, non maximus ante hendrerit nec. Vestibulum nibh nulla, sollicitudin ut risus eu, aliquam cursus turpis. Donec eu nisl venenatis, viverra nibh in, rhoncus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In sed lorem vitae mauris pretium aliquet eget eu tellus. Fusce bibendum lacus sem, at vehicula purus viverra ut. Curabitur orci purus, pellentesque sit amet turpis a, pharetra molestie nisi. Aliquam dui sem, laoreet eget auctor et, tincidunt in neque. Suspendisse interdum, sapien id ultrices condimentum, augue magna suscipit ipsum, id dignissim eros mi nec neque.</p>
 			</section>
 			<div className={"side"}>
-
+				<h2>Sidebar Type Content</h2>
 			</div>
 		</div>
 	)
