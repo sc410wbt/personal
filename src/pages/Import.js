@@ -5,6 +5,8 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
 import s from './Import.module.sass'
 
+const existing = ['rhino', 'android', 'shiba']
+
 const models = [
 	{
 		name: 'Android',
@@ -29,6 +31,11 @@ function ImportPage() {
 		dispatch({ type: 'SET_SCENE_POSITION', position: 'left' })
 	}, [])
 
+	function handlePreview(name) {
+		console.log('preview?')
+		dispatch({ type: 'SET_OBJECT', object: name })
+	}
+
 	function handleClick(src) {
 		getPoints(src)
 			.then(res => {
@@ -37,12 +44,18 @@ function ImportPage() {
 			})
 	}
 
+	let previews = existing.map(name => <button onClick={e => handlePreview(name)}>{name}</button>)
+
 	let modelOptions = models.map(model => {
 		return <button onClick={e => handleClick(model.src)}>{model.name}</button>
 	})
 
 	return (
 		<div className={s.wrapper}>
+			View existing models
+			<div>
+				{previews}
+			</div>
 			Import point data from GLTF files
 			<div className={s.options}>
 				{modelOptions}

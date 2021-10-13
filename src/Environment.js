@@ -20,7 +20,11 @@ import s from './Environment.module.sass'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {RingBufferGeometry} from "three";
 
-// const Android = require('maps/android.json')
+const maps = {
+	rhino: RhinoMap,
+	android: AndroidMap,
+	shiba: ShibaMap
+}
 const currentMap = RhinoMap
 
 const scene = new THREE.Scene()
@@ -118,7 +122,7 @@ export default function Environment() {
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const { sceneRotation, scenePosition } = useSelector(state => state.system)
+	const { sceneRotation, scenePosition, object } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -149,6 +153,22 @@ export default function Environment() {
 		animate()
 
 	}, [])
+
+	useEffect(() => {
+		if (object !== 'none') {
+			let target = maps[object]
+			target.forEach((point, x) => {
+				let particle = particleGroup.children[x]
+				let pos = particle.position
+				console.log(particle, x)
+				new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z}).to({x: point[0], y: point[1], z: point[2]}, 1000)
+					.onUpdate(function () {
+						particle.position.set(this.x, this.y, this.z)
+					})
+					.start()
+			})
+		}
+	}, [object])
 
 	useEffect(() => {
 		stage.rotation.y = sceneRotation.y

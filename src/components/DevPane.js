@@ -5,7 +5,7 @@ import s from './DevPane.module.sass'
 
 export default function DevPane() {
 
-	const { sceneRotation, scenePosition } = useSelector(state => state.system)
+	const { sceneRotation, scenePosition, object } = useSelector(state => state.system)
 
 
 	return (
@@ -14,7 +14,8 @@ export default function DevPane() {
 			<div>
 				clientX: {sceneRotation.x}<br />
 				clientY: {sceneRotation.y}<br />
-				scenePosition: {JSON.stringify(scenePosition)}
+				scenePosition: {JSON.stringify(scenePosition)}<br />
+				object: {object}
 			</div>
 		</div>
 	)
