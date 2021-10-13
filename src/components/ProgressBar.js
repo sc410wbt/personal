@@ -9,9 +9,11 @@ export default function ProgressBar() {
 
 	useEffect(() => {
 		let page = document.querySelector('.page')
-		dot = document.querySelector('.' + s.dot)
-		pageHeight = page.clientHeight
-		document.addEventListener('scroll', handleScroll)
+		if (page) {
+			dot = document.querySelector('.' + s.dot)
+			pageHeight = page.clientHeight
+			document.addEventListener('scroll', handleScroll)
+		}
 	}, [])
 
 	function handleScroll() {

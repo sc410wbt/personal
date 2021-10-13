@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import {useDispatch} from "react-redux"
 import * as THREE from "three"
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
@@ -21,7 +22,12 @@ const models = [
 
 function ImportPage() {
 
+	const dispatch = useDispatch()
 	const [map, setMap] = useState()
+
+	useEffect(() => {
+		dispatch({ type: 'SET_SCENE_POSITION', position: 'left' })
+	}, [])
 
 	function handleClick(src) {
 		getPoints(src)
