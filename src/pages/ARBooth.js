@@ -2,6 +2,7 @@ import React from 'react'
 
 import TitleTemplate from "../sections/templates/Title";
 import IntroTemplate from "../sections/templates/Intro"
+import ARCoreSection from "../sections/projects/ARBooth/ARCore";
 
 function ARBoothPage() {
 
@@ -9,6 +10,7 @@ function ARBoothPage() {
 		<div className={"page"}>
 			<TitleTemplate title={"AR Immersion Booth"} />
 			<IntroTemplate text={"Create a photo booth experience unlike any other allowing brands to drop animated objects along with the subject"} />
+			<ARCoreSection />
 			<div className={"image"} />
 			<div className={"spacer"} />
 			<section>
