@@ -347,6 +347,7 @@ export default function Environment() {
 	async function populate() {
 		addGuides()
 		addSpinning()
+		addObjectParticles()
 
 		let planeGeom = new THREE.PlaneBufferGeometry(1000, 1000)
 		let planeMat = new THREE.MeshPhysicalMaterial({
@@ -443,7 +444,22 @@ export default function Environment() {
 
 		scene.add(stage)
 
-		loadFromJson()
+		// loadFromJson()
+	}
+
+	function addObjectParticles() {
+		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
+		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
+		for (let x = 0; x < 1000; x++) {
+			let particle = new THREE.Mesh(particleGeom, particleMat)
+			let theta = Math.random() * Math.PI * 2
+			let x = (Math.random() * 0.5 + 6) * Math.cos(theta) + Math.sin(theta)
+			let z = (Math.random() * 0.5 + 6)  * Math.sin(theta) - Math.cos(theta)
+			particle.position.set(x, -0.1 - Math.random() * 2,  z)
+			particle.castShadow = enableShadows
+			particleGroup.add(particle)
+		}
+		stage.add(particleGroup)
 	}
 
 	function loadFromJson() {
