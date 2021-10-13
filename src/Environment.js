@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from "react-redux"
+import cx from 'classnames'
 import * as THREE from 'three'
 import {Geometry} from "three/examples/jsm/deprecated/Geometry";
 import * as TWEEN from 'tween'
@@ -117,7 +118,7 @@ export default function Environment() {
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const { sceneRotation, cameraPosition } = useSelector(state => state.system)
+	const { sceneRotation, scenePosition } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -556,7 +557,7 @@ export default function Environment() {
 
 	return (
 		<>
-			<div className={s.webgl} />
+			<div className={cx(s.webgl, { [s.left]: scenePosition === 'left', [s.right]: scenePosition === 'right' })} />
 		</>
 	)
 

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import {useDispatch} from 'react-redux'
 import {useInView} from "react-intersection-observer"
 import cx from 'classnames'
 
@@ -8,10 +9,14 @@ import s from './Title.module.sass'
 
 export default function TitleTemplate({ title, tags }) {
 
+	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
 
 	useEffect(() => {
-		setCameraPosition(0, 15, 20)
+		if (inView) {
+			setCameraPosition(0, 15, 20)
+			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
+		}
 	}, [inView])
 
 	let processedTitle = []

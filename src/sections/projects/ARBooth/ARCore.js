@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import {useDispatch} from 'react-redux'
 import {useInView} from "react-intersection-observer"
 
 import {setCameraPosition} from "../../../Environment"
@@ -10,10 +11,14 @@ import image from '../../../media/projects/ARBooth/android-models.jpg'
 
 export default function ARCoreSection() {
 
+	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
 
 	useEffect(() => {
-		if (inView) setCameraPosition(0,15, 10)
+		if (inView) {
+			setCameraPosition(0,15, 10)
+			dispatch({ type: 'SET_SCENE_POSITION', position: 'right' })
+		}
 	}, [inView])
 
 	return (
