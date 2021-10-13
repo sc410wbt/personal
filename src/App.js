@@ -10,7 +10,7 @@ import Pages from "./Pages"
 import SectionNav from "./components/SectionNav"
 
 import './App.sass'
-import ProgressBar from "./components/ProgressBar";
+import ProgressBar from "./components/ProgressBar"
 
 function App() {
 

@@ -49,6 +49,7 @@ let fov = (window.innerWidth < 760) ? 60 : 45
 // options
 const enableShadows = false
 
+let stage = new THREE.Group()
 let spinningParticles = new THREE.Group()
 let spinningDormant = new THREE.Group()
 let bannerGroup = new THREE.Group()
@@ -63,6 +64,19 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 	transparent: true,
 	opacity: 1
 })
+
+// export function rotateCamera() {
+// 	let pos = camera.position
+// 	new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z }).to({x: 7, y: 0, z: 0}, 1000)
+// 		.easing(TWEEN.Easing.Exponential.InOut)
+// 		.onUpdate(function () {
+// 			camera.position.x = this.x
+// 			// camera.position.y = this.y
+// 			// camera.position.z = this.z
+// 			camera.lookAt(this.x, 0, 0)
+// 		})
+// 		.start()
+// }
 
 export function setCameraPosition(x, y, z) {
 	let pos = camera.position
@@ -136,8 +150,8 @@ export default function Environment() {
 	}, [])
 
 	useEffect(() => {
-		scene.rotation.y = sceneRotation.y
-		scene.rotation.x = sceneRotation.x
+		stage.rotation.y = sceneRotation.y
+		stage.rotation.x = sceneRotation.x
 		// let movementTween
 		// function handleMouseMove(e) {
 		// 	let y = e.clientX / windowWidth
@@ -315,7 +329,7 @@ export default function Environment() {
 			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
 			spinningParticles.add(particle)
 		}
-		scene.add(spinningParticles)
+		stage.add(spinningParticles)
 
 		for (let x = 0; x < 100; x++) {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
@@ -326,7 +340,7 @@ export default function Environment() {
 			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
 			spinningDormant.add(particle)
 		}
-		scene.add(spinningDormant)
+		stage.add(spinningDormant)
 	}
 
 	async function populate() {
@@ -342,33 +356,33 @@ export default function Environment() {
 		let plane = new THREE.Mesh(planeGeom, planeMat)
 		plane.rotation.set(-Math.PI / 2, 0, 0)
 		plane.receiveShadow = enableShadows
-		scene.add(plane)
+		stage.add(plane)
 
-		let shadeGeom = new THREE.PlaneBufferGeometry(400, 400)
-		let shadeMat = new THREE.MeshBasicMaterial({
-			color: 0x333333,
-			transparent: true,
-			opacity: 0.015
-		})
-		let shade = new THREE.Mesh(shadeGeom, shadeMat)
-		shade.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
-		shade.position.set(-141.3, 0.01, -141.3)
-		shade.renderOrder = 1
-		scene.add(shade)
+		// let shadeGeom = new THREE.PlaneBufferGeometry(400, 400)
+		// let shadeMat = new THREE.MeshBasicMaterial({
+		// 	color: 0x333333,
+		// 	transparent: true,
+		// 	opacity: 0.05
+		// })
+		// let shade = new THREE.Mesh(shadeGeom, shadeMat)
+		// shade.rotation.set(-Math.PI / 2, 0, Math.PI / 4)
+		// shade.position.set(-141.3, 0.01, -141.3)
+		// shade.renderOrder = 1
+		// stage.add(shade)
 
 		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
 		let borderMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		border = new THREE.Mesh(borderGeom, borderMat)
 		border.position.set(0, 0.1, 0)
 		border.rotation.set(-Math.PI / 2, 0, 0)
-		scene.add(border)
+		stage.add(border)
 
 		// let circleGeom = new THREE.CircleBufferGeometry(10, 30)
 		// let circleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		// let circle = new THREE.Mesh(circleGeom, circleMat)
 		// circle.rotation.set(-Math.PI / 2, 0, 0)
 		// circle.position.set(0, 0.01, 0)
-		// scene.add(circle)
+		// stage.add(circle)
 
 		// let cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
 		// let cubeMaterial = new THREE.MeshPhysicalMaterial({ color: 0xFFFFFF, metalness: 1, roughness: 1 })
@@ -393,7 +407,7 @@ export default function Environment() {
 		// 	object.position.set(0, -20, 0)
 		// 	object.rotation.y = Math.PI / 12
 		// 	console.log('loaded', object.children)
-		// 	scene.add(object)
+		// 	stage.add(object)
 		// }, () => {
 		// 	console.log('error')
 		// })
@@ -426,6 +440,8 @@ export default function Environment() {
 
 		// addBannerWobble()
 
+		scene.add(stage)
+
 		loadFromJson()
 	}
 
@@ -450,7 +466,7 @@ export default function Environment() {
 		console.log(particleGroup)
 		// rotatedGroup.position.set(0, -5, 0)
 
-		scene.add(particleGroup)
+		stage.add(particleGroup)
 	}
 
 
@@ -481,7 +497,7 @@ export default function Environment() {
 			sprite.position.set(...coords)
 			bannerGroup.add(sprite)
 		}
-		scene.add(bannerGroup)
+		stage.add(bannerGroup)
 	}
 
 	function addGuides() {
@@ -505,12 +521,12 @@ export default function Environment() {
 	let dLight
 	function light() {
 		let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.8)
-		scene.add(ambientLight)
+		stage.add(ambientLight)
 
 		dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
 		dLight.position.set(camera.position.x, 10, 2)
 		dLight.castShadow = enableShadows
-		scene.add(dLight)
+		stage.add(dLight)
 	}
 
 	function animate() {
