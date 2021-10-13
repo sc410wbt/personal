@@ -330,7 +330,7 @@ export default function Environment() {
 	}
 
 	async function populate() {
-		// addGuides()
+		addGuides()
 		addSpinning()
 
 		let planeGeom = new THREE.PlaneBufferGeometry(1000, 1000)
@@ -485,48 +485,19 @@ export default function Environment() {
 	}
 
 	function addGuides() {
-		const lineMaterial = new THREE.LineBasicMaterial({
-			color: 0xd81921,
-			transparent: true,
-			opacity: 0.5
-		})
-
-		const points = []
-		points.push( new THREE.Vector3( 0, 0, 0 ) )
-		points.push( new THREE.Vector3( 0, 0, 20 ) )
-
-		const geometry = new THREE.BufferGeometry().setFromPoints( points )
-
-		const line = new THREE.Line( geometry, new THREE.LineBasicMaterial({
-			color: 0xd81921,
-			transparent: true,
-			opacity: 0.5
-		}))
-		scene.add( line )
-
-		const pointsY = []
-		pointsY.push( new THREE.Vector3( 0, 0, 0 ) )
-		pointsY.push( new THREE.Vector3( 0, 20, 0 ) )
-
-		const geometryY = new THREE.BufferGeometry().setFromPoints( pointsY )
-
-		const lineY = new THREE.Line( geometryY, new THREE.LineBasicMaterial({
-			color: 0x6cbd38,
-			transparent: true,
-			opacity: 0.5
-		}) )
-		scene.add( lineY )
-
-		lineMaterial.color.set(0x69FFFF)
-
-		const pointsZ = []
-		pointsZ.push( new THREE.Vector3( 0, 0, 0 ) )
-		pointsZ.push( new THREE.Vector3( 20, 0, 0 ) )
-
-		const geometryZ = new THREE.BufferGeometry().setFromPoints( pointsZ )
-
-		const lineZ = new THREE.Line( geometryZ, lineMaterial )
-		scene.add( lineZ )
+		let planeGeometry = new THREE.PlaneBufferGeometry(0.05, 100)
+		let redMaterial = new THREE.MeshBasicMaterial({ color: 0xde1111, side: THREE.DoubleSide, depthTest: false })
+		let blueMaterial = new THREE.MeshBasicMaterial({ color: 0x158def, side: THREE.DoubleSide, depthTest: false })
+		let greenMaterial = new THREE.MeshBasicMaterial({ color: 0x4ad53a, side: THREE.DoubleSide, depthTest: false })
+		let lineZ = new THREE.Mesh(planeGeometry, redMaterial)
+		lineZ.rotation.set(Math.PI / 2, 0 ,0)
+		scene.add(lineZ)
+		let lineY = new THREE.Mesh(planeGeometry, greenMaterial)
+		lineY.rotation.set(0, 0 ,0)
+		scene.add(lineY)
+		let lineX = new THREE.Mesh(planeGeometry, blueMaterial)
+		lineX.rotation.set(0, 0,Math.PI / 2)
+		scene.add(lineX)
 	}
 
 
