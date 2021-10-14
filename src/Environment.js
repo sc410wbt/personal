@@ -378,7 +378,7 @@ export default function Environment() {
 		for (let x = 0; x < 1000; x++) {
 			let particle = particleGroup.children[x]
 			let pos = particle.position
-			if (pos.y > -0.1) {
+			if (Math.abs(pos.x)  < 3) {
 				moveParticleDown(particle)
 			}
 		}
