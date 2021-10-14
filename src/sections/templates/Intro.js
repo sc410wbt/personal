@@ -27,6 +27,9 @@ export default function IntroTemplate({ text }) {
 
 	return (
 		<div className={s.wrapper}>
+			<div className={cx(s.title, { [s.active]: inView })}>
+				The Brief
+			</div>
 			<div className={cx([s.panel, { [s.active]: inView }])} ref={ref}>
 				{text}
 			</div>
