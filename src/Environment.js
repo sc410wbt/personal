@@ -346,10 +346,11 @@ export default function Environment() {
 		let target = maps[currentObject]
 		for (let x = 0; x < 1000; x++) {
 			let point = target[x]
+			let particle = particleGroup.children[x]
 			if (!point) {
 				// this map does not exceed 1000 particles
+				moveParticleToEdge(particle)
 			} else {
-				let particle = particleGroup.children[x]
 				moveParticleToCenter(particle, point)
 			}
 		}
@@ -423,8 +424,8 @@ export default function Environment() {
 
 	function moveParticleDown(particle) {
 		let pos = particle.position
-		new TWEEN.Tween({y: pos.y}).to({y: Math.random() - 1.1}, objectTransitionTime)
-			.easing(TWEEN.Easing.Exponential.InOut)
+		new TWEEN.Tween({y: pos.y}).to({y: Math.random() - 1.3}, objectTransitionTime)
+			.easing(TWEEN.Easing.Elastic.Out)
 			.onUpdate(function () {
 				particle.position.setY(this.y)
 			})
