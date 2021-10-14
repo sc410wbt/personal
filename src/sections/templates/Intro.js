@@ -15,12 +15,12 @@ export default function IntroTemplate({ text }) {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(0,15, 0)
+			setCameraPosition(0,15, 1, 0, 0, 0)
 			dispatch({ type: 'SET_OBJECT', object: 'none' })
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			// dispatch({ type: 'SET_CAMERA_POSITION', position: { y: 5, z: 5 } })
 		} else {
-			showObject()
+			// showObject()
 			// dispatch({ type: 'SET_CAMERA_POSITION', position: { y: 20, z: 20 } })
 		}
 	}, [inView])

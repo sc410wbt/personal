@@ -14,7 +14,7 @@ export default function TitleTemplate({ title, tags }) {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(0, 15, 20)
+			setCameraPosition(0, 15, 20, 0, 0, 3)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_OBJECT', object: 'camera' })
 		}
