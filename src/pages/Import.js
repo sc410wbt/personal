@@ -5,7 +5,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
 import s from './Import.module.sass'
 
-const existing = ['rhino', 'android', 'shiba']
+const existing = ['none', 'rhino', 'android', 'shiba']
 
 const models = [
 	{

@@ -26,6 +26,7 @@ const maps = {
 	shiba: ShibaMap
 }
 const currentMap = RhinoMap
+let currentObject = 'none'
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -155,18 +156,17 @@ export default function Environment() {
 	}, [])
 
 	useEffect(() => {
-		if (object !== 'none') {
-			let target = maps[object]
-			target.forEach((point, x) => {
-				let particle = particleGroup.children[x]
-				let pos = particle.position
-				console.log(particle, x)
-				new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z}).to({x: point[0], y: point[1], z: point[2]}, 1000)
-					.onUpdate(function () {
-						particle.position.set(this.x, this.y, this.z)
-					})
-					.start()
-			})
+		if (object === currentObject) {
+			console.log('the same, do nothing')
+		} else if (object === 'none') {
+			console.log('going from something to nothing')
+			clearObject()
+		} else if (currentObject === 'none') {
+			console.log('going from nothing to something')
+			formObject()
+		} else {
+			console.log('switch objects')
+			switchObject()
 		}
 	}, [object])
 
@@ -299,6 +299,36 @@ export default function Environment() {
 	}, [page])
 
 
+	function formObject() {
+		currentObject = object
+		console.log('forming object')
+		gatherParticles()
+		setTimeout(() => {
+			raiseObject()
+		}, 1000)
+	}
+
+	function switchObject() {
+		lowerObject()
+		setTimeout(() => {
+			currentObject = object
+			gatherParticles()
+		}, 1000)
+		setTimeout(() => {
+			raiseObject()
+		}, 2000)
+		// gatherAndDisperse()
+		// raiseObject()
+	}
+
+	function clearObject() {
+		currentObject = object
+		lowerObject()
+		setTimeout(() => {
+			disperseParticles()
+		}, 1000)
+	}
+
 	function getRandomOutwardPosition(x, y, z) {
 		return {
 			x: 0,
@@ -306,6 +336,100 @@ export default function Environment() {
 			z: 0
 		}
 	}
+
+	function gatherParticles() {
+		let target = maps[currentObject]
+		for (let x = 0; x < 1000; x++) {
+			let point = target[x]
+			if (!point) {
+				// this map does not exceed 1000 particles
+			} else {
+				let particle = particleGroup.children[x]
+				moveParticleToCenter(particle, point)
+			}
+		}
+	}
+
+	function disperseParticles() {
+		for (let x = 0; x < 1000; x++) {
+			let particle = particleGroup.children[x]
+			let pos = particle.position
+			if (Math.abs(pos.x) < 3) {
+				moveParticleToEdge(particle)
+			}
+		}
+	}
+
+	function raiseObject() {
+		let target = maps[object]
+		for (let x = 0; x < 1000; x++) {
+			let point = target[x]
+			if (!point) {
+
+			} else {
+				let particle = particleGroup.children[x]
+				moveParticleUp(particle, point)
+			}
+		}
+	}
+
+	function lowerObject() {
+		for (let x = 0; x < 1000; x++) {
+			let particle = particleGroup.children[x]
+			let pos = particle.position
+			if (pos.y > -0.1) {
+				moveParticleDown(particle)
+			}
+		}
+	}
+
+	function moveParticleToCenter(particle, point) {
+		let pos = particle.position
+		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: point[0], z: point[2]}, 750)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function () {
+				particle.position.set(this.x, pos.y, this.z)
+			})
+			.start()
+	}
+
+	function moveParticleToEdge(particle) {
+		let pos = particle.position
+		let theta = Math.random() * Math.PI * 2
+		let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
+		let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
+		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: x, z: z}, 700)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function () {
+				particle.position.set(this.x, pos.y, this.z)
+			})
+			.start()
+	}
+
+	function moveParticleUp(particle, point) {
+		let pos = particle.position
+		new TWEEN.Tween({y: pos.y}).to({y: point[1]}, 700)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function () {
+				particle.position.setY(this.y)
+			})
+			.start()
+	}
+
+	function moveParticleDown(particle) {
+		let pos = particle.position
+		new TWEEN.Tween({y: pos.y}).to({y: Math.random() - 1.1}, 700)
+			.easing(TWEEN.Easing.Exponential.InOut)
+			.onUpdate(function () {
+				particle.position.setY(this.y)
+			})
+			.start()
+	}
+
+
+
+
+
 
 	function scatterParticles() {
 		for (let x = 0; x < particleGroup.children.length; x++) {
