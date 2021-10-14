@@ -28,6 +28,10 @@ const maps = {
 const currentMap = RhinoMap
 let currentObject = 'none'
 let objectTransitionTime = 500
+const ringThickness = {
+	constricted: { inner: 6, outer: 6.25 },
+	expanded: { inner: 5.25, outer: 7 }
+}
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -111,8 +115,19 @@ export function showObject() {
 	transformRing(5.25, 7, 6, 6.25)
 }
 
-function transformRing(i1, o1, i2, o2) {
-	new TWEEN.Tween({ inner: i1, outer: o1 }).to({ inner: i2, outer: o2 }, 1000)
+function expandRing() {
+	transformRing(6, 6.25, 5.25, 7)
+}
+
+function constrictRing() {
+	transformRing(5.25, 7, 6, 6.25)
+}
+
+function transformRing(type) {
+	let origin = ringThickness[type === 'expanded' ? 'constricted' : 'expanded']
+	let target = ringThickness[type]
+	console.log(origin, target)
+	new TWEEN.Tween({ inner: origin.inner, outer: origin.outer }).to({ inner: target.inner, outer: target.outer }, objectTransitionTime)
 		.easing(TWEEN.Easing.Back.InOut)
 		.onUpdate(function() {
 			if (border) {
@@ -308,6 +323,7 @@ export default function Environment() {
 		currentObject = object
 		console.log('forming object')
 		gatherParticles()
+		transformRing('constricted')
 		setTimeout(() => {
 			raiseObject()
 		}, objectTransitionTime)
@@ -331,6 +347,7 @@ export default function Environment() {
 		lowerObject()
 		setTimeout(() => {
 			disperseParticles()
+			transformRing('expanded')
 		}, objectTransitionTime)
 	}
 
@@ -522,7 +539,7 @@ export default function Environment() {
 		// shade.renderOrder = 1
 		// stage.add(shade)
 
-		let borderGeom = new THREE.RingBufferGeometry(6, 6.25, 100)
+		let borderGeom = new THREE.RingBufferGeometry(ringThickness.expanded.inner, ringThickness.expanded.outer, 100)
 		let borderMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		border = new THREE.Mesh(borderGeom, borderMat)
 		border.position.set(0, 0.1, 0)
