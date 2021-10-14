@@ -10,8 +10,8 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import * as _ from 'lodash'
 
 import AndroidMap from './maps/android.json'
-import ShibaMap from './maps/shiba.json'
 import RhinoMap from './maps/rhino.json'
+import CameraMap from './maps/camera.json'
 
 import formulateSprites from "./library/Loader"
 
@@ -23,7 +23,7 @@ import {RingBufferGeometry} from "three";
 const maps = {
 	rhino: RhinoMap,
 	android: AndroidMap,
-	shiba: ShibaMap
+	camera: CameraMap
 }
 const currentMap = RhinoMap
 let currentObject = 'none'

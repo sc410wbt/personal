@@ -7,7 +7,7 @@ import { addCustomMap } from "../Environment"
 
 import s from './Import.module.sass'
 
-const existing = ['none', 'rhino', 'android', 'shiba']
+const existing = ['none', 'rhino', 'android', 'camera']
 
 const models = [
 	{
@@ -22,6 +22,27 @@ const models = [
 		scale: 2,
 		rotation: {x: -Math.PI / 2, y: 0, z: 0},
 		src: '/models/rhino/scene.gltf'
+	},
+	{
+		name: 'camera',
+		scale: 0.2,
+		rotation: {x: 0, y: 0, z: 0},
+		position: {x: -42.5, y: -8, z: 13.5},
+		src: '/models/camera_prop/scene.gltf'
+	},
+	{
+		name: 'audi',
+		scale: 1.5,
+		rotation: {x: 0, y: 0, z: 0},
+		position: {x: 0, y: 1.5, z: 0},
+		src: '/models/low_poly_audi_r8/scene.gltf'
+	},
+	{
+		name: 'phone',
+		scale: 0.2,
+		rotation: {x: -0.3 - Math.PI / 2, y: 0, z: 0},
+		position: {x: 0, y: 2.3, z: 0},
+		src: '/models/low-poly_smartphone/scene.gltf'
 	},
 ]
 
