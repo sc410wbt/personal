@@ -2,22 +2,17 @@ import React, {useState, useEffect} from 'react'
 import {useSelector} from "react-redux"
 import cx from 'classnames'
 import * as THREE from 'three'
-import {Geometry} from "three/examples/jsm/deprecated/Geometry";
+import {Geometry} from "three/examples/jsm/deprecated/Geometry"
 import * as TWEEN from 'tween'
-// import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader"
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
+// import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import * as _ from 'lodash'
 
 import AndroidMap from './maps/android.json'
 import RhinoMap from './maps/rhino.json'
 import CameraMap from './maps/camera.json'
 
-import formulateSprites from "./library/Loader"
-
-
 import s from './Environment.module.sass'
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {RingBufferGeometry} from "three";
 
 const maps = {
@@ -108,19 +103,19 @@ export function addCustomMap(json, x) {
 }
 
 export function hideObject() {
-	transformRing(6, 6.25, 5.25, 7)
+	transformRing('expanded')
 }
 
 export function showObject() {
-	transformRing(5.25, 7, 6, 6.25)
+	transformRing('constricted')
 }
 
 function expandRing() {
-	transformRing(6, 6.25, 5.25, 7)
+	transformRing('expanded')
 }
 
 function constrictRing() {
-	transformRing(5.25, 7, 6, 6.25)
+	transformRing('constricted')
 }
 
 function transformRing(type) {
