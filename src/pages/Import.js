@@ -3,6 +3,8 @@ import {useDispatch} from "react-redux"
 import * as THREE from "three"
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 
+import { addCustomMap } from "../Environment"
+
 import s from './Import.module.sass'
 
 const existing = ['none', 'rhino', 'android', 'shiba']
@@ -27,6 +29,7 @@ function ImportPage() {
 
 	const dispatch = useDispatch()
 	const [map, setMap] = useState()
+	const [count, setCount] = useState(0)
 
 	useEffect(() => {
 		dispatch({ type: 'SET_SCENE_POSITION', position: 'left' })
@@ -41,7 +44,11 @@ function ImportPage() {
 		getPoints(model.src)
 			.then(res => {
 				console.log('res returned', res)
-				setMap(JSON.stringify(res))
+				let json = JSON.stringify(res)
+				setMap(json)
+				addCustomMap(res, count)
+				dispatch({ type: 'SET_OBJECT', object: 'custom' + count })
+				setCount(count + 1)
 			})
 	}
 

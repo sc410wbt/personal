@@ -98,6 +98,11 @@ export function setCameraPosition(x, y, z) {
 		.start()
 }
 
+export function addCustomMap(json, x) {
+	maps[`custom${x}`] = json
+	console.log(maps)
+}
+
 export function hideObject() {
 	transformRing(6, 6.25, 5.25, 7)
 }
@@ -298,7 +303,6 @@ export default function Environment() {
 
 		}
 	}, [page])
-
 
 	function formObject() {
 		currentObject = object
