@@ -12,16 +12,16 @@ const existing = ['none', 'rhino', 'android', 'shiba']
 const models = [
 	{
 		name: 'Android',
-		scale: 1.5,
+		scale: 1.25,
+		rotation: {x: -Math.PI / 2, y: 0, z: 0},
+		position: {x: 0, y: 3, z: 0},
 		src: '/models/android/scene.gltf'
 	},
 	{
 		name: 'Rhino',
+		scale: 2,
+		rotation: {x: -Math.PI / 2, y: 0, z: 0},
 		src: '/models/rhino/scene.gltf'
-	},
-	{
-		name: 'Shiba Puppy',
-		src: '/models/shiba/scene.gltf'
 	},
 ]
 
@@ -41,7 +41,7 @@ function ImportPage() {
 	}
 
 	function handleClick(model) {
-		getPoints(model.src)
+		getPoints(model)
 			.then(res => {
 				console.log('res returned', res)
 				let json = JSON.stringify(res)
@@ -76,15 +76,18 @@ function ImportPage() {
 
 }
 
-async function getPoints(src) {
+async function getPoints(model) {
 	let loader = new GLTFLoader()
-	let object = await loader.loadAsync(src)
+	let object = await loader.loadAsync(model.src)
+
+	let options = {...model}
+	delete options.src
 
 	let arr = []
 	object.scene.traverse(function (child) {
 		if (child.isMesh) {
 			console.log(child.geometry)
-			let meshArr = processObject(child.geometry, { rotation: { x: -Math.PI / 2, y: 0, z: 0 } })
+			let meshArr = processObject(child.geometry, options)
 			console.log('mesh array', meshArr)
 			arr = arr.concat(meshArr)
 		}
@@ -97,7 +100,7 @@ async function getPoints(src) {
 function processObject(geometry, options) {
 	// check out the position attribute of a cube
 	options = {
-		scale: 2,
+		scale: 1,
 		max: 500,
 		...options
 	}
@@ -176,7 +179,8 @@ function processObject(geometry, options) {
 	console.log(`${totalSprites} total sprites added`)
 
 	console.log('object processing: getting rotated positions')
-	group.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
+	if (options.rotation) group.rotation.set(options.rotation.x, options.rotation.y, options.rotation.z)
+	if (options.position) group.position.set(options.position.x, options.position.y, options.position.z)
 	let points = []
 	group.children.forEach(sprite => {
 		let target = new THREE.Vector3()
