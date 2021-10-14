@@ -31,6 +31,8 @@ const ringThickness = {
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
 let camera
+let camera2
+let lookAt = [0, 0, 0]
 let controls
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
@@ -84,15 +86,26 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 // 		.start()
 // }
 
-export function setCameraPosition(x, y, z) {
+export function setCameraTarget(x, y, z) {
+	camera.lookAt(x, y, z)
+}
+
+export function setCameraPosition(x, y, z, lx, ly, lz) {
 	let pos = camera.position
-	new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z }).to({x: x, y: y, z: z}, 1000)
+	let prevLookAt = [...lookAt]
+	if (!lx) lx = lookAt[0]
+	if (!ly) ly = lookAt[1]
+	if (!lz) lz = lookAt[2]
+	new TWEEN.Tween({x: pos.x, y: pos.y, z: pos.z, lx: prevLookAt[0], ly: prevLookAt[1], lz: prevLookAt[2] }).to({x: x, y: y, z: z, lx: lx, ly: ly, lz: lz }, 1000)
 		.easing(TWEEN.Easing.Exponential.InOut)
+		.onComplete(function() {
+			lookAt = [lx, ly, lz]
+		})
 		.onUpdate(function () {
 			camera.position.x = this.x
 			camera.position.y = this.y
 			camera.position.z = this.z
-			camera.lookAt(0, 0, 0)
+			camera.lookAt(lx, ly, lz)
 		})
 		.start()
 }
@@ -151,8 +164,9 @@ export default function Environment() {
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
 		camera = new THREE.PerspectiveCamera(fov, windowWidth/ windowHeight, 0.1, 300)
+		camera2 = new THREE.PerspectiveCamera(fov, windowWidth/ windowHeight, 0.1, 300)
 		camera.position.set(0,15, 20)
-		camera.lookAt(0, 0, 0)
+		camera.lookAt(lookAt[0], lookAt[1], lookAt[2])
 		renderer.setClearColor(0x222222, 0)
 		renderer.setPixelRatio(window.devicePixelRatio)
 		renderer.setSize(window.innerWidth, window.innerHeight)
