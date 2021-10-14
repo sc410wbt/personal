@@ -1,0 +1,11 @@
+Model Information:
+* title:	3D Model car Audi RS8
+* source:	https://sketchfab.com/3d-models/3d-model-car-audi-rs8-803ba74d4538444bac584e5a30b2641a
+* author:	Hyap (https://sketchfab.com/source5525)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "3D Model car Audi RS8" (https://sketchfab.com/3d-models/3d-model-car-audi-rs8-803ba74d4538444bac584e5a30b2641a) by Hyap (https://sketchfab.com/source5525) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

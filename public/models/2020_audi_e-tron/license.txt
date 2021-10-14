@@ -1,0 +1,11 @@
+Model Information:
+* title:	2020 Audi E-Tron
+* source:	https://sketchfab.com/3d-models/2020-audi-e-tron-4602d4d118b24577881e21c63eaa5340
+* author:	lplp32 (https://sketchfab.com/lplp32)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "2020 Audi E-Tron" (https://sketchfab.com/3d-models/2020-audi-e-tron-4602d4d118b24577881e21c63eaa5340) by lplp32 (https://sketchfab.com/lplp32) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

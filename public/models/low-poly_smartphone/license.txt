@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low-Poly Smartphone
+* source:	https://sketchfab.com/3d-models/low-poly-smartphone-2f0211fa7ca64a6987998c105416f7b7
+* author:	Anjith (https://sketchfab.com/anjithkrish89)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low-Poly Smartphone" (https://sketchfab.com/3d-models/low-poly-smartphone-2f0211fa7ca64a6987998c105416f7b7) by Anjith (https://sketchfab.com/anjithkrish89) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
