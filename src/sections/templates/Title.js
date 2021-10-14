@@ -16,6 +16,7 @@ export default function TitleTemplate({ title, tags }) {
 		if (inView) {
 			setCameraPosition(0, 15, 20)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
+			dispatch({ type: 'SET_OBJECT', object: 'camera' })
 		}
 	}, [inView])
 

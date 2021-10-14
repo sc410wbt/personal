@@ -16,8 +16,9 @@ export default function ARCoreSection() {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(0,15, 10)
+			setCameraPosition(0,7, 10)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'right' })
+			dispatch({ type: 'SET_OBJECT', object: 'android' })
 		}
 	}, [inView])
 
