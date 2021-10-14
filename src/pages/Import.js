@@ -10,6 +10,7 @@ const existing = ['none', 'rhino', 'android', 'shiba']
 const models = [
 	{
 		name: 'Android',
+		scale: 1.5,
 		src: '/models/android/scene.gltf'
 	},
 	{
@@ -36,8 +37,8 @@ function ImportPage() {
 		dispatch({ type: 'SET_OBJECT', object: name })
 	}
 
-	function handleClick(src) {
-		getPoints(src)
+	function handleClick(model) {
+		getPoints(model.src)
 			.then(res => {
 				console.log('res returned', res)
 				setMap(JSON.stringify(res))
@@ -47,7 +48,7 @@ function ImportPage() {
 	let previews = existing.map(name => <button onClick={e => handlePreview(name)}>{name}</button>)
 
 	let modelOptions = models.map(model => {
-		return <button onClick={e => handleClick(model.src)}>{model.name}</button>
+		return <button onClick={e => handleClick(model)}>{model.name}</button>
 	})
 
 	return (
