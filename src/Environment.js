@@ -27,6 +27,7 @@ const maps = {
 }
 const currentMap = RhinoMap
 let currentObject = 'none'
+let objectTransitionTime = 500
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
@@ -305,7 +306,7 @@ export default function Environment() {
 		gatherParticles()
 		setTimeout(() => {
 			raiseObject()
-		}, 1000)
+		}, objectTransitionTime)
 	}
 
 	function switchObject() {
@@ -313,10 +314,10 @@ export default function Environment() {
 		setTimeout(() => {
 			currentObject = object
 			gatherParticles()
-		}, 1000)
+		}, objectTransitionTime)
 		setTimeout(() => {
 			raiseObject()
-		}, 2000)
+		}, objectTransitionTime * 2)
 		// gatherAndDisperse()
 		// raiseObject()
 	}
@@ -326,7 +327,7 @@ export default function Environment() {
 		lowerObject()
 		setTimeout(() => {
 			disperseParticles()
-		}, 1000)
+		}, objectTransitionTime)
 	}
 
 	function getRandomOutwardPosition(x, y, z) {
@@ -385,7 +386,7 @@ export default function Environment() {
 
 	function moveParticleToCenter(particle, point) {
 		let pos = particle.position
-		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: point[0], z: point[2]}, 750)
+		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: point[0], z: point[2]}, objectTransitionTime)
 			.easing(TWEEN.Easing.Exponential.InOut)
 			.onUpdate(function () {
 				particle.position.set(this.x, pos.y, this.z)
@@ -398,7 +399,7 @@ export default function Environment() {
 		let theta = Math.random() * Math.PI * 2
 		let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
 		let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
-		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: x, z: z}, 700)
+		new TWEEN.Tween({x: pos.x, z: pos.z}).to({x: x, z: z}, objectTransitionTime)
 			.easing(TWEEN.Easing.Exponential.InOut)
 			.onUpdate(function () {
 				particle.position.set(this.x, pos.y, this.z)
@@ -408,7 +409,7 @@ export default function Environment() {
 
 	function moveParticleUp(particle, point) {
 		let pos = particle.position
-		new TWEEN.Tween({y: pos.y}).to({y: point[1]}, 700)
+		new TWEEN.Tween({y: pos.y}).to({y: point[1]}, objectTransitionTime)
 			.easing(TWEEN.Easing.Exponential.InOut)
 			.onUpdate(function () {
 				particle.position.setY(this.y)
@@ -418,7 +419,7 @@ export default function Environment() {
 
 	function moveParticleDown(particle) {
 		let pos = particle.position
-		new TWEEN.Tween({y: pos.y}).to({y: Math.random() - 1.1}, 700)
+		new TWEEN.Tween({y: pos.y}).to({y: Math.random() - 1.1}, objectTransitionTime)
 			.easing(TWEEN.Easing.Exponential.InOut)
 			.onUpdate(function () {
 				particle.position.setY(this.y)
