@@ -181,22 +181,22 @@ export default function Environment() {
 		composer = new EffectComposer(renderer)
 		composer.addPass(new RenderPass(scene, camera))
 
-		// let resolution, strength, radius, threshold
-		// resolution = new THREE.Vector2(2056, 2056)
-		// strength = 0.5
-		// radius = 0.05
-		// threshold = 0.2
-		// let unrealBloomPass = new UnrealBloomPass(resolution, strength, radius, threshold)
-		// composer.addPass(unrealBloomPass)
+		let resolution, strength, radius, threshold
+		resolution = new THREE.Vector2(1028, 1028)
+		strength = 0.32
+		radius = 0.1
+		threshold = 0.2
+		let unrealBloomPass = new UnrealBloomPass(resolution, strength, radius, threshold)
+		composer.addPass(unrealBloomPass)
 
-		const filmPass = new FilmPass(
-			1,   // noise intensity
-			1,  // scanline intensity
-			648,    // scanline count
-			false,  // grayscale
-		)
-		filmPass.renderToScreen = true
-		composer.addPass(filmPass)
+		// const filmPass = new FilmPass(
+		// 	1,   // noise intensity
+		// 	0.2,  // scanline intensity
+		// 	// window.innerHeight / 1.5,    // scanline count
+		// 	// false,  // grayscale
+		// )
+		// filmPass.renderToScreen = true
+		// composer.addPass(filmPass)
 
 		// controls = new OrbitControls(camera, renderer.domElement)
 		// controls.enableZoom = true
@@ -550,22 +550,34 @@ export default function Environment() {
 		addSpinning()
 		addObjectParticles()
 
-		let planeGeom = new THREE.PlaneBufferGeometry(1000, 1000)
+		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
 		let planeMat = new THREE.MeshPhysicalMaterial({
 			color: 0xFFFFFF,
+			// transmission: 0.5,
 			transparent: true,
-			opacity: 0.8
+			// sides: THREE.DoubleSide,
+			opacity: 0.25,
+			// specularIntensity: 0.5
 		})
 		let plane = new THREE.Mesh(planeGeom, planeMat)
 		plane.rotation.set(-Math.PI / 2, 0, 0)
 		plane.receiveShadow = enableShadows
 		stage.add(plane)
 
+		let boxGeom = new THREE.BoxBufferGeometry(100, 100, 100)
+		let boxMat = new THREE.MeshBasicMaterial({ color: 0xEEEEEE, side: THREE.DoubleSide })
+		let box = new THREE.Mesh(boxGeom, boxMat)
+		box.position.set(0, 0, 0)
+		stage.add(box)
 
-		let wallGeom = new THREE.PlaneBufferGeometry(1000, 1000)
-		let wall = new THREE.Mesh(wallGeom, planeMat)
-		wall.position.set(0, 0, -50)
-		stage.add(wall)
+		// let wallMat = new THREE.MeshBasicMaterial({
+		// 	color: 0xFFFFFF,
+		// 	sides: THREE.DoubleSide,
+		// })
+		// let wallGeom = new THREE.PlaneBufferGeometry(1000, 1000)
+		// let wall = new THREE.Mesh(wallGeom, wallMat)
+		// wall.position.set(0, 0, -10)
+		// stage.add(wall)
 
 		// let shadeGeom = new THREE.PlaneBufferGeometry(400, 400)
 		// let shadeMat = new THREE.MeshBasicMaterial({
@@ -656,7 +668,7 @@ export default function Environment() {
 
 	function addObjectParticles() {
 		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
-		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
+		let particleMat = new THREE.MeshBasicMaterial({ color: 0x111111 })
 		for (let x = 0; x < 1000; x++) {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
 			let theta = Math.random() * Math.PI * 2
@@ -748,7 +760,7 @@ export default function Environment() {
 		stage.add(ambientLight)
 
 		dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
-		dLight.position.set(camera.position.x, 10, 2)
+		dLight.position.set(0, 10, 0)
 		dLight.castShadow = enableShadows
 		stage.add(dLight)
 	}
