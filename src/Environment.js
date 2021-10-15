@@ -169,7 +169,7 @@ export default function Environment() {
 		// console.log(appWrapper)
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
 
-		camera = new THREE.PerspectiveCamera(fov, windowWidth / (windowHeight), 0.1, 300)
+		camera = new THREE.PerspectiveCamera(fov, windowWidth / (windowHeight), 0.1, 600)
 		camera.position.set(0,15, 20)
 		camera.lookAt(lookAt[0], lookAt[1], lookAt[2])
 		renderer.setClearColor(0x222222, 0)
@@ -560,6 +560,12 @@ export default function Environment() {
 		plane.rotation.set(-Math.PI / 2, 0, 0)
 		plane.receiveShadow = enableShadows
 		stage.add(plane)
+
+
+		let wallGeom = new THREE.PlaneBufferGeometry(1000, 1000)
+		let wall = new THREE.Mesh(wallGeom, planeMat)
+		wall.position.set(0, 0, -50)
+		stage.add(wall)
 
 		// let shadeGeom = new THREE.PlaneBufferGeometry(400, 400)
 		// let shadeMat = new THREE.MeshBasicMaterial({
