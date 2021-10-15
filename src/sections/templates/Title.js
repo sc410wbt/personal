@@ -17,6 +17,8 @@ export default function TitleTemplate({ title, tags }) {
 			setCameraPosition(0, 15, 20, 0, 0, 3)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_OBJECT', object: 'camera' })
+		} else {
+
 		}
 	}, [inView])
 
@@ -30,6 +32,9 @@ export default function TitleTemplate({ title, tags }) {
 	return (
 		<div className={s.wrapper}>
 			<div style={{ position: 'absolute', top: '50px' }} ref={ref} />
+			<div className={cx(s.more, { [s.active]: inView })}>
+				scroll down
+			</div>
 			{/*<div className={s.bg} />*/}
 			<h1 className={cx({ [s.active]: inView })}>
 				{/*{processedTitle}*/}
