@@ -24,12 +24,17 @@ export default function ARCoreSection() {
 	}, [inView])
 
 	return (
-		<div className={s.wrapper}>
-			<div className={s.image}>
-				<div>3D Objects</div>
-				<img src={image} ref={ref} />
-			</div>
-		</div>
+		<section>
+			<div style={{ margin: '10px', padding: '50px', background: 'blue' }}>CONTENT GOES HERE</div>
+			<div style={{ margin: '10px', padding: '50px', background: 'blue' }}>CONTENT GOES HERE</div>
+			<div style={{ margin: '10px', padding: '50px', background: 'blue' }}>CONTENT GOES HERE</div>
+		</section>
+		// <div className={s.wrapper}>
+		// 	<div className={s.image}>
+		// 		<div>3D Objects</div>
+		// 		<img src={image} ref={ref} />
+		// 	</div>
+		// </div>
 	)
 
 }

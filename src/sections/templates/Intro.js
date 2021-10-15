@@ -30,8 +30,17 @@ export default function IntroTemplate({ text }) {
 			<div className={cx(s.title, { [s.active]: inView })}>
 				The Brief
 			</div>
-			<div className={cx([s.panel, { [s.active]: inView }])} ref={ref}>
-				{text}
+			<div className={s.points} ref={ref}>
+				<div className={s.point}>
+					...
+				</div>
+				<div className={s.point}>
+					...
+				</div>
+				<div className={s.point}>
+					...
+				</div>
+
 			</div>
 		</div>
 	)
