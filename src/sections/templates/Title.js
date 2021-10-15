@@ -32,7 +32,7 @@ export default function TitleTemplate({ title, tags }) {
 			<div style={{ position: 'absolute', top: '50px' }} ref={ref} />
 			{/*<div className={s.bg} />*/}
 			<h1 className={cx({ [s.active]: inView })}>
-				{processedTitle}
+				{/*{processedTitle}*/}
 			</h1>
 		</div>
 	)

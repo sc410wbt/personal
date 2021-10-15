@@ -12,6 +12,8 @@ import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass
 import {FilmPass} from "three/examples/jsm/postprocessing/FilmPass";
 import * as _ from 'lodash'
 
+import font from 'three/examples/fonts/helvetiker_regular.typeface.json'
+
 import AndroidMap from './maps/android.json'
 import RhinoMap from './maps/rhino.json'
 import CameraMap from './maps/camera.json'
@@ -549,6 +551,27 @@ export default function Environment() {
 		// addGuides()
 		addSpinning()
 		addObjectParticles()
+
+		let textGroup = new THREE.Group()
+		let testFont = new THREE.Font(font)
+		let textGeom = new THREE.TextGeometry('AR IMMERSION BOOTH', {
+			font: testFont,
+			size: 0.8,
+			height: 0.05,
+		})
+		console.log('font', textGeom)
+		let text = new THREE.Mesh(textGeom, new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide }))
+
+		let measureBox = new THREE.Box3().setFromObject(text)
+		let textWidth = Math.abs(measureBox.min.x - measureBox.max.x)
+		text.position.set( -(textWidth/2), 0.6, 8.5)
+		text.rotation.set(-Math.PI / 2 + 0.2, 0, 0)
+		textGroup.rotation.set(0, -0.3, 0)
+		textGroup.add(text)
+		stage.add(textGroup)
+
+
+
 
 		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
 		let planeMat = new THREE.MeshPhysicalMaterial({
