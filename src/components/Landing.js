@@ -48,11 +48,21 @@ export default function Landing() {
 			setMode(currentOrientation + ' ' + inverted)
 
 			// Portrait = gamma, landscape = beta
+			let beta = Math.round(event.beta)
+			let gamma = Math.round(event.gamma)
+			let y = 0
+			if (currentOrientation === 'portrait') { // Determine a rotation between -1 and 1
+				let val = gamma
+				if (inverted) val = 0 - val
+				if (val < 0) y = Math.max(-25, val) / 25
+				else y = Math.min(25, val) / 25
+				dispatch({ type: 'SET_SCENE_ROTATION', rotation: { y: y, x: 0 }})
+			}
 
 			setOrientation({
-				alpha: event.alpha.toFixed(0),
-				beta: event.beta.toFixed(0),
-				gamma: event.gamma.toFixed(0)
+				alpha: alpha,
+				beta: beta,
+				gamma: gamma
 			})
 		})
 	}
