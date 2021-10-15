@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
+import {useDispatch} from "react-redux"
 
 import s from './Landing.module.sass'
 
 export default function Landing() {
 
+	const dispatch = useDispatch()
+	const [mode, setMode] = useState('portrait')
 	const [orientation, setOrientation] = useState({})
 
 	useEffect(() => {
@@ -23,10 +26,33 @@ export default function Landing() {
 	function bindDeviceSensors() {
 		window.addEventListener('deviceorientation',(event) => {
 			// Expose each orientation angle in a more readable way
+			let alpha = event.alpha.toFixed(0)
+			let currentOrientation
+			let inverted = false
+			switch (true) {
+				case alpha >= 315 && alpha < 45:
+					currentOrientation = 'portrait'
+					break
+				case  alpha >= 45 && alpha < 135:
+					currentOrientation = 'landscape'
+					break
+				case alpha >= 135 && alpha < 225:
+					currentOrientation = 'portrait'
+					inverted = true
+					break
+				default:
+					currentOrientation = 'landscape'
+					inverted = true
+					break
+			}
+			setMode(currentOrientation + ' ' + inverted)
+
+			// Portrait = gamma, landscape = beta
+
 			setOrientation({
-				alpha: event.alpha.toFixed(2),
-				beta: event.beta.toFixed(2),
-				gamma: event.gamma.toFixed(2)
+				alpha: event.alpha.toFixed(0),
+				beta: event.beta.toFixed(0),
+				gamma: event.gamma.toFixed(0)
 			})
 		})
 	}
@@ -38,6 +64,7 @@ export default function Landing() {
 			<div>no thanks</div>
 
 			<div>
+				<div>{mode}</div>
 				{JSON.stringify(orientation)}
 			</div>
 		</div>

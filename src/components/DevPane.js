@@ -10,12 +10,15 @@ export default function DevPane() {
 
 	return (
 		<div className={s.dev}>
-			<button>toggle object</button>
+			{/*<button>toggle object</button>*/}
 			<div>
 				clientX: {sceneRotation.x}<br />
 				clientY: {sceneRotation.y}<br />
 				scenePosition: {JSON.stringify(scenePosition)}<br />
 				object: {object}
+				{/*this needs to be translated for device orientation*/}
+				<div>Beta (side to side): {}</div>
+				<div>Gamma (front to back): {}</div>
 			</div>
 		</div>
 	)

@@ -1,7 +1,8 @@
 const defaultState = {
 	sceneRotation: { x: 0, y: 0 },
 	scenePosition: 'center',
-	object: 'none'
+	object: 'none',
+	deviceOrientation: ''
 }
 
 const SystemReducer = (state = defaultState, action) => {
@@ -20,6 +21,11 @@ const SystemReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				object: action.object
+			}
+		case 'SET_DEVICE_ORIENTATION':
+			return {
+				...state,
+				deviceOrientation: action.orientation
 			}
 		default:
 			return state
