@@ -668,7 +668,7 @@ export default function Environment() {
 
 	function addObjectParticles() {
 		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
-		let particleMat = new THREE.MeshBasicMaterial({ color: 0x111111 })
+		let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		for (let x = 0; x < 1000; x++) {
 			let particle = new THREE.Mesh(particleGeom, particleMat)
 			let theta = Math.random() * Math.PI * 2
