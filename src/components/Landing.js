@@ -30,7 +30,7 @@ export default function Landing() {
 			let currentOrientation
 			let inverted = false
 			switch (true) {
-				case alpha >= 315 && alpha < 45:
+				case alpha >= 315 || alpha < 45:
 					currentOrientation = 'portrait'
 					break
 				case  alpha >= 45 && alpha < 135:
