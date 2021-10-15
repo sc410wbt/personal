@@ -521,7 +521,7 @@ export default function Environment() {
 	}
 
 	async function populate() {
-		addGuides()
+		// addGuides()
 		addSpinning()
 		addObjectParticles()
 
