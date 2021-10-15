@@ -6,6 +6,10 @@ import {Geometry} from "three/examples/jsm/deprecated/Geometry"
 import * as TWEEN from 'tween'
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 // import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
+import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer"
+import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass"
+import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import {FilmPass} from "three/examples/jsm/postprocessing/FilmPass";
 import * as _ from 'lodash'
 
 import AndroidMap from './maps/android.json'
@@ -30,6 +34,7 @@ const ringThickness = {
 
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true })
+let composer
 let camera
 let lookAt = [0, 0, 0]
 let controls
@@ -172,6 +177,26 @@ export default function Environment() {
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
+		composer = new EffectComposer(renderer)
+		composer.addPass(new RenderPass(scene, camera))
+
+		// let resolution, strength, radius, threshold
+		// resolution = new THREE.Vector2(2056, 2056)
+		// strength = 0.5
+		// radius = 0.05
+		// threshold = 0.2
+		// let unrealBloomPass = new UnrealBloomPass(resolution, strength, radius, threshold)
+		// composer.addPass(unrealBloomPass)
+
+		const filmPass = new FilmPass(
+			1,   // noise intensity
+			1,  // scanline intensity
+			648,    // scanline count
+			false,  // grayscale
+		)
+		filmPass.renderToScreen = true
+		composer.addPass(filmPass)
 
 		// controls = new OrbitControls(camera, renderer.domElement)
 		// controls.enableZoom = true
@@ -735,7 +760,8 @@ export default function Environment() {
 		TWEEN.update()
 		requestAnimationFrame(animate)
 
-		renderer.render(scene, camera)
+		// renderer.render(scene, camera)
+		composer.render()
 	}
 
 	function handleClick(e) {
