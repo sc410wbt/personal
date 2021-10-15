@@ -11,6 +11,7 @@ import SectionNav from "./components/SectionNav"
 
 import './App.sass'
 import ProgressBar from "./components/ProgressBar"
+import Landing from "./components/Landing";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
     return (
         <div className="App" onMouseMove={_.throttle(handleMouseMove, 10)}>
             <BrowserRouter>
+                <Landing />
                 <DevPane />
                 <Header />
                 <Nav />
