@@ -12,7 +12,7 @@ import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass
 import {FilmPass} from "three/examples/jsm/postprocessing/FilmPass";
 import * as _ from 'lodash'
 
-import font from 'three/examples/fonts/helvetiker_regular.typeface.json'
+import font from './fonts/Montserrat_Bold.json'
 
 import AndroidMap from './maps/android.json'
 import RhinoMap from './maps/rhino.json'
