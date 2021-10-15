@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch} from "react-redux"
+import cx from 'classnames'
 
 import s from './Landing.module.sass'
 
 export default function Landing() {
 
 	const dispatch = useDispatch()
+	const [active, setActive] = useState(!!DeviceMotionEvent.requestPermission)
 	const [mode, setMode] = useState('portrait')
 	const [orientation, setOrientation] = useState({})
 
@@ -19,6 +21,7 @@ export default function Landing() {
 				// Add a listener to get smartphone orientation
 				// in the alpha-beta-gamma axes (units in degrees)
 				bindDeviceSensors()
+				setActive(false)
 			}
 		});
 	}
@@ -69,7 +72,7 @@ export default function Landing() {
 	}
 
 	return (
-		<div className={s.wrapper}>
+		<div className={cx(s.wrapper, { [s.active]: active })}>
 			<div className={s.text}>Please allow access to your accelerometer</div>
 			<button onClick={getPermissions}>Will do</button>
 			<div>no thanks</div>
