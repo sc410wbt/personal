@@ -6,10 +6,14 @@
 	padding: 70px 50px 50px
 	width: 300px
 	height: 250px
-	background: #111
-	color: white
+	background: #fff
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1)
+	color: black
 	font-size: 30px
-	perspective: 10000px
+	//perspective: 10000px
+	opacity: 0
+	transform: scale(0.5)
+	transition: 0.5s
 
 	.number
 		position: absolute
@@ -17,11 +21,15 @@
 		left: calc(50% - 30px)
 		width: 60px
 		height: 60px
-		background: white
+		background: black
 		border-radius: 50%
 		box-shadow: 0 0 10px rgba(0,0,0,0.5)
-		color: black
+		color: white
 		font-weight: bold
 		text-align: center
 		line-height: 60px
 		//transform: translateZ(200px)
+
+	&.active
+		opacity: 1
+		transform: scale(1)
