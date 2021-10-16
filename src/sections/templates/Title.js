@@ -7,7 +7,7 @@ import {setCameraPosition} from "../../Environment"
 
 import s from './Title.module.sass'
 
-export default function TitleTemplate({ title, tags }) {
+export default function TitleTemplate({ title, tags, object }) {
 
 	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
@@ -16,7 +16,7 @@ export default function TitleTemplate({ title, tags }) {
 		if (inView) {
 			setCameraPosition(0, 15, 20, 0, 0, 3)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
-			dispatch({ type: 'SET_OBJECT', object: 'camera' })
+			dispatch({ type: 'SET_OBJECT', object: object })
 			dispatch({ type: 'SET_TITLE', title: title })
 		} else {
 

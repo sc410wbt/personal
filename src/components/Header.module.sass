@@ -3,11 +3,37 @@
 	z-index: 1000
 	top: 0
 	left: 0
+	width: 100%
 
 	header
 		position: absolute
 		top: 30px
 		left: 30px
-		width: 50vw
+		width: calc(100% - 60px)
 		color: #000
 		text-align: left
+
+		.close
+			position: absolute
+			top: -2px
+			right: -2px
+			width: 30px
+			height: 30px
+			opacity: 0
+			transform: rotate(0deg)
+			transition: 0.5s ease-in-out
+
+			span
+				position: absolute
+				top: 0
+				left: 14px
+				height: 30px
+				width: 1.5px
+				background: #333
+
+				&:first-child
+					transform: rotate(90deg)
+
+			&.active
+				opacity: 1
+				transform: rotate(315deg)

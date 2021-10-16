@@ -36,7 +36,7 @@ function App() {
                 <Landing />
                 <DevPane />
                 <Header />
-                <Nav />
+                {/*<Nav />*/}
                 <Environment />
                 <Pages />
                 {/*<ProgressBar />*/}

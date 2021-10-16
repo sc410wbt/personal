@@ -13,7 +13,7 @@ function ARBoothPage() {
 		<div className={"page"}>
 			<div style={{ position: 'relative' }}>
 				<ScrollProgress />
-				<TitleTemplate title={"AR Immersion Booth"} />
+				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate text={"Create a photo booth experience unlike any other allowing brands to drop animated objects along with the subject"} />
 				<ARCoreSection />
 				<SharingSection />

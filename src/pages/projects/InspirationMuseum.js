@@ -6,7 +6,7 @@ export default function InspirationMuseumPage() {
 
 	return (
 		<div className={"page"}>
-			<TitleTemplate title={"Inspiration Museum"} />
+			<TitleTemplate title={"Inspiration Museum"} object={"rhino"}/>
 			<IntroTemplate />
 		</div>
 	)
