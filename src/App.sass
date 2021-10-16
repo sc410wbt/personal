@@ -1,3 +1,20 @@
+.wrapper
+	position: relative
+
+	&.exit-active
+		opacity: 0
+		transition-duration: 0.5s
+		transition-delay: 0s
+
+	&.enter
+		opacity: 0
+
+	&.enter-active
+		opacity: 1
+		transition-duration: 0.5s
+		transition-delay: 0.5s
+
+
 .page
 	position: relative
 	z-index: 1000

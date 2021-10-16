@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
-import {Switch, Route, useHistory, withRouter} from 'react-router-dom'
+import {Switch, Route, useHistory, withRouter, useLocation} from 'react-router-dom'
+import {TransitionGroup, CSSTransition} from "react-transition-group"
 import PageTitle from "./components/PageTile"
 
 import ARBoothPage from "./pages/ARBooth"
@@ -8,31 +9,36 @@ import ImportPage from "./pages/Import"
 
 export default function Pages() {
 
+	const location = useLocation()
+
 	return (
 
-		<Switch>
+		<TransitionGroup>
+			<CSSTransition timeout={1000} className={'wrapper'} key={location.pathname}>
+				<main>
 
-			<main>
+					<Switch location={location}>
 
-				<PageTitle />
+						<Route exact path={"/"}>
+							Home
+						</Route>
+						<Route exact path={"/projects/ar-immersion-booth"}>
+							<ARBoothPage />
+						</Route>
+						<Route exact path={"/projects/inspiration-museum"}>
+							<InspirationMuseumPage />
+						</Route>
+						<Route exact path={"/import"}>
+							<ImportPage />
+						</Route>
 
-				<Route path={"/"}>
-					{/*Home Page test*/}
-				</Route>
-				<Route path={"/projects/ar-immersion-booth"}>
-					<ARBoothPage />
-				</Route>
-				<Route path={"/projects/inspiration-museum"}>
-					<InspirationMuseumPage />
-				</Route>
-				<Route path={"/import"}>
-					<ImportPage />
-				</Route>
+					</Switch>
 
-			</main>
-
-		</Switch>
+				</main>
+			</CSSTransition>
+		</TransitionGroup>
 
 	)
 
 }
+
