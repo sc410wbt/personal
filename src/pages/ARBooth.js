@@ -9,12 +9,18 @@ import SharingSection from "../sections/projects/ARBooth/Sharing"
 
 function ARBoothPage() {
 
+	const goals = [
+		'Appease clients with a photo booth for events',
+		'But make it techy',
+		'And then make it modifiable for future use'
+	]
+
 	return (
 		<div className={"page"}>
 			<div style={{ position: 'relative' }}>
 				<ScrollProgress />
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
-				<IntroTemplate text={"Create a photo booth experience unlike any other allowing brands to drop animated objects along with the subject"} />
+				<IntroTemplate goals={goals} />
 				<ARCoreSection />
 				<SharingSection />
 			</div>

@@ -8,7 +8,7 @@ import {hideObject} from "../../Environment"
 
 import s from './Intro.module.sass'
 
-export default function IntroTemplate({ text }) {
+export default function IntroTemplate({ goals = [], text }) {
 
 	const dispatch = useDispatch()
 	const {ref, inView} = useInView()
@@ -25,22 +25,15 @@ export default function IntroTemplate({ text }) {
 		}
 	}, [inView])
 
+	let goalOutput = goals.map(goal => <div className={s.point}>{goal}</div>)
+
 	return (
 		<div className={s.wrapper}>
 			<div className={cx(s.title, { [s.active]: inView })}>
 				The Brief
 			</div>
 			<div className={s.points} ref={ref}>
-				<div className={s.point}>
-					...
-				</div>
-				<div className={s.point}>
-					...
-				</div>
-				<div className={s.point}>
-					...
-				</div>
-
+				{goalOutput}
 			</div>
 		</div>
 	)
