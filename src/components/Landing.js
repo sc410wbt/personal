@@ -7,7 +7,7 @@ import s from './Landing.module.sass'
 export default function Landing() {
 
 	const dispatch = useDispatch()
-	const [active, setActive] = useState(!!DeviceMotionEvent.requestPermission)
+	const [active, setActive] = useState(false)
 	const [mode, setMode] = useState('portrait')
 	const [orientation, setOrientation] = useState({})
 

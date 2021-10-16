@@ -39,7 +39,7 @@ function App() {
                 <Nav />
                 <Environment />
                 <Pages />
-                <ProgressBar />
+                {/*<ProgressBar />*/}
                 {/*<SectionNav />*/}
             </BrowserRouter>
         </div>
