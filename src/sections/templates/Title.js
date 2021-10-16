@@ -17,6 +17,7 @@ export default function TitleTemplate({ title, tags }) {
 			setCameraPosition(0, 15, 20, 0, 0, 3)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_OBJECT', object: 'camera' })
+			dispatch({ type: 'SET_TITLE', title: title })
 		} else {
 
 		}

@@ -6,6 +6,7 @@ import PageTitle from "./components/PageTile"
 import ARBoothPage from "./pages/ARBooth"
 import InspirationMuseumPage from "./pages/projects/InspirationMuseum"
 import ImportPage from "./pages/Import"
+import HomePage from "./pages/Home";
 
 export default function Pages() {
 
@@ -20,7 +21,7 @@ export default function Pages() {
 					<Switch location={location}>
 
 						<Route exact path={"/"}>
-							Home
+							<HomePage />
 						</Route>
 						<Route exact path={"/projects/ar-immersion-booth"}>
 							<ARBoothPage />

@@ -17,6 +17,11 @@ const SystemReducer = (state = defaultState, action) => {
 				...state,
 				scenePosition: action.position
 			}
+		case 'SET_TITLE':
+			return {
+				...state,
+				title: action.title
+			}
 		case 'SET_OBJECT':
 			return {
 				...state,

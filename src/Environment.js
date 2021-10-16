@@ -8,7 +8,7 @@ import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader"
 // import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer"
 import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass"
-import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import {UnrealBloomPass} from "three/examples/jsm/postprocessing/UnrealBloomPass"
 import {FilmPass} from "three/examples/jsm/postprocessing/FilmPass";
 import * as _ from 'lodash'
 
@@ -20,6 +20,7 @@ import CameraMap from './maps/camera.json'
 
 import s from './Environment.module.sass'
 import {RingBufferGeometry} from "three";
+import {addTitleGroupToStage, addTitle, removeTitle} from "./webgl/Titles"
 
 const maps = {
 	rhino: RhinoMap,
@@ -160,7 +161,7 @@ export default function Environment() {
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const { sceneRotation, scenePosition, object } = useSelector(state => state.system)
+	const { sceneRotation, scenePosition, object, title } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -226,6 +227,15 @@ export default function Environment() {
 			switchObject()
 		}
 	}, [object])
+
+	useEffect(() => {
+		removeTitle()
+		if (title) {
+			setTimeout(() => {
+				addTitle(title)
+			}, 500)
+		}
+	}, [title])
 
 	useEffect(() => {
 		stage.rotation.y = sceneRotation.y
@@ -549,28 +559,9 @@ export default function Environment() {
 
 	async function populate() {
 		// addGuides()
+		addTitleGroupToStage(stage)
 		addSpinning()
 		addObjectParticles()
-
-		let textGroup = new THREE.Group()
-		let testFont = new THREE.Font(font)
-		let textGeom = new THREE.TextGeometry('AR IMMERSION BOOTH', {
-			font: testFont,
-			size: 0.8,
-			height: 0.05,
-		})
-		console.log('font', textGeom)
-		let text = new THREE.Mesh(textGeom, new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide }))
-
-		let measureBox = new THREE.Box3().setFromObject(text)
-		let textWidth = Math.abs(measureBox.min.x - measureBox.max.x)
-		text.position.set( -(textWidth/2), 0.6, 8.5)
-		text.rotation.set(-Math.PI / 2 + 0.2, 0, 0)
-		textGroup.rotation.set(0, -0.3, 0)
-		textGroup.add(text)
-		stage.add(textGroup)
-
-
 
 
 		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
