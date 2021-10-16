@@ -24,8 +24,8 @@ function App() {
         let y = e.clientX / windowWidth
         let x = e.clientY / windowHeight
         let sceneRotation = {
-            y: -1 + (y * 2),
-            x: -0.25 + (x * 0.5)
+            y: -0.5 + y,
+            x: -0.2 + (x * 0.2)
         }
         dispatch({ type: 'SET_SCENE_ROTATION', rotation: sceneRotation })
     }
