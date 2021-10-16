@@ -3,6 +3,8 @@ import {useDispatch} from "react-redux"
 import cx from 'classnames'
 import {useInView} from "react-intersection-observer"
 
+import Goal from "./Goal";
+
 import {setCameraPosition, showObject} from "../../Environment"
 import {hideObject} from "../../Environment"
 
@@ -25,7 +27,7 @@ export default function IntroTemplate({ goals = [], text }) {
 		}
 	}, [inView])
 
-	let goalOutput = goals.map(goal => <div className={s.point}>{goal}</div>)
+	let goalOutput = goals.map((goal, no) => <Goal no={no} goal={goal} />)
 
 	return (
 		<div className={s.wrapper}>
