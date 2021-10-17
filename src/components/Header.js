@@ -17,7 +17,7 @@ export default function Header() {
 	return (
 		<div className={s.wrapper}>
 			<header>
-				<strong>WORK</strong> by Sun Chen
+				<strong>WORK</strong> <span style={{ fontSize: '0.8em' }}>by Sun Chen</span>
 				<div className={cx(s.close, { [s.active]: location.pathname !== '/' })} onClick={handleClick}>
 					<span />
 					<span />
