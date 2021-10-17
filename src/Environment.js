@@ -211,6 +211,7 @@ function transformRing(type) {
 
 export default function Environment() {
 
+	const [stageRotating, setStageRotating] = useState(false)
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
@@ -295,7 +296,16 @@ export default function Environment() {
 			stage.rotation.y = rotation.y
 			stage.rotation.x = rotation.x
 		} else {
-			stage.rotation.set(0, 0, 0)
+			if (!stageRotating) {
+				setStageRotating(true)
+				new TWEEN.Tween({ y: stage.rotation.y, x: stage.rotation.x }).to({ y: 0, x: 0 }, 500)
+					.onUpdate(function() {
+						stage.rotation.y = this.y
+						stage.rotation.x = this.x
+					})
+					.onComplete(() => setStageRotating(false))
+					.start()
+			}
 			photoGroup.rotation.y = rotation.y
 			photoGroup.rotation.x = rotation.x
 		}
