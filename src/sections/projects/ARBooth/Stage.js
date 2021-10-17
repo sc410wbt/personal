@@ -21,7 +21,7 @@ export default function StageSection() {
 			// setCameraTarget(10, 0, -10)
 			setCameraPosition(0,4, 15, 0, 2, 0)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'right' })
-			dispatch({ type: 'SET_OBJECT', object: 'camera' })
+			dispatch({ type: 'SET_OBJECT', object: 'phone' })
 		}
 	}, [inView])
 

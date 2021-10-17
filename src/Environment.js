@@ -17,6 +17,7 @@ import font from './fonts/Montserrat_Bold.json'
 import AndroidMap from './maps/android.json'
 import RhinoMap from './maps/rhino.json'
 import CameraMap from './maps/camera.json'
+import PhoneMap from './maps/phone.json'
 
 import s from './Environment.module.sass'
 import {RingBufferGeometry} from "three";
@@ -25,7 +26,8 @@ import {addTitleGroupToStage, addTitle, removeTitle} from "./webgl/Titles"
 const maps = {
 	rhino: RhinoMap,
 	android: AndroidMap,
-	camera: CameraMap
+	camera: CameraMap,
+	phone: PhoneMap
 }
 const currentMap = RhinoMap
 let currentObject = 'none'
