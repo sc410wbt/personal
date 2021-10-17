@@ -1,0 +1,368 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 939,
+      "max": [
+        10.800357818603516,
+        10.911417961120605,
+        12.315468788146973
+      ],
+      "min": [
+        -10.800355911254883,
+        -10.911417961120605,
+        -13.852962493896484
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 11268,
+      "componentType": 5126,
+      "count": 939,
+      "max": [
+        0.98982173204421997,
+        1,
+        1
+      ],
+      "min": [
+        -0.98982161283493042,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 939,
+      "max": [
+        0.99999988079071045,
+        1,
+        0.92364364862442017,
+        1
+      ],
+      "min": [
+        -0.9999852180480957,
+        -0.99959993362426758,
+        -0.90707260370254517,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 3102,
+      "max": [
+        938
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 22536,
+      "componentType": 5126,
+      "count": 652,
+      "max": [
+        8.1612644195556641,
+        1.090276837348938,
+        13.600259780883789
+      ],
+      "min": [
+        -8.1612634658813477,
+        -16.645456314086914,
+        -22.965869903564453
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 30360,
+      "componentType": 5126,
+      "count": 652,
+      "max": [
+        0.99915868043899536,
+        0.99142247438430786,
+        0.99994003772735596
+      ],
+      "min": [
+        -0.99915891885757446,
+        -0.98052865266799927,
+        -0.99558091163635254
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 15024,
+      "componentType": 5126,
+      "count": 652,
+      "max": [
+        1,
+        0.99995124340057373,
+        0.90320366621017456,
+        1
+      ],
+      "min": [
+        -0.99389469623565674,
+        -0.99995195865631104,
+        -0.8692629337310791,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12408,
+      "componentType": 5125,
+      "count": 1932,
+      "max": [
+        651
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Théo Richard (https://sketchfab.com/theorichard)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/models/488c2e87460a483fa737534d0cb29332",
+      "title": "Globe"
+    },
+    "generator": "Sketchfab-3.18.7",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 20136,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 38184,
+      "byteOffset": 20136,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 25456,
+      "byteOffset": 58320,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 83776,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "globe",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.58823499999999995,
+          0.58823499999999995,
+          0.58823499999999995,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.89297135959999996
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "globe-sphere_globe_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "globle-support_globe_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TANGENT": 6
+          },
+          "indices": 7,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "4baf847366f8444cae69438a5cb848a0.fbx"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5,
+        7
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        2.2204460492503131e-16,
+        -1,
+        0,
+        0,
+        1,
+        2.2204460492503131e-16,
+        0,
+        9.5367431640625e-07,
+        -3.300328254699707,
+        1.8099851608276367,
+        1
+      ],
+      "name": "globe"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.9063078005819204,
+        0.4226182326927721,
+        0,
+        0,
+        -0.4226182326927721,
+        0.9063078005819204,
+        0,
+        -9.5367431640625e-07,
+        1.3502106666564941,
+        4.5852890014648438,
+        1
+      ],
+      "name": "globe-sphere"
+    },
+    {
+      "mesh": 0,
+      "name": "globe-sphere_globe_0"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.9063078005819204,
+        0.4226182326927721,
+        0,
+        0,
+        -0.4226182326927721,
+        0.9063078005819204,
+        0,
+        -9.5367431640625e-07,
+        1.3502106666564941,
+        4.5852890014648438,
+        1
+      ],
+      "name": "globle-support"
+    },
+    {
+      "mesh": 1,
+      "name": "globle-support_globe_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
+

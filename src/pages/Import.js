@@ -44,6 +44,13 @@ const models = [
 		position: {x: 0, y: 2.3, z: 0},
 		src: '/models/low-poly_smartphone/scene.gltf'
 	},
+	{
+		name: 'globe',
+		scale: 0.2,
+		rotation: {x: -0.3 - Math.PI / 2, y: 0.5, z: 0},
+		position: {x: 0, y: 3, z: 0},
+		src: '/models/globe/scene.gltf'
+	},
 ]
 
 function ImportPage() {
