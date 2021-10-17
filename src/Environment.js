@@ -19,6 +19,7 @@ import RhinoMap from './maps/rhino.json'
 import CameraMap from './maps/camera.json'
 import PhoneMap from './maps/phone.json'
 import GlobeMap from './maps/globe.json'
+import CubeMap from './maps/cube.json'
 
 import s from './Environment.module.sass'
 import {RingBufferGeometry} from "three";
@@ -29,7 +30,8 @@ const maps = {
 	android: AndroidMap,
 	camera: CameraMap,
 	phone: PhoneMap,
-	globe: GlobeMap
+	globe: GlobeMap,
+	cube: CubeMap
 }
 const currentMap = RhinoMap
 let currentObject = 'none'

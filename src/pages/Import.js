@@ -51,6 +51,13 @@ const models = [
 		position: {x: 0, y: 3, z: 0},
 		src: '/models/globe/scene.gltf'
 	},
+	{
+		name: 'cube',
+		scale: 1.5,
+		rotation: {x: -0.3 - Math.PI / 2, y: 0.5, z: 0},
+		position: {x:-0.5, y: 3, z: 0},
+		src: '/models/statistic_charts_with_arrow/scene.gltf'
+	},
 ]
 
 function ImportPage() {
