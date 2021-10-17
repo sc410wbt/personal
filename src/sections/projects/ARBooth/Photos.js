@@ -8,14 +8,20 @@ export default function PhotosSection() {
 
 	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
+	const photos = [
+		'',
+		'',
+		'',
+		'',
+	]
 
 	useEffect(() => {
-		addPhotos()
+		addPhotos(photos)
 	}, [])
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(-20, 5, -5, -20, 3, -20)
+			setCameraPosition(-20, 5, -5, -20, 2, -20)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'photos' })
 		} else {

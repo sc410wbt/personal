@@ -94,28 +94,32 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 // }
 
 let photoGroup = new THREE.Group()
-export function addPhotos() {
-	let frameGeom = new THREE.BoxBufferGeometry(6.2, 4.2, 0.5)
-	let frameMat = new THREE.MeshPhysicalMaterial({ color: 0x000000 })
-	let frame = new THREE.Mesh(frameGeom, frameMat)
-	frame.rotation.set(0, 0, 0)
-	frame.position.set(0, 2.1, 0)
+photoGroup.position.set(-20, 0.1, -20)
+export function addPhotos(photos) {
 
-	let pictureGeom = new THREE.PlaneBufferGeometry(6, 4)
-	let pictureMat = new THREE.MeshPhysicalMaterial({
-		map: new THREE.TextureLoader().load('/media/projects/ARBooth/android-models.jpg'),
-		side: THREE.DoubleSide
+	photos.forEach((src, x) => {
+
+		let frameWidth = 0.1
+		let photo = new THREE.Group()
+		let frameGeom = new THREE.BoxBufferGeometry(6.2, 4.2, frameWidth)
+		let frameMat = new THREE.MeshPhysicalMaterial({color: 0x000000})
+		let frame = new THREE.Mesh(frameGeom, frameMat)
+		photo.add(frame)
+		let imageGeom = new THREE.PlaneBufferGeometry(6, 4)
+		let imageMat = new THREE.MeshPhysicalMaterial({
+			map: new THREE.TextureLoader().load('/media/projects/ARBooth/android-models.jpg'),
+			// side: THREE.DoubleSide
+		})
+		let image = new THREE.Mesh(imageGeom, imageMat)
+		image.position.set(0, 0, frameWidth / 2 + 0.01)
+		photo.add(image)
+
+		photo.rotation.set(0, 0, 0)
+		photo.position.set(0, 2.1, 0 - x)
+
+		photoGroup.add(photo)
 	})
-	let picture = new THREE.Mesh(pictureGeom, pictureMat)
-	picture.rotation.set(0, 0, 0)
-	picture.position.set(0, 2.1, 0.26)
 
-
-
-	photoGroup.position.set(-20, 0.1, -20)
-	photoGroup.add(picture)
-	photoGroup.add(frame)
-	stage.add(photoGroup)
 }
 
 export function setCameraTarget(x, y, z) {
@@ -594,6 +598,7 @@ export default function Environment() {
 		addSpinning()
 		addObjectParticles()
 
+		stage.add(photoGroup)
 
 		let planeGeom = new THREE.PlaneBufferGeometry(100, 100)
 		let planeMat = new THREE.MeshPhysicalMaterial({
