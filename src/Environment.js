@@ -186,7 +186,7 @@ export default function Environment() {
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const { sceneRotation, scenePosition, object, title } = useSelector(state => state.system)
+	const { rotation, rotationObject, scenePosition, object, title } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -263,8 +263,14 @@ export default function Environment() {
 	}, [title])
 
 	useEffect(() => {
-		// stage.rotation.y = sceneRotation.y
-		// stage.rotation.x = sceneRotation.x
+		if (rotationObject === 'stage') {
+			stage.rotation.y = rotation.y
+			stage.rotation.x = rotation.x
+		} else {
+			stage.rotation.set(0, 0, 0)
+			photoGroup.rotation.y = rotation.y
+			photoGroup.rotation.x = rotation.x
+		}
 		// let movementTween
 		// function handleMouseMove(e) {
 		// 	let y = e.clientX / windowWidth
@@ -280,7 +286,7 @@ export default function Environment() {
 		// 		})
 		// 		.start()
 		// }
-	}, [sceneRotation])
+	}, [rotation])
 
 	// useEffect(() => {
 	// 	if (cameraPosition.y) {

@@ -1,5 +1,6 @@
 const defaultState = {
-	sceneRotation: { x: 0, y: 0 },
+	rotation: { x: 0, y: 0 },
+	rotationObject: 'stage',
 	scenePosition: 'center',
 	object: 'none',
 	deviceOrientation: ''
@@ -7,10 +8,15 @@ const defaultState = {
 
 const SystemReducer = (state = defaultState, action) => {
 	switch (action.type) {
-		case 'SET_SCENE_ROTATION':
+		case 'SET_ROTATION':
 			return {
 				...state,
-				sceneRotation: action.rotation
+				rotation: action.rotation
+			}
+		case 'SET_ROTATION_OBJECT':
+			return {
+				...state,
+				rotationObject: action.object
 			}
 		case 'SET_SCENE_POSITION':
 			return {

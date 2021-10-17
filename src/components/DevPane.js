@@ -9,7 +9,7 @@ export default function DevPane() {
 
 	const [active, setActive] = useState(false)
 	const location = useLocation()
-	const { sceneRotation, scenePosition, object } = useSelector(state => state.system)
+	const { rotation, scenePosition, object } = useSelector(state => state.system)
 
 	useEffect(() => {
 		// console.log('query', location)
@@ -20,8 +20,8 @@ export default function DevPane() {
 		<div className={cx(s.dev, { [s.active]: active })}>
 			{/*<button>toggle object</button>*/}
 			<div>
-				clientX: {sceneRotation.x}<br />
-				clientY: {sceneRotation.y}<br />
+				clientX: {rotation.x}<br />
+				clientY: {rotation.y}<br />
 				scenePosition: {JSON.stringify(scenePosition)}<br />
 				object: {object}
 				{/*this needs to be translated for device orientation*/}

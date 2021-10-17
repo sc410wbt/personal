@@ -23,11 +23,11 @@ function App() {
     function handleMouseMove(e) {
         let y = e.clientX / windowWidth
         let x = e.clientY / windowHeight
-        let sceneRotation = {
+        let rotation = {
             y: -0.5 + y,
             x: -0.2 + (x * 0.2)
         }
-        dispatch({ type: 'SET_SCENE_ROTATION', rotation: sceneRotation })
+        dispatch({ type: 'SET_ROTATION', rotation: rotation })
     }
 
     return (

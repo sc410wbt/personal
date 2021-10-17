@@ -17,6 +17,9 @@ export default function PhotosSection() {
 		if (inView) {
 			setCameraPosition(-17, 5, -5, -20, 3, -20)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
+			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'photos' })
+		} else {
+			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'stage' })
 		}
 	}, [inView])
 
