@@ -93,6 +93,31 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 // 		.start()
 // }
 
+let photoGroup = new THREE.Group()
+export function addPhotos() {
+	let frameGeom = new THREE.BoxBufferGeometry(6.2, 4.2, 0.5)
+	let frameMat = new THREE.MeshPhysicalMaterial({ color: 0x000000 })
+	let frame = new THREE.Mesh(frameGeom, frameMat)
+	frame.rotation.set(0, 0, 0)
+	frame.position.set(0, 2.1, 0)
+
+	let pictureGeom = new THREE.PlaneBufferGeometry(6, 4)
+	let pictureMat = new THREE.MeshPhysicalMaterial({
+		map: new THREE.TextureLoader().load('/media/projects/ARBooth/android-models.jpg'),
+		side: THREE.DoubleSide
+	})
+	let picture = new THREE.Mesh(pictureGeom, pictureMat)
+	picture.rotation.set(0, 0, 0)
+	picture.position.set(0, 2.1, 0.26)
+
+
+
+	photoGroup.position.set(-20, 0.1, -20)
+	photoGroup.add(picture)
+	photoGroup.add(frame)
+	stage.add(photoGroup)
+}
+
 export function setCameraTarget(x, y, z) {
 	camera.lookAt(x, y, z)
 }
@@ -238,8 +263,8 @@ export default function Environment() {
 	}, [title])
 
 	useEffect(() => {
-		stage.rotation.y = sceneRotation.y
-		stage.rotation.x = sceneRotation.x
+		// stage.rotation.y = sceneRotation.y
+		// stage.rotation.x = sceneRotation.x
 		// let movementTween
 		// function handleMouseMove(e) {
 		// 	let y = e.clientX / windowWidth

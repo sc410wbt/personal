@@ -6,6 +6,7 @@ import TitleTemplate from "../../sections/templates/Title"
 import IntroTemplate from "../../sections/templates/Intro"
 import ARCoreSection from "../../sections/projects/ARBooth/ARCore"
 import SharingSection from "../../sections/projects/ARBooth/Sharing"
+import PhotosSection from "../../sections/projects/ARBooth/Photos";
 
 function ARBoothPage() {
 
@@ -22,6 +23,7 @@ function ARBoothPage() {
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate goals={goals} />
 				<ARCoreSection />
+				<PhotosSection />
 				{/*<SharingSection />*/}
 			</div>
 		</div>
