@@ -15,7 +15,7 @@ export default function PhotosSection() {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(-17, 5, -5, -20, 3, -20)
+			setCameraPosition(-20, 5, -5, -20, 3, -20)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'photos' })
 		} else {
@@ -24,7 +24,8 @@ export default function PhotosSection() {
 	}, [inView])
 
 	return (
-		<section ref={ref}>
+		<section>
+			<div ref={ref}></div>
 			...
 		</section>
 	)
