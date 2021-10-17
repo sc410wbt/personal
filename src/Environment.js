@@ -94,7 +94,8 @@ const spriteTransitionMaterial = new THREE.SpriteMaterial({
 // }
 
 let photoGroup = new THREE.Group()
-photoGroup.position.set(-20, 0.1, -20)
+photoGroup.visible = false
+photoGroup.position.set(-20, -10, -20)
 export function addPhotos(photos) {
 
 	photos.forEach((src, x) => {
@@ -121,6 +122,29 @@ export function addPhotos(photos) {
 	})
 
 }
+
+export function showGallery() {
+	photoGroup.visible = true
+	new TWEEN.Tween({y: -10}).to({y: 0.1}, 1000)
+		.easing(TWEEN.Easing.Exponential.InOut)
+		.onUpdate(function() {
+			photoGroup.position.y = this.y
+		})
+		.start()
+}
+
+export function hideGallery() {
+	new TWEEN.Tween({y: 0.1}).to({y: -10}, 1000)
+		.easing(TWEEN.Easing.Exponential.InOut)
+		.onUpdate(function() {
+			photoGroup.position.y = this.y
+		})
+		.onComplete(function() {
+			photoGroup.visible = false
+		})
+		.start()
+}
+
 
 export function setCameraTarget(x, y, z) {
 	camera.lookAt(x, y, z)

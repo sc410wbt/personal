@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux"
 import {useInView} from "react-intersection-observer"
 import cx from 'classnames'
 
-import {addPhotos, setCameraPosition} from "../../../Environment"
+import {addPhotos, setCameraPosition, showGallery, hideGallery} from "../../../Environment"
 
 import s from './Photos.module.sass'
 
@@ -25,9 +25,11 @@ export default function PhotosSection() {
 	useEffect(() => {
 		if (inView) {
 			setCameraPosition(-20, 5, -5, -20, 2, -20)
+			showGallery()
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'photos' })
 		} else {
+			hideGallery()
 			dispatch({ type: 'SET_ROTATION_OBJECT', object: 'stage' })
 		}
 	}, [inView])
