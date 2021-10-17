@@ -5,6 +5,8 @@ import cx from 'classnames'
 
 import {setCameraPosition} from "../../../Environment"
 
+import technicalDrawing from '../../../media/projects/ARBooth/technical-drawing.jpg'
+
 import s from './Stage.module.sass'
 
 import image from '../../../media/projects/ARBooth/android-models.jpg'
@@ -29,6 +31,7 @@ export default function StageSection() {
 			<div className={cx(s.panel, { [s.active]: inView })}>
 				<h2>Get everything measured</h2>
 				<div>We had to test everything out to make sure it worked</div>
+				<img src={technicalDrawing} />
 			</div>
 		</section>
 	)
