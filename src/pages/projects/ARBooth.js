@@ -1,11 +1,11 @@
 import React from 'react'
 
-import ScrollProgress from '../components/ScrollProgress'
+import ScrollProgress from '../../components/ScrollProgress'
 
-import TitleTemplate from "../sections/templates/Title"
-import IntroTemplate from "../sections/templates/Intro"
-import ARCoreSection from "../sections/projects/ARBooth/ARCore"
-import SharingSection from "../sections/projects/ARBooth/Sharing"
+import TitleTemplate from "../../sections/templates/Title"
+import IntroTemplate from "../../sections/templates/Intro"
+import ARCoreSection from "../../sections/projects/ARBooth/ARCore"
+import SharingSection from "../../sections/projects/ARBooth/Sharing"
 
 function ARBoothPage() {
 
