@@ -3,14 +3,13 @@ import {useDispatch} from 'react-redux'
 import {useInView} from "react-intersection-observer"
 import cx from 'classnames'
 
-import {setCameraTarget, setCameraPosition} from "../../../Environment"
+import {setCameraPosition} from "../../../Environment"
 
-
-import s from './ARCore.module.sass'
+import s from './Stage.module.sass'
 
 import image from '../../../media/projects/ARBooth/android-models.jpg'
 
-export default function ARCoreSection() {
+export default function StageSection() {
 
 	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
@@ -18,9 +17,9 @@ export default function ARCoreSection() {
 	useEffect(() => {
 		if (inView) {
 			// setCameraTarget(10, 0, -10)
-			setCameraPosition(0,3, 15, 0, 2, 0)
+			setCameraPosition(0,4, 15, 0, 2, 0)
 			dispatch({ type: 'SET_SCENE_POSITION', position: 'right' })
-			dispatch({ type: 'SET_OBJECT', object: 'android' })
+			dispatch({ type: 'SET_OBJECT', object: 'camera' })
 		}
 	}, [inView])
 
@@ -28,8 +27,8 @@ export default function ARCoreSection() {
 		<section>
 			<div className={s.wrapper} ref={ref} />
 			<div className={cx(s.panel, { [s.active]: inView })}>
-				<h2>Augmented Reality with ARCore</h2>
-				<div>The most powerful augmented reality SDKs are baked into mobile operating systems taking most of the pain out of development</div>
+				<h2>Get everything measured</h2>
+				<div>We had to test everything out to make sure it worked</div>
 			</div>
 		</section>
 	)

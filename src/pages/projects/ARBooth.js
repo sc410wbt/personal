@@ -5,6 +5,7 @@ import ScrollProgress from '../../components/ScrollProgress'
 import TitleTemplate from "../../sections/templates/Title"
 import IntroTemplate from "../../sections/templates/Intro"
 import ARCoreSection from "../../sections/projects/ARBooth/ARCore"
+import StageSection from "../../sections/projects/ARBooth/Stage";
 import SharingSection from "../../sections/projects/ARBooth/Sharing"
 import PhotosSection from "../../sections/projects/ARBooth/Photos";
 
@@ -23,6 +24,7 @@ function ARBoothPage() {
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate goals={goals} />
 				<ARCoreSection />
+				<StageSection />
 				<PhotosSection />
 				{/*<SharingSection />*/}
 			</div>
