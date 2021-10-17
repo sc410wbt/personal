@@ -22,7 +22,7 @@ function ARBoothPage() {
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate goals={goals} />
 				<ARCoreSection />
-				<SharingSection />
+				{/*<SharingSection />*/}
 			</div>
 		</div>
 	)
