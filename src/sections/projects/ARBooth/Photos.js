@@ -1,8 +1,11 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from "react-redux"
 import {useInView} from "react-intersection-observer"
+import cx from 'classnames'
 
 import {addPhotos, setCameraPosition} from "../../../Environment"
+
+import s from './Photos.module.sass'
 
 export default function PhotosSection() {
 
@@ -32,7 +35,8 @@ export default function PhotosSection() {
 	return (
 		<section>
 			<div ref={ref}></div>
-			...
+			<div className={cx(s.prev, { [s.active]: inView })}>{'<'}</div>
+			<div className={cx(s.next, { [s.active]: inView })}>{'>'}</div>
 		</section>
 	)
 
