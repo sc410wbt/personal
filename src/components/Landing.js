@@ -61,13 +61,21 @@ export default function Landing() {
 			let beta = event.beta.toFixed(2)
 			let gamma = event.gamma.toFixed(2)
 			let y = 0
+			let x = 0
 
 			let val = currentOrientation === 'portrait' ? gamma : beta
 			if (inverted) val = 0 - val
 
-			if (val < 0) y = Math.max(-25, val) / 25
-			else y = Math.min(25, val) / 25
-			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: 0 }})
+			let vertical = currentOrientation === 'portrait' ? beta : gamma
+			if (inverted) vertical = 0 - vertical
+
+			if (val < 0) y = Math.max(-25, val) / 50
+			else y = Math.min(25, val) / 50
+
+			if (vertical < 0) x = Math.max(-25, vertical) / 50
+			else x = Math.min(25, vertical) / 50
+
+			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x - 0.2 }})
 
 
 			setOrientation({
