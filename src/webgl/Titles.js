@@ -22,7 +22,7 @@ export function addTitle(title) {
 	let textWidth = Math.abs(measureBox.min.x - measureBox.max.x)
 	text.position.set( -(textWidth/2), 0.1, 8.5)
 	text.rotation.set(-Math.PI / 2, 0, 0)
-	titleGroup.rotation.set(0, -0.3, 0)
+	titleGroup.rotation.set(0, 0, 0)
 	titleGroup.add(text)
 }
 
