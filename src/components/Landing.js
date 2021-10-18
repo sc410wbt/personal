@@ -58,8 +58,8 @@ export default function Landing() {
 			setMode(currentOrientation + ' ' + inverted)
 
 			// Portrait = gamma, landscape = beta
-			let beta = Math.round(event.beta)
-			let gamma = Math.round(event.gamma)
+			let beta = event.beta.toFixed(2)
+			let gamma = event.gamma.toFixed(2)
 			let y = 0
 
 			let val = currentOrientation === 'portrait' ? gamma : beta
