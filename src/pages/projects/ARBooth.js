@@ -22,7 +22,7 @@ function ARBoothPage() {
 	return (
 		<div className={"page"}>
 			<div style={{ position: 'relative' }}>
-				<ScrollProgress />
+				{/*<ScrollProgress />*/}
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate goals={goals} />
 				<ARCoreSection />

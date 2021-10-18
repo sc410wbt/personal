@@ -25,11 +25,13 @@ export default function ProgressBar() {
 
 	return (
 		<div className={s.wrapper}>
-			<div className={s.cap} />
-			<div className={s.cap} />
+			{/*<div className={s.cap} />*/}
+			{/*<div className={s.cap} />*/}
 			<div className={s.line} />
 			<div className={s.inner}>
-				<div className={s.dot} />
+				<div className={s.track}>
+					<div className={s.dot} />
+				</div>
 			</div>
 		</div>
 	)

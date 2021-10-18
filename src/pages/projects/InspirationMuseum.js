@@ -14,7 +14,7 @@ export default function InspirationMuseumPage() {
 	return (
 		<div className={"page"}>
 			<div style={{ position: 'relative' }}>
-				<ScrollProgress />
+				{/*<ScrollProgress />*/}
 				<TitleTemplate title={"Inspiration Museum"} object={"rhino"}/>
 				<IntroTemplate goals={goals} />
 			</div>
