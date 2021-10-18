@@ -2,18 +2,43 @@
 	min-height: 100vh
 	pointer-events: none
 
-	.panel
+	.panels
+		display: flex
 		position: fixed
-		bottom: 30px
+		bottom: 50px
 		left: 70px
 		width: calc(100vw - 110px)
 		height: 40vh
-		background: white
-		border: solid 5px black
-		opacity: 0
-		transform: translateY(100%)
-		transition-duration: 0.5s
+
+		.panel
+			flex: 1
+			margin: 0 20px
+			padding: 30px
+			background: white
+			border: solid 5px black
+			font-size: 20px
+			opacity: 0
+			transform: translateY(100%)
+			transition-duration: 0.5s
+
+			.number
+				margin-bottom: 20px
+				padding-bottom: 10px
+				border-bottom: solid 2px black
+				font-size: 50px
+				font-weight: bold
+
+				.unit
+					display: inline-block
+					margin-left: 5px
+					font-size: 20px
+					font-weight: normal
 
 		&.active
-			opacity: 1
-			transform: translateY(0)
+
+			@for $i from 1 through 3
+
+				.panel:nth-child(#{$i})
+					opacity: 1
+					transform: translateY(0)
+					transition-delay: #{$i * 0.3}s
