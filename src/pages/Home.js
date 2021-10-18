@@ -19,7 +19,7 @@ export default function HomePage() {
 		<div className={s.wrapper}>
 			<Link to={"/projects/inspiration-museum"}>Inspiration Museum</Link>
 			<Link to={"/projects/ar-immersion-booth"}>AR Immersion Booth</Link>
-			<a>Learn More</a>
+			<Link to={"/info"}>Learn More</Link>
 		</div>
 	)
 
