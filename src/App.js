@@ -1,3 +1,5 @@
+import React, {useEffect} from "react"
+
 import * as _ from 'lodash'
 import {BrowserRouter} from "react-router-dom"
 import {useDispatch} from "react-redux"
@@ -11,7 +13,7 @@ import SectionNav from "./components/SectionNav"
 
 import './App.sass'
 import ProgressBar from "./components/ProgressBar"
-import Landing from "./components/Landing";
+import Landing from "./components/Landing"
 
 function App() {
 
@@ -19,6 +21,15 @@ function App() {
     let windowHeight = window.innerHeight
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        window.addEventListener('resize', _.throttle(adjustRendererDimensions, 100))
+        adjustRendererDimensions()
+    }, [])
+
+    function adjustRendererDimensions() {
+        dispatch({ type: 'SET_WINDOW_DIMENSIONS', width: window.innerWidth, height: window.innerHeight})
+    }
 
     function handleMouseMove(e) {
         let y = e.clientX / windowWidth

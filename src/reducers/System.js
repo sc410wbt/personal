@@ -3,7 +3,8 @@ const defaultState = {
 	rotationObject: 'stage',
 	scenePosition: 'center',
 	object: 'none',
-	deviceOrientation: ''
+	deviceOrientation: '',
+	windowDimensions: { width: 1000, height: 1000 }
 }
 
 const SystemReducer = (state = defaultState, action) => {
@@ -37,6 +38,11 @@ const SystemReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				deviceOrientation: action.orientation
+			}
+		case 'SET_WINDOW_DIMENSIONS':
+			return {
+				...state,
+				windowDimensions: { width: action.width, height: action.height }
 			}
 		default:
 			return state

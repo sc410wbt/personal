@@ -221,7 +221,7 @@ export default function Environment() {
 	const [active, setActive] = useState(true)
 	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
-	const { rotation, rotationObject, scenePosition, object, title } = useSelector(state => state.system)
+	const { rotation, rotationObject, scenePosition, object, title, windowDimensions } = useSelector(state => state.system)
 
 	useEffect(() => {
 
@@ -231,13 +231,12 @@ export default function Environment() {
 		const appWrapper = document.querySelector('.' + s.webgl)
 		// console.log(appWrapper)
 		if (appWrapper.children.length <= 0) appWrapper.appendChild(renderer.domElement)
-
-		camera = new THREE.PerspectiveCamera(fov, windowWidth / (windowHeight), 0.1, 600)
+		camera = new THREE.PerspectiveCamera(fov, 1,  0.1, 600)
 		camera.position.set(0,15, 20)
 		camera.lookAt(lookAt[0], lookAt[1], lookAt[2])
 		renderer.setClearColor(0x222222, 0)
-		renderer.setPixelRatio(1.5)
-		renderer.setSize(window.innerWidth, window.innerHeight)
+		renderer.setPixelRatio(window.devicePixelRatio)
+		renderer.setSize(1000, 1000)
 		renderer.shadowMap.enabled = true
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
@@ -296,6 +295,12 @@ export default function Environment() {
 			}, 500)
 		}
 	}, [title])
+
+	useEffect(() => {
+		renderer.setSize(windowDimensions.width, windowDimensions.height)
+		camera.aspect = (windowDimensions.width / windowDimensions.height)
+		camera.updateProjectionMatrix()
+	}, [windowDimensions])
 
 	useEffect(() => {
 		if (rotationObject === 'stage') {
