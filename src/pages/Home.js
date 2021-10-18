@@ -13,6 +13,7 @@ export default function HomePage() {
 		setCameraPosition(0, 18, 18, 0, 0, -2)
 		dispatch({ type: 'SET_OBJECT', object: 'none' })
 		dispatch({ type: 'SET_TITLE', title: ''})
+		dispatch({ type: 'SET_PROGRESS_BAR', active: false })
 	}, [])
 
 	return (

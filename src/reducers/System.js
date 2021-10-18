@@ -4,7 +4,9 @@ const defaultState = {
 	scenePosition: 'center',
 	object: 'none',
 	deviceOrientation: '',
-	windowDimensions: { width: 1000, height: 1000 }
+	windowDimensions: { width: 1000, height: 1000 },
+	progressBarActive: false,
+	pageHeight: 0
 }
 
 const SystemReducer = (state = defaultState, action) => {
@@ -43,6 +45,16 @@ const SystemReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				windowDimensions: { width: action.width, height: action.height }
+			}
+		case 'SET_PROGRESS_BAR':
+			return {
+				...state,
+				progressBarActive: action.active
+			}
+		case 'SET_PAGE_HEIGHT':
+			return {
+				...state,
+				pageHeight: action.height
 			}
 		default:
 			return state

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
+import {useDispatch, useSelector} from "react-redux"
 
 import ScrollProgress from '../../components/ScrollProgress'
 
@@ -19,9 +20,20 @@ function ARBoothPage() {
 		'And then make it modifiable for future use'
 	]
 
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		console.log('ar booth page mounted')
+		dispatch({ type: 'SET_PROGRESS_BAR', active: true })
+
+		let pageHeight = document.querySelector('.page-inner').getBoundingClientRect().height
+		dispatch({ type: 'SET_PAGE_HEIGHT', height: pageHeight })
+
+	}, [])
+
 	return (
 		<div className={"page"}>
-			<div style={{ position: 'relative' }}>
+			<div className={"page-inner"} style={{ position: 'relative' }}>
 				{/*<ScrollProgress />*/}
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
 				<IntroTemplate goals={goals} />

@@ -1,25 +1,41 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
+import {useSelector} from "react-redux"
 
 import s from './ProgressBar.module.sass'
 
 export default function ProgressBar() {
 
-	let pageHeight
-	let dot
+	// const [pageHeight, setPageHeight] = useState()
+	const {windowDimensions, progressBarActive, pageHeight} = useSelector(state => state.system)
+
+	// let dot
+	//
+	// useEffect(() => {
+	// 	dot = document.querySelector('.' + s.dot)
+	// }, [])
 
 	useEffect(() => {
-		let page = document.querySelector('.page')
-		if (page) {
-			dot = document.querySelector('.' + s.dot)
-			pageHeight = page.clientHeight
-			document.addEventListener('scroll', handleScroll)
+		if (progressBarActive) {
+			setTimeout(() => {
+				document.querySelector('.page').addEventListener('scroll', handleScroll)
+			}, 1400)
 		}
-	}, [])
+	}, [progressBarActive])
+
+	function getPageHeight() {
+		let page = document.querySelector('.page-inner')
+		console.log(page)
+		// setPageHeight(page.getBoundingClientRect().height)
+	}
 
 	function handleScroll() {
-		let scroll = document.documentElement.scrollTop
+		if (!pageHeight) getPageHeight()
+		let dot = document.querySelector('.' + s.dot)
+		let scroll = document.querySelector('.page').scrollTop
+		console.log(scroll)
 		// console.log(scroll, pageHeight, window.innerHeight)
-		let top = scroll / (pageHeight - window.innerHeight) * 100
+		let top = scroll / (pageHeight - windowDimensions.height) * 100
+		console.log(pageHeight, windowDimensions.height)
 		dot.style.top = top + '%'
 	}
 
