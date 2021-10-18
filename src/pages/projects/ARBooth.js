@@ -8,7 +8,8 @@ import ARCoreSection from "../../sections/projects/ARBooth/ARCore"
 import StageSection from "../../sections/projects/ARBooth/Stage";
 import SharingSection from "../../sections/projects/ARBooth/Sharing"
 import PhotosSection from "../../sections/projects/ARBooth/Photos";
-import GallerySection from "../../sections/projects/ARBooth/Gallery";
+import GallerySection from "../../sections/projects/ARBooth/Gallery"
+import NumbersSection from "../../sections/projects/ARBooth/Numbers"
 
 function ARBoothPage() {
 
@@ -27,6 +28,7 @@ function ARBoothPage() {
 				<ARCoreSection />
 				<StageSection />
 				<GallerySection />
+				<NumbersSection />
 				{/*<PhotosSection />*/}
 				{/*<SharingSection />*/}
 			</div>
