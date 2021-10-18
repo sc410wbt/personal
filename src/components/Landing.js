@@ -76,7 +76,7 @@ export default function Landing() {
 			if (vertical < 0) x = Math.max(-25, vertical) / 50
 			else x = Math.min(25, vertical) / 50
 
-			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x - 0.2 }})
+			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: y - 0.5 }})
 
 
 			setOrientation({
