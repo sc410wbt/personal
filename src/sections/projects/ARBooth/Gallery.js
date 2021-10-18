@@ -3,6 +3,7 @@ import {useInView} from "react-intersection-observer"
 import {useDispatch} from "react-redux"
 
 import {setCameraPosition} from "../../../Environment"
+import GalleryImage from "../../templates/GalleryImage"
 
 import image from '../../../media/projects/ARBooth/device-close-up.jpg'
 
@@ -25,12 +26,8 @@ export default function GallerySection() {
 		<section>
 			<div className={s.wrapper}>
 				<div ref={ref}>
-					<div className={s.image}>
-						<img src={image} />
-						<div className={s.text}>
-							Use the app on a device mounted to a mechanized track to take an Augmented Reality video
-						</div>
-					</div>
+					<GalleryImage src={image} />
+					<GalleryImage src={image} />
 				</div>
 			</div>
 		</section>
