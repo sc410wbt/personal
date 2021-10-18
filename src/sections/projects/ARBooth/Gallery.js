@@ -6,6 +6,8 @@ import {setCameraPosition} from "../../../Environment"
 
 import image from '../../../media/projects/ARBooth/device-close-up.jpg'
 
+import s from './Gallery.module.sass'
+
 export default function GallerySection() {
 
 	const dispatch = useDispatch()
@@ -21,9 +23,15 @@ export default function GallerySection() {
 
 	return (
 		<section>
-			<div ref={ref} />
-			<div>
-				<img src={image} style={{ width: '100%', border: 'solid 5px black' }} />
+			<div className={s.wrapper}>
+				<div ref={ref}>
+					<div className={s.image}>
+						<img src={image} />
+						<div className={s.text}>
+							Use the app on a device mounted to a mechanized track to take an Augmented Reality video
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	)
