@@ -7,6 +7,7 @@ import ARBoothPage from "./pages/projects/ARBooth"
 import InspirationMuseumPage from "./pages/projects/InspirationMuseum"
 import ImportPage from "./pages/Import"
 import HomePage from "./pages/Home";
+import InfoPage from "./pages/Info";
 
 export default function Pages() {
 
@@ -28,6 +29,9 @@ export default function Pages() {
 						</Route>
 						<Route exact path={"/projects/inspiration-museum"}>
 							<InspirationMuseumPage />
+						</Route>
+						<Route exact path={"/info"}>
+							<InfoPage />
 						</Route>
 						<Route exact path={"/import"}>
 							<ImportPage />
