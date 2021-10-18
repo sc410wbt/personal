@@ -72,13 +72,13 @@ export default function Landing() {
 			let x = 0
 
 			let val = currentOrientation === 'portrait' ? gamma : beta
-			if (os !== 'ios') val = beta
+			if (os !== 'ios') val = gamma
 			if (inverted) val = 0 - val
 			if (val < 0) y = Math.max(-25, val) / 50
 			else y = Math.min(25, val) / 50
 
 			let vertical = currentOrientation === 'portrait' ? beta : gamma
-			if (os !== 'ios') vertical = gamma
+			if (os !== 'ios') vertical = beta
 			if (inverted) vertical = 0 - vertical
 			if (vertical > 60) vertical = 60
 			else if (vertical < 30) vertical = 30
