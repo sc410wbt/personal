@@ -11,10 +11,13 @@ export default function GalleryImage({ src, text }) {
 	return (
 		<div className={s.wrapper} ref={ref}>
 			<div className={cx(s.image, { [s.active]: inView })}>
-				<img src={src} />
-				<div className={s.text}>
-					{text}
+				<div className={s.inner}>
+					<img src={src} />
+					<div className={s.text}>
+						{text}
+					</div>
 				</div>
+
 			</div>
 		</div>
 	)

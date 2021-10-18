@@ -8,29 +8,43 @@
 		top: 50%
 		left: 50%
 		width: 800px
-		height: 533px
-		border: solid 5px black
 		opacity: 0
-		transform: translate(-50%, -50%) scale(1.5)
-		pointer-events: none
+		transform: scale(1.5)
+		transform-origin: top left
 		transition: 0.5s ease-in-out
 		pointer-events: none
 
-		.text
+		.inner
 			position: absolute
-			bottom: -50px
-			right: 30px
-			padding: 30px
-			background: black
-			color: white
-
-		img
+			padding-top: 66%
 			width: 100%
-			height: 100%
-			object-fit: cover
-			filter: saturate(0)
+			border: solid 5px black
+			transform: translate(-50%, -50%)
+
+			img
+				position: absolute
+				top: 0
+				left: 0
+				width: 100%
+				height: 100%
+				object-fit: cover
+				filter: saturate(0)
+
+			.text
+				position: absolute
+				bottom: -50px
+				right: 30px
+				padding: 30px
+				background: black
+				color: white
 
 		&.active
 			opacity: 1
-			transform: translate(-50%, -50%) scale(1)
+			transform: scale(1)
 
+@media all and (max-width: 760px)
+
+	.wrapper
+
+		.image
+			width: 90%
