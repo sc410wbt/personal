@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {useInView} from "react-intersection-observer"
 import cx from 'classnames'
 
@@ -11,17 +11,19 @@ export default function ARCoreSection() {
 
 	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
+	const [sectionRef, sectionInView] = useInView()
+	const {windowDimensions} = useSelector(state => state.system)
 
 	useEffect(() => {
-		if (inView) {
+		if (sectionInView) {
 			setCameraPosition(0,3, 15, 0, 2, 0)
-			dispatch({ type: 'SET_SCENE_POSITION', position: 'right' })
+			dispatch({ type: 'SET_SCENE_POSITION', position: windowDimensions.width < 760 ? 'center' : 'right' })
 			dispatch({ type: 'SET_OBJECT', object: 'android' })
 		}
-	}, [inView])
+	}, [sectionInView])
 
 	return (
-		<section>
+		<section ref={sectionRef}>
 			<div className={s.wrapper} ref={ref} />
 			<div className={cx(s.panel, { [s.active]: inView })}>
 				<h2>Augmented Reality with ARCore</h2>

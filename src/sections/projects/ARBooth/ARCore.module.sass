@@ -9,7 +9,7 @@
 	width: calc(50vw - 80px - 100px)
 	height: calc(100vh - 200px - 100px)
 	background: black
-	border: solid 5px white
+	border: solid 5px #888
 	color: white
 	opacity: 0
 	transform: translateX(-100%)
@@ -30,10 +30,14 @@
 
 @media all and (max-width: 760px)
 
+	.wrapper
+		margin-top: 200vh
+
 	.panel
 		top: auto
-		bottom: 30px
+		bottom: 40px
 		padding: 30px
-		left: 20px
-		width: calc(100% - 40px - 60px)
-		height: calc(100vh - 130px - 60px)
+		left: 35px
+		width: calc(100% - 40px - 80px)
+		height: calc(100vh - 130px - 70px)
+		border-radius: 10px
