@@ -81,8 +81,8 @@ export default function Landing() {
 			if (os !== 'ios') vertical = beta
 			if (inverted) vertical = 0 - vertical
 			if (vertical > 60) vertical = 60
-			else if (vertical < 30) vertical = 30
-			x = ((vertical - 30) / 30) * 0.2 - 0.1
+			else if (vertical < 10) vertical = 10
+			x = ((vertical - 10) / 50) * 0.2 - 0.1
 
 			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x }})
 
