@@ -36,7 +36,7 @@ export default function Landing() {
 	function bindDeviceSensors() {
 		window.addEventListener('deviceorientation',(event) => {
 			// Expose each orientation angle in a more readable way
-			if (active) setActive(false)
+			// if (active) setActive(false)
 			let alpha = event.alpha.toFixed(0)
 			let currentOrientation
 			let inverted = false
