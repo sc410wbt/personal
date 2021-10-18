@@ -7,6 +7,7 @@ import s from './Landing.module.sass'
 export default function Landing() {
 
 	const dispatch = useDispatch()
+	const [os, setOS] = useState('')
 	const [active, setActive] = useState(true)
 	const [mode, setMode] = useState('portrait')
 	const [orientation, setOrientation] = useState({})
@@ -15,6 +16,9 @@ export default function Landing() {
 		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
 			// true for mobile device
 			setActive(true)
+			if(/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+				setOS('ios')
+			}
 			bindDeviceSensors()
 		}else{
 			// false for not mobile device
@@ -68,11 +72,13 @@ export default function Landing() {
 			let x = 0
 
 			let val = currentOrientation === 'portrait' ? gamma : beta
+			if (os !== 'ios') val = beta
 			if (inverted) val = 0 - val
 			if (val < 0) y = Math.max(-25, val) / 50
 			else y = Math.min(25, val) / 50
 
 			let vertical = currentOrientation === 'portrait' ? beta : gamma
+			if (os !== 'ios') vertical = gamma
 			if (inverted) vertical = 0 - vertical
 			if (vertical > 60) vertical = 60
 			else if (vertical < 30) vertical = 30
