@@ -95,16 +95,17 @@ export default function Landing() {
 		})
 	}
 
+
 	return (
 		<div className={cx(s.wrapper, { [s.active]: active })}>
 			<div className={s.text}>Please allow access to your accelerometer</div>
 			<button onClick={getPermissions}>Will do</button>
-			<div>no thanks</div>
+			<div onClick={() => setActive(false)}>no thanks</div>
 
-			<div>
-				<div>{mode}</div>
-				{JSON.stringify(orientation)}
-			</div>
+			{/*<div>*/}
+			{/*	<div>{mode}</div>*/}
+			{/*	{JSON.stringify(orientation)}*/}
+			{/*</div>*/}
 		</div>
 	)
 
