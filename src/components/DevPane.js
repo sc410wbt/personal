@@ -25,8 +25,9 @@ export default function DevPane() {
 				scenePosition: {JSON.stringify(scenePosition)}<br />
 				object: {object}
 				{/*this needs to be translated for device orientation*/}
-				<div>Beta (side to side): {}</div>
-				<div>Gamma (front to back): {}</div>
+				<div>userAgent: {navigator.userAgent}</div>
+				{/*<div>Beta (side to side): {}</div>*/}
+				{/*<div>Gamma (front to back): {}</div>*/}
 			</div>
 		</div>
 	)
