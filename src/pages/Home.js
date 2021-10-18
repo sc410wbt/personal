@@ -20,8 +20,10 @@ export default function HomePage() {
 	return (
 		<div className={s.wrapper}>
 			<Link to={"/projects/ar-immersion-booth"}>AR Immersion Booth</Link>
-			<Link to={"/projects/inspiration-museum"}>Inspiration Museum</Link>
-			<Link to={"/info"}>Learn More</Link>
+			<a className={s.disabled}>Inspiration Museum</a>
+			<a className={s.disabled}>Learn More</a>
+			{/*<Link to={"/projects/inspiration-museum"}>Inspiration Museum</Link>*/}
+			{/*<Link to={"/info"}>Learn More</Link>*/}
 		</div>
 	)
 
