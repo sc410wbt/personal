@@ -16,7 +16,8 @@ export default function GallerySection() {
 
 	useEffect(() => {
 		if (inView) {
-			setCameraPosition(0, 3,4, 0, 3, 0)
+			setCameraPosition(0, 3,4.5, 0, 3, 0)
+			// setCameraPosition(5, 3,5, 5, 0, 5)
 			dispatch({ type: 'SET_OBJECT', object: 'globe' })
 			dispatch({ type: 'SET_SCENE_POSITION', object: 'center' })
 		}
