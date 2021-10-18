@@ -12,7 +12,14 @@ export default function Landing() {
 	const [orientation, setOrientation] = useState({})
 
 	useEffect(() => {
-		bindDeviceSensors()
+		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+			// true for mobile device
+			setActive(true)
+			bindDeviceSensors()
+		}else{
+			// false for not mobile device
+			setActive(false)
+		}
 	}, [])
 
 	function getPermissions() {
@@ -60,7 +67,7 @@ export default function Landing() {
 
 			if (val < 0) y = Math.max(-25, val) / 25
 			else y = Math.min(25, val) / 25
-			dispatch({ type: 'SET_SCENE_ROTATION', rotation: { y: y, x: 0 }})
+			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: 0 }})
 
 
 			setOrientation({
