@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from "react-redux"
+import cx from 'classnames'
 
 import s from './ProgressBar.module.sass'
 
@@ -16,31 +17,25 @@ export default function ProgressBar() {
 
 	useEffect(() => {
 		if (progressBarActive) {
+			document.querySelector('.' + s.dot).style.top = 0
 			setTimeout(() => {
 				document.querySelector('.page').addEventListener('scroll', handleScroll)
 			}, 1400)
 		}
 	}, [progressBarActive])
 
-	function getPageHeight() {
-		let page = document.querySelector('.page-inner')
-		console.log(page)
-		// setPageHeight(page.getBoundingClientRect().height)
-	}
-
 	function handleScroll() {
-		if (!pageHeight) getPageHeight()
 		let dot = document.querySelector('.' + s.dot)
 		let scroll = document.querySelector('.page').scrollTop
-		console.log(scroll)
+		// console.log(scroll)
 		// console.log(scroll, pageHeight, window.innerHeight)
 		let top = scroll / (pageHeight - windowDimensions.height) * 100
-		console.log(pageHeight, windowDimensions.height)
+		// console.log(pageHeight, windowDimensions.height)
 		dot.style.top = top + '%'
 	}
 
 	return (
-		<div className={s.wrapper}>
+		<div className={cx(s.wrapper, { [s.active]: progressBarActive })}>
 			{/*<div className={s.cap} />*/}
 			{/*<div className={s.cap} />*/}
 			<div className={s.line} />

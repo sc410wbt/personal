@@ -14,6 +14,7 @@ export default function HomePage() {
 		dispatch({ type: 'SET_OBJECT', object: 'none' })
 		dispatch({ type: 'SET_TITLE', title: ''})
 		dispatch({ type: 'SET_PROGRESS_BAR', active: false })
+		dispatch({ type: 'SET_SCENE_POSITION', position: 'center' })
 	}, [])
 
 	return (
