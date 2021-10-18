@@ -98,9 +98,12 @@ export default function Landing() {
 
 	return (
 		<div className={cx(s.wrapper, { [s.active]: active })}>
-			<div className={s.text}>Please allow access to your accelerometer</div>
+			<div className={s.text}>
+				<div className={s.welcome}>Thanks for stopping by!</div>
+				<strong>Please allow access to your accelerometer.</strong>
+			</div>
 			<button onClick={getPermissions}>Will do</button>
-			<div onClick={() => setActive(false)}>no thanks</div>
+			<div className={s.decline} onClick={() => setActive(false)}>no thanks</div>
 
 			{/*<div>*/}
 			{/*	<div>{mode}</div>*/}
