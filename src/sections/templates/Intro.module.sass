@@ -9,17 +9,22 @@
 		left: 50%
 		width: 500px
 		color: #333
-		font-size: 150px
+		font-size: 50px
 		font-weight: bold
 		text-transform: uppercase
 		text-align: center
 		//filter: blur(2px)
-		text-shadow: 0 0 8px rgba(0,0,0,0.8)
+		text-shadow: 0 0 8px rgba(0,0,0,0.5)
 		opacity: 0
 		transform: translate(-50%, -50%) scale(0.5)
 		transition-timing-function: cubic-bezier(0.9, 0, 0.1, 1)
 		transition-duration: 1s
 		pointer-events: none
+
+		.subtitle
+			margin: 20px 0 15px
+			font-size: 26px
+			text-transform: none
 
 		&.active
 			transform: translate(-50%, -50%) scale(1)
