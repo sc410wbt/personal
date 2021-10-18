@@ -12,7 +12,7 @@ export default function Goal({ goal, no }) {
 	const {windowDimensions} = useSelector(state => state.system)
 
 	useEffect(() => {
-		if (windowDimensions.width < 760) setMargin('20px')
+		if (windowDimensions.width < 760) setMargin('40px')
 		else {
 			let percent = 350 / windowDimensions.width * 100
 			setMargin('calc(' + ((Math.random() * (100 - percent)) + percent) + '% - 350px)')
