@@ -35,7 +35,7 @@ export default function IntroTemplate({ goals = [], text }) {
 				<div className={s.subtitle}>— or —</div>
 				HOW TO MAKE A<br />
 				SHAREABLE AR BOOMERANG
-				<div className={s.subtitle}>in 15 easy steps</div>
+				<div className={s.subtitle}>in 4 easy steps</div>
 			</div>
 			<div className={s.points} ref={ref}>
 				{goalOutput}
