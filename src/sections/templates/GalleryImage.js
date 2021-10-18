@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 import s from './GalleryImage.module.sass'
 
-export default function GalleryImage({ src }) {
+export default function GalleryImage({ src, text }) {
 
 	const [ref, inView] = useInView()
 
@@ -13,7 +13,7 @@ export default function GalleryImage({ src }) {
 			<div className={cx(s.image, { [s.active]: inView })}>
 				<img src={src} />
 				<div className={s.text}>
-					Use the app on a device mounted to a mechanized track to take an Augmented Reality video
+					{text}
 				</div>
 			</div>
 		</div>
