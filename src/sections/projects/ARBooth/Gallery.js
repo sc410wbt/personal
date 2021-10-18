@@ -5,7 +5,8 @@ import {useDispatch} from "react-redux"
 import {setCameraPosition} from "../../../Environment"
 import GalleryImage from "../../templates/GalleryImage"
 
-import image from '../../../media/projects/ARBooth/device-close-up.jpg'
+import appImage from '../../../media/projects/ARBooth/device-close-up.jpg'
+import droidImage from '../../../media/projects/ARBooth/droid-mascot.jpg'
 
 import s from './Gallery.module.sass'
 
@@ -27,8 +28,8 @@ export default function GallerySection() {
 		<section>
 			<div className={s.wrapper}>
 				<div ref={ref}>
-					<GalleryImage src={image} />
-					<GalleryImage src={image} />
+					<GalleryImage src={appImage} />
+					<GalleryImage src={droidImage} />
 				</div>
 			</div>
 		</section>
