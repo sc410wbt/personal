@@ -40,16 +40,19 @@ export default function Landing() {
 			let alpha = event.alpha.toFixed(0)
 			let currentOrientation
 			let inverted = false
+			let verticalInverted = false
 			switch (true) {
 				case alpha >= 315 || alpha < 45:
 					currentOrientation = 'portrait'
 					break
 				case  alpha >= 45 && alpha < 135:
 					currentOrientation = 'landscape'
+					verticalInverted = true
 					break
 				case alpha >= 135 && alpha < 225:
 					currentOrientation = 'portrait'
 					inverted = true
+					verticalInverted = true
 					break
 				default:
 					currentOrientation = 'landscape'
@@ -66,17 +69,16 @@ export default function Landing() {
 
 			let val = currentOrientation === 'portrait' ? gamma : beta
 			if (inverted) val = 0 - val
-
-			let vertical = currentOrientation === 'portrait' ? beta : gamma
-			if (inverted) vertical = 0 - vertical
-
 			if (val < 0) y = Math.max(-25, val) / 50
 			else y = Math.min(25, val) / 50
 
-			if (vertical < 0) x = Math.max(-25, vertical) / 50
-			else x = Math.min(25, vertical) / 50
+			let vertical = currentOrientation === 'portrait' ? beta : gamma
+			if (inverted) vertical = 0 - vertical
+			if (vertical > 60) vertical = 60
+			else if (vertical < 30) vertical = 30
+			x = ((vertical - 30) / 30) * 0.2 - 0.1
 
-			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: y / 2 + 0.01 }})
+			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x }})
 
 
 			setOrientation({
