@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector} from "react-redux"
 import cx from 'classnames'
+import * as _ from 'lodash'
 
 import s from './ProgressBar.module.sass'
 
@@ -19,7 +20,7 @@ export default function ProgressBar() {
 		if (progressBarActive) {
 			document.querySelector('.' + s.dot).style.top = 0
 			setTimeout(() => {
-				document.querySelector('.page').addEventListener('scroll', handleScroll)
+				document.querySelector('.page').addEventListener('scroll', _.throttle(handleScroll, 20))
 			}, 1400)
 		}
 	}, [progressBarActive])
