@@ -191,14 +191,6 @@ export function showObject() {
 	transformRing('constricted')
 }
 
-function expandRing() {
-	transformRing('expanded')
-}
-
-function constrictRing() {
-	transformRing('constricted')
-}
-
 function transformRing(type) {
 	let origin = ringThickness[type === 'expanded' ? 'constricted' : 'expanded']
 	let target = ringThickness[type]
@@ -219,7 +211,6 @@ export default function Environment() {
 
 	const [stageRotating, setStageRotating] = useState(false)
 	const [active, setActive] = useState(true)
-	const banner = useSelector(state => state.content.banner)
 	const page = useSelector(state => state.content.page)
 	const { rotation, rotationObject, scenePosition, object, title, windowDimensions } = useSelector(state => state.system)
 
@@ -337,114 +328,6 @@ export default function Environment() {
 		// }
 	}, [rotation])
 
-	// useEffect(() => {
-	// 	if (cameraPosition.y) {
-	// 		// camera.position.y = cameraPosition.y
-	// 		new TWEEN.Tween({y: camera.position.y}).to({y: cameraPosition.y}, 1000)
-	// 			.easing(TWEEN.Easing.Exponential.InOut)
-	// 			.onUpdate(function () {
-	// 				camera.position.y = this.y
-	// 			})
-	// 			.start()
-	// 	}
-	// }, [cameraPosition])
-
-	useEffect(() => {
-		console.log('page is changing', page)
-		if (spriteMaps[page]) { // Make sure there have been things added to it
-
-			console.log('should rotate', bannerGroup.rotation, bannerGroup.children)
-			new TWEEN.Tween({y: 0}).to({y: Math.PI * 4}, 2500)
-				.easing(TWEEN.Easing.Exponential.InOut)
-				.onUpdate(function() {
-					bannerGroup.rotation.y = this.y
-				})
-				.onComplete(function() {
-					console.log('animation completed', bannerGroup.rotation)
-					bannerGroup.rotation.set(0, 0, 0)
-				})
-				.start()
-
-
-			let currentSprites = bannerGroup.children.length
-			let spriteMap = spriteMaps[page]
-			let targetSprites = spriteMap.length
-			console.log('sprite from', currentSprites, 'to', targetSprites)
-
-			for (let x = 0; x < Math.min(currentSprites, targetSprites); x++) {
-				let sprite = bannerGroup.children[x]
-				let target = spriteMap[x]
-				// console.log('target', sprite, target)
-				// sprite.position.set(...target)
-				let position = sprite.position
-				new TWEEN.Tween({ x: position.x, y: position.y, z: position.z }).to({ x: target[0], y: target[1], z: target[2] }, 2500)
-					.easing(TWEEN.Easing.Exponential.InOut)
-					.onUpdate(function() {
-						sprite.position.set(this.x, this.y, this.z)
-					})
-					.start()
-			}
-
-			if (currentSprites === targetSprites) {
-				// do nothing
-			} else if (currentSprites > targetSprites) { // Delete remaining
-				console.log('removing sprites')
-				spriteTransitionMaterial.opacity = 1
-				for (let x = currentSprites - 1; x > targetSprites; x--) {
-					let sprite = bannerGroup.children[x]
-					sprite.material = spriteTransitionMaterial
-					let pos = sprite.position
-					new TWEEN.Tween({ x: pos.x, y: pos.y, z: pos.z }).to({ ...getRandomOutwardPosition(pos.x, pos.y, pos.z) }, 2500)
-						.easing(TWEEN.Easing.Exponential.InOut)
-						.onUpdate(function() {
-							sprite.position.set(this.x, this.y, this.z)
-						})
-						.onComplete(function() {
-							bannerGroup.remove(sprite)
-						})
-						.start()
-				}
-				new TWEEN.Tween({ opacity: 1 }).to({ opacity: 0}, 2500)
-					.easing(TWEEN.Easing.Exponential.InOut)
-					.onUpdate(function() {
-						spriteTransitionMaterial.opacity = this.opacity
-					})
-					.start()
-				// console.log('bannerGroup size', bannerGroup.children.length)
-			} else { // Add more
-				// console.log('adding more sprites')
-				spriteTransitionMaterial.opacity = 0
-				for (let x = currentSprites; x < targetSprites; x++) {
-					let coords = spriteMap[x]
-					const sprite = new THREE.Sprite(spriteTransitionMaterial)
-					sprite.scale.set(...randomizeSpriteScale())
-					sprite.position.set(0, 0, 0)
-					bannerGroup.add(sprite)
-					new TWEEN.Tween({ ...getRandomOutwardPosition(coords[0], coords[1], coords[2]) }).to({ x: coords[0], y: coords[1], z: coords[2] }, 3000)
-						.easing(TWEEN.Easing.Exponential.InOut)
-						.onUpdate(function() {
-							sprite.position.set(this.x, this.y, this.z)
-						})
-						.onComplete(() => {
-							sprite.material = spriteMaterial
-						})
-						.start()
-				}
-				new TWEEN.Tween({ opacity: 0 }).to({ opacity: 1}, 2500)
-					.easing(TWEEN.Easing.Exponential.InOut)
-					.onUpdate(function() {
-						spriteTransitionMaterial.opacity = this.opacity
-					})
-					.start()
-			}
-
-
-
-
-
-		}
-	}, [page])
-
 	function formObject() {
 		currentObject = object
 		console.log('forming object')
@@ -475,14 +358,6 @@ export default function Environment() {
 			disperseParticles()
 			transformRing('expanded')
 		}, objectTransitionTime)
-	}
-
-	function getRandomOutwardPosition(x, y, z) {
-		return {
-			x: 0,
-			y: 0,
-			z: 0
-		}
 	}
 
 	function gatherParticles() {
@@ -728,37 +603,10 @@ export default function Environment() {
 		// 	console.log('error')
 		// })
 
-
-		// spriteMaps['/'] = await formulateSprites('/models/rhino/scene.gltf', {
-		// 	scale: 5.0,
-		// 	position: [-0.5, -3, 0],
-		// 	rotation: [0 - Math.PI / 2, 0, 0 - Math.PI / 2],
-		// 	minDistance: 0.5,
-		// 	maxDistance: 1.5
-		// })
-		// addToBanner(spriteMaps['/'])
-		//
-		// spriteMaps['/inspiration-museum'] = await formulateSprites('/models/ring/scene.gltf', {
-		// 	scale: 4.0,
-		// 	rotation: [-0.9, 0.25, 0],
-		// 	minDistance: 0.1,
-		// 	maxDistance: 5
-		// })
-		// // addToBanner(spriteMaps['ring'])
-		//
-		// spriteMaps['/ar-booth'] = await formulateSprites('/models/android/scene.gltf', {
-		// 	scale: 2.5,
-		// 	position: [0, 2, 0],
-		// 	rotation: [0 - Math.PI / 2, 0, 0],
-		// 	minDistance: 0.1,
-		// 	maxDistance: 0.7
-		// })
-
 		// addBannerWobble()
 
 		scene.add(stage)
 
-		// loadFromJson()
 	}
 
 	function addObjectParticles() {
@@ -774,61 +622,6 @@ export default function Environment() {
 			particleGroup.add(particle)
 		}
 		stage.add(particleGroup)
-	}
-
-	function loadFromJson() {
-		// const map = new THREE.TextureLoader().load( '/images/sprite.png' )
-		// const material = new THREE.SpriteMaterial({ map: map })
-		let points = currentMap
-		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
-		let particleMat = new THREE.MeshToonMaterial({ color: 0x333333 })
-		points.forEach(point => {
-			let particle = new THREE.Mesh(particleGeom, particleMat)
-			particle.position.set(point[0], point[1], point[2])
-			particle.castShadow = enableShadows
-			particleGroup.add(particle)
-
-			// let sprite = new THREE.Sprite(material)
-			// sprite.position.set(point[0], point[1], point[2])
-			// sprite.scale.set(0.1,0.1,0.1)
-			// sprite.castShadow = true
-			// rotatedGroup.add(sprite)
-		})
-		console.log(particleGroup)
-		// rotatedGroup.position.set(0, -5, 0)
-
-		stage.add(particleGroup)
-	}
-
-
-
-
-
-	function addBannerWobble() {
-		setInterval(() => {
-			let intensity = 0.1
-			new TWEEN.Tween({ x: bannerGroup.rotation.x, y: bannerGroup.rotation.y, z: bannerGroup.rotation.z })
-				.to({ x: (Math.random() - 0.5) * intensity, y: (Math.random() - 0.5) * intensity, z: (Math.random() - 0.5) * intensity }, 2000)
-				.easing(TWEEN.Easing.Quadratic.InOut)
-				.onUpdate(function() {
-					bannerGroup.rotation.set(this.x, this.y, this.z)
-				})
-				.start()
-		}, 2000)
-	}
-
-	async function addToBanner(spriteMap) {
-		const map = await new THREE.TextureLoader().load( '/images/sprite.png' )
-		// console.log('sprite map', map)
-		const material = new THREE.SpriteMaterial({ map: map })
-		for (let coords of spriteMap) {
-			const sprite = new THREE.Sprite(material)
-			sprite.scale.set(0.1, 0.1, 0.1)
-			// sprite.scale.set(...randomizeSpriteScale())
-			sprite.position.set(...coords)
-			bannerGroup.add(sprite)
-		}
-		stage.add(bannerGroup)
 	}
 
 	function addGuides() {
@@ -875,15 +668,6 @@ export default function Environment() {
 
 		// renderer.render(scene, camera)
 		composer.render()
-	}
-
-	function handleClick(e) {
-		e.preventDefault()
-		if (active) {
-			scatterParticles()
-		} else {
-			formParticles()
-		}
 	}
 
 	return (
