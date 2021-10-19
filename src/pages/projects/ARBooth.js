@@ -5,12 +5,13 @@ import ScrollProgress from '../../components/ScrollProgress'
 
 import TitleTemplate from "../../sections/templates/Title"
 import IntroTemplate from "../../sections/templates/Intro"
-import ARCoreSection from "../../sections/projects/ARBooth/ARCore"
-import StageSection from "../../sections/projects/ARBooth/Stage";
-import SharingSection from "../../sections/projects/ARBooth/Sharing"
-import PhotosSection from "../../sections/projects/ARBooth/Photos";
+// import SharingSection from "../../sections/projects/ARBooth/Sharing"
+// import PhotosSection from "../../sections/projects/ARBooth/Photos";
 import GallerySection from "../../sections/projects/ARBooth/Gallery"
 import NumbersSection from "../../sections/projects/ARBooth/Numbers"
+import SidePanelTemplate from "../../sections/templates/SidePanel"
+
+import technicalDrawing from '../../media/projects/ARBooth/technical-drawing.jpg'
 
 function ARBoothPage() {
 
@@ -40,8 +41,23 @@ function ARBoothPage() {
 							   title={<div>How to make a<br />shareable AR Boomerang</div>}
 				   	subtitle={"in 4 easy steps"}
 					/>
-				<ARCoreSection />
-				<StageSection />
+
+				<SidePanelTemplate
+					title={"Develop an ARCore app"}
+					content={<div>
+						The most powerful augmented reality SDKs are baked into mobile operating systems taking most of the pain out of development. They include complex features such as body occlusion and depth perception
+					</div>}
+				/>
+
+				<SidePanelTemplate
+					title={"Measure Everything"}
+					content={<div>
+						Develop structure for a booth taking into account physical space as well and degrees of arc and camera field of view
+						<img src={technicalDrawing} />
+					</div>}
+					object={"phone"}
+					/>
+				{/*<StageSection />*/}
 				<GallerySection />
 				<NumbersSection />
 				{/*<PhotosSection />*/}

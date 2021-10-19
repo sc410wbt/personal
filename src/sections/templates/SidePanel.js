@@ -26,7 +26,7 @@ export default function SidePanelTemplate({ title, theme, content, object, camer
 			<div className={s.wrapper} ref={ref} />
 			<div className={cx(s.panel, { [s.active]: inView })}>
 				<h2>{title}</h2>
-				<div>The most powerful augmented reality SDKs are baked into mobile operating systems taking most of the pain out of development</div>
+				<div>{content}</div>
 			</div>
 		</section>
 	)
