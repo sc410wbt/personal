@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch} from "react-redux"
+import * as _ from 'lodash'
 import cx from 'classnames'
 
 import s from './Landing.module.sass'
@@ -38,7 +39,7 @@ export default function Landing() {
 	}
 
 	function bindDeviceSensors() {
-		window.addEventListener('deviceorientation', handleOrientationEvent)
+		window.addEventListener('deviceorientation', _.throttle(handleOrientationEvent, 50))
 	}
 
 	function handleOrientationEvent(event) {
@@ -71,8 +72,8 @@ export default function Landing() {
 		// Portrait = gamma, landscape = beta
 		let beta = event.beta.toFixed(2)
 		let gamma = event.gamma.toFixed(2)
-		let y = 0
-		let x = 0
+		let y
+		let x
 
 		let val = currentOrientation === 'portrait' ? gamma : beta
 		if (os !== 'ios') val = gamma
@@ -88,7 +89,6 @@ export default function Landing() {
 		x = ((vertical - 10) / 50) * 0.2 - 0.1
 
 		dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x }})
-
 
 		setOrientation({
 			alpha: alpha,
