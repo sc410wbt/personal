@@ -36,7 +36,10 @@ function ARBoothPage() {
 			<div className={"page-inner"} style={{ position: 'relative' }}>
 				{/*<ScrollProgress />*/}
 				<TitleTemplate title={"AR Immersion Booth"} object={"camera"} />
-				<IntroTemplate goals={goals} />
+				<IntroTemplate goals={goals}
+							   title={<div>How to make a<br />shareable AR Boomerang</div>}
+				   	subtitle={"in 4 easy steps"}
+					/>
 				<ARCoreSection />
 				<StageSection />
 				<GallerySection />

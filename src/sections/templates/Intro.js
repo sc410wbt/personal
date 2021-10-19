@@ -10,7 +10,7 @@ import {hideObject} from "../../Environment"
 
 import s from './Intro.module.sass'
 
-export default function IntroTemplate({ goals = [], text }) {
+export default function IntroTemplate({ goals = [], title, subtitle }) {
 
 	const dispatch = useDispatch()
 	const {ref, inView} = useInView()
@@ -33,9 +33,8 @@ export default function IntroTemplate({ goals = [], text }) {
 		<div className={s.wrapper}>
 			<div className={cx(s.title, { [s.active]: inView })}>
 				<div className={s.subtitle}>— or —</div>
-				HOW TO MAKE A<br />
-				SHAREABLE AR BOOMERANG
-				<div className={s.subtitle}>in 4 easy steps</div>
+				{title}
+				<div className={s.subtitle}>{subtitle}</div>
 			</div>
 			<div className={s.points} ref={ref}>
 				{goalOutput}
