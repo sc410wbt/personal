@@ -11,6 +11,7 @@ export default function Goal({ goal, no }) {
 	const [ref, inView] = useInView()
 	const {windowDimensions} = useSelector(state => state.system)
 
+
 	useEffect(() => {
 		if (windowDimensions.width < 760) setMargin('40px')
 		else {
@@ -25,7 +26,7 @@ export default function Goal({ goal, no }) {
 
 	return (
 		<div className={cx(s.goal, { [s.active]: inView })} style={{ marginLeft: margin }} ref={ref}>
-			<div className={s.number}>{no + 1}</div>
+			<div className={s.number}>{String.fromCharCode(65 + no)}</div>
 			{goal}
 		</div>
 	)
