@@ -13,6 +13,15 @@ export default function Pages() {
 
 	const location = useLocation()
 
+	useEffect(() => {
+		window.gtag('event', 'page_view', {
+			// page_title: '<Page Title>',
+			// page_location: '<Page Location>',
+			page_path: location.pathname,
+		})
+		// console.log('sending', location.pathname)
+	}, [location.pathname])
+
 	return (
 
 		<TransitionGroup>
