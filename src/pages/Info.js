@@ -18,8 +18,10 @@ export default function InfoPage() {
 	}, [inView])
 
 	return (
-		<div ref={ref}>
-			more information coming soon
+		<div ref={ref} className={s.wrapper}>
+			<h1>WORK by Sun Chen is a non-comprehensive (for now) showcase of some of my projects involving interdisciplinary participation</h1>
+			<p>The site is in preview mode and will be adding new content weekly</p>
+			<p>For inquiries, please send an email to <strong>sunnnchen@gmail.com</strong></p>
 		</div>
 	)
 }
