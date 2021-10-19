@@ -37,10 +37,12 @@ export default function InspirationMuseumPage() {
 				<SidePanelTemplate
 					title={"Create the 3D environment"}
 					content={"Make a good 3D environment and fill it with key imagery"}
+					object={"cylinder"}
 					/>
 				<SidePanelTemplate
 					title={"Load all the photos into it"}
 					content={"Make a good 3D environment and fill it with key imagery"}
+					object={"frame"}
 				/>
 				<BlankTemplate
 					title={"VIP customers receive a custom designed jewelry item"}

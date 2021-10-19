@@ -65,6 +65,20 @@ const models = [
 		position: {x: 0, y: 3, z: 0},
 		src: '/models/rusty_gold_ring/scene.gltf'
 	},
+	{
+		name: 'cylinder',
+		scale: 18,
+		rotation: {x: -Math.PI / 2, y: 0, z: 0},
+		position: {x: 0, y: 1, z: 0},
+		src: '/models/hollow_cylinder/scene.gltf'
+	},
+	{
+		name: 'picture frame',
+		scale: 2,
+		rotation: {x: Math.PI - 0.3, y: 0, z: 0},
+		position: {x: 0, y: 2, z: 0},
+		src: '/models/picture_frame/scene.gltf'
+	},
 ]
 
 function ImportPage() {
