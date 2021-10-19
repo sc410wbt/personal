@@ -4,6 +4,7 @@ import IntroTemplate from "../../sections/templates/Intro"
 import ScrollProgress from "../../components/ScrollProgress"
 import {useDispatch} from "react-redux";
 import SidePanelTemplate from "../../sections/templates/SidePanel"
+import BlankTemplate from "../../sections/templates/Blank"
 
 export default function InspirationMuseumPage() {
 
@@ -41,6 +42,9 @@ export default function InspirationMuseumPage() {
 					title={"Load all the photos into it"}
 					content={"Make a good 3D environment and fill it with key imagery"}
 				/>
+				<BlankTemplate
+					title={"VIP customers receive a custom designed jewelry item"}
+					/>
 			</div>
 		</div>
 	)
