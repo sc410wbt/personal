@@ -22,7 +22,7 @@ import GlobeMap from './maps/globe.json'
 import CubeMap from './maps/cube.json'
 
 import s from './Environment.module.sass'
-import {RingBufferGeometry} from "three";
+import {RingBufferGeometry, SpriteMaterial} from "three";
 import {addTitleGroupToStage, addTitle, removeTitle} from "./webgl/Titles"
 
 const maps = {
@@ -236,7 +236,7 @@ export default function Environment() {
 
 		let resolution, strength, radius, threshold
 		resolution = new THREE.Vector2(1028, 1028)
-		strength = 0.32
+		strength = 0.29 //0.32
 		radius = 0.1
 		threshold = 0.2
 		let unrealBloomPass = new UnrealBloomPass(resolution, strength, radius, threshold)
@@ -450,64 +450,32 @@ export default function Environment() {
 			.start()
 	}
 
-
-
-
-
-
-	function scatterParticles() {
-		for (let x = 0; x < particleGroup.children.length; x++) {
-			let particle = particleGroup.children[x]
-			// console.log(particle)
-			new TWEEN.Tween({ y: particle.position.y }).to({ y: -2 }, 1000)
-				.easing(TWEEN.Easing.Exponential.InOut)
-				.onUpdate(function() {
-					particle.position.y = this.y
-				})
-				.onComplete(() => {
-					setActive(false)
-				})
-				.start()
-		}
-	}
-
-	function formParticles() {
-		for (let x = 0; x < particleGroup.children.length; x++) {
-			let particle = particleGroup.children[x]
-			let origin = currentMap[x]
-			// console.log(particle, origin)
-			new TWEEN.Tween({ y: particle.position.y }).to({ y: origin[1] }, 1000)
-				.easing(TWEEN.Easing.Exponential.InOut)
-				.onUpdate(function() {
-					particle.position.y = this.y
-				})
-				.onComplete(() => setActive(true))
-				.start()
-		}
-	}
-
 	function addSpinning() {
-		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
-		let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+		// let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
+		// let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		for (let x = 0; x < 100; x++) {
-			let particle = new THREE.Mesh(particleGeom, particleMat)
+			let sprite = new THREE.Sprite(spriteMaterial)
+			// let particle = new THREE.Mesh(particleGeom, particleMat)
 			let theta = Math.random() * Math.PI * 2
-			let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
-			let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
-			particle.position.set(x, -0.1 - Math.random(),  z)
+			let x = (Math.random() * 0.2 + 6) * Math.cos(theta) + Math.sin(theta)
+			let z = (Math.random() * 0.2 + 6)  * Math.sin(theta) - Math.cos(theta)
+			sprite.position.set(x, -0.1 - Math.random(),  z)
+			sprite.scale.set(0.1,0.1,0.1)
 			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
-			spinningParticles.add(particle)
+			spinningParticles.add(sprite)
 		}
 		stage.add(spinningParticles)
 
 		for (let x = 0; x < 100; x++) {
-			let particle = new THREE.Mesh(particleGeom, particleMat)
+			let sprite = new THREE.Sprite(spriteMaterial)
+			// let particle = new THREE.Mesh(particleGeom, particleMat)
 			let theta = Math.random() * Math.PI * 2
-			let x = (Math.random() * 1 + 6) * Math.cos(theta) + Math.sin(theta)
-			let z = (Math.random() * 1 + 6)  * Math.sin(theta) - Math.cos(theta)
-			particle.position.set(x, -0.1 - Math.random(),  z)
+			let x = (Math.random() * 0.1 + 6) * Math.cos(theta) + Math.sin(theta)
+			let z = (Math.random() * 0.1 + 6)  * Math.sin(theta) - Math.cos(theta)
+			sprite.position.set(x, -0.05 - Math.random() * 0.5,  z)
+			sprite.scale.set(0.12,0.12,0.12)
 			// particle.position.set(3 + Math.random() * 2, -1 + Math.random() * 3, 2 + Math.random() * 2)
-			spinningDormant.add(particle)
+			spinningDormant.add(sprite)
 		}
 		stage.add(spinningDormant)
 	}
@@ -610,16 +578,18 @@ export default function Environment() {
 	}
 
 	function addObjectParticles() {
-		let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
-		let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
+		// let particleGeom = new THREE.SphereBufferGeometry(0.05, 16, 8)
+		// let particleMat = new THREE.MeshBasicMaterial({ color: 0x000000 })
 		for (let x = 0; x < 1000; x++) {
-			let particle = new THREE.Mesh(particleGeom, particleMat)
+			// let particle = new THREE.Mesh(particleGeom, particleMat)
+			let sprite = new THREE.Sprite(spriteMaterial)
 			let theta = Math.random() * Math.PI * 2
 			let x = (Math.random() * 0.5 + 6) * Math.cos(theta) + Math.sin(theta)
 			let z = (Math.random() * 0.5 + 6)  * Math.sin(theta) - Math.cos(theta)
-			particle.position.set(x, -0.1 - Math.random() * 2,  z)
-			particle.castShadow = enableShadows
-			particleGroup.add(particle)
+			sprite.position.set(x, -0.1 - Math.random() * 2,  z)
+			sprite.scale.set(0.1,0.1,0.1)
+			// particle.castShadow = enableShadows
+			particleGroup.add(sprite)
 		}
 		stage.add(particleGroup)
 	}
@@ -657,7 +627,7 @@ export default function Environment() {
 		frames++
 		// scene.rotation.y += 0.005
 		spinningParticles.rotation.y += 0.005
-		spinningDormant.rotation.y += 0.001
+		spinningDormant.rotation.y += 0.002
 
 		dLight.position.set(camera.position.x, 10, 2)
 
