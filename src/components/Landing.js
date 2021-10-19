@@ -39,7 +39,7 @@ export default function Landing() {
 	}
 
 	function bindDeviceSensors() {
-		window.addEventListener('deviceorientation', _.throttle(handleOrientationEvent, 25))
+		window.addEventListener('deviceorientation', _.throttle(handleOrientationEvent, 15))
 	}
 
 	function handleOrientationEvent(event) {
