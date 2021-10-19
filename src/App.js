@@ -35,7 +35,7 @@ function App() {
         let y = e.clientX / windowWidth
         let x = e.clientY / windowHeight
         let rotation = {
-            y: -0.5 + y,
+            y: -0.3 + (y * 0.6),
             x: -0.2 + (x * 0.2)
         }
         dispatch({ type: 'SET_ROTATION', rotation: rotation })
