@@ -79,6 +79,13 @@ const models = [
 		position: {x: 0, y: 2, z: 0},
 		src: '/models/picture_frame/scene.gltf'
 	},
+	{
+		name: 'pillar',
+		scale: 0.03,
+		rotation: {x: Math.PI, y: 0, z: 0},
+		position: {x: 0, y: 6, z: 0},
+		src: '/models/pillar/scene.gltf'
+	},
 ]
 
 function ImportPage() {

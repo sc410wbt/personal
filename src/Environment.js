@@ -23,6 +23,7 @@ import CubeMap from './maps/cube.json'
 import RingMap from './maps/ring.json'
 import CylinderMap from './maps/cylinder.json'
 import FrameMap from './maps/frame.json'
+import PillarMap from './maps/pillar.json'
 
 import s from './Environment.module.sass'
 import {RingBufferGeometry, SpriteMaterial} from "three";
@@ -37,7 +38,8 @@ const maps = {
 	cube: CubeMap,
 	ring: RingMap,
 	cylinder: CylinderMap,
-	frame: FrameMap
+	frame: FrameMap,
+	pillar: PillarMap
 }
 const currentMap = RhinoMap
 let currentObject = 'none'
