@@ -20,6 +20,7 @@ import CameraMap from './maps/camera.json'
 import PhoneMap from './maps/phone.json'
 import GlobeMap from './maps/globe.json'
 import CubeMap from './maps/cube.json'
+import RingMap from './maps/ring.json'
 
 import s from './Environment.module.sass'
 import {RingBufferGeometry, SpriteMaterial} from "three";
@@ -31,7 +32,8 @@ const maps = {
 	camera: CameraMap,
 	phone: PhoneMap,
 	globe: GlobeMap,
-	cube: CubeMap
+	cube: CubeMap,
+	ring: RingMap
 }
 const currentMap = RhinoMap
 let currentObject = 'none'

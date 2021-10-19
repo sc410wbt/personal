@@ -58,6 +58,13 @@ const models = [
 		position: {x:-0.5, y: 3, z: 0},
 		src: '/models/statistic_charts_with_arrow/scene.gltf'
 	},
+	{
+		name: 'ring (rusty gold)',
+		scale: 0.5,
+		rotation: {x: 0.5, y: 0.8, z: 0},
+		position: {x: 0, y: 3, z: 0},
+		src: '/models/rusty_gold_ring/scene.gltf'
+	},
 ]
 
 function ImportPage() {

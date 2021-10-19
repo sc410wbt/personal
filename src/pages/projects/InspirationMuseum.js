@@ -29,7 +29,7 @@ export default function InspirationMuseumPage() {
 		<div className={"page"}>
 			<div className={"page-inner"} style={{ position: 'relative' }}>
 				{/*<ScrollProgress />*/}
-				<TitleTemplate title={"Inspiration Museum"} object={"rhino"}/>
+				<TitleTemplate title={"Inspiration Museum"} object={"ring"}/>
 				<IntroTemplate goals={goals}
 				   	title={<div>How to engage VIP retail shoppers</div>}
 				   	subtitle={<div>(and their wallets)</div>}
