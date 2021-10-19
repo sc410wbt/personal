@@ -38,60 +38,62 @@ export default function Landing() {
 	}
 
 	function bindDeviceSensors() {
-		window.addEventListener('deviceorientation',(event) => {
-			// Expose each orientation angle in a more readable way
-			if (active) setActive(false)
-			let alpha = event.alpha.toFixed(0)
-			let currentOrientation
-			let inverted = false
-			let verticalInverted = false
-			switch (true) {
-				case alpha >= 315 || alpha < 45:
-					currentOrientation = 'portrait'
-					break
-				case  alpha >= 45 && alpha < 135:
-					currentOrientation = 'landscape'
-					verticalInverted = true
-					break
-				case alpha >= 135 && alpha < 225:
-					currentOrientation = 'portrait'
-					inverted = true
-					verticalInverted = true
-					break
-				default:
-					currentOrientation = 'landscape'
-					inverted = true
-					break
-			}
-			setMode(currentOrientation + ' ' + inverted)
+		window.addEventListener('deviceorientation', handleOrientationEvent)
+	}
 
-			// Portrait = gamma, landscape = beta
-			let beta = event.beta.toFixed(2)
-			let gamma = event.gamma.toFixed(2)
-			let y = 0
-			let x = 0
+	function handleOrientationEvent(event) {
+		// Expose each orientation angle in a more readable way
+		if (active) setActive(false)
+		let alpha = event.alpha.toFixed(0)
+		let currentOrientation
+		let inverted = false
+		let verticalInverted = false
+		switch (true) {
+			case alpha >= 315 || alpha < 45:
+				currentOrientation = 'portrait'
+				break
+			case  alpha >= 45 && alpha < 135:
+				currentOrientation = 'landscape'
+				verticalInverted = true
+				break
+			case alpha >= 135 && alpha < 225:
+				currentOrientation = 'portrait'
+				inverted = true
+				verticalInverted = true
+				break
+			default:
+				currentOrientation = 'landscape'
+				inverted = true
+				break
+		}
+		setMode(currentOrientation + ' ' + inverted)
 
-			let val = currentOrientation === 'portrait' ? gamma : beta
-			if (os !== 'ios') val = gamma
-			if (inverted) val = 0 - val
-			if (val < 0) y = Math.max(-25, val) / 50
-			else y = Math.min(25, val) / 50
+		// Portrait = gamma, landscape = beta
+		let beta = event.beta.toFixed(2)
+		let gamma = event.gamma.toFixed(2)
+		let y = 0
+		let x = 0
 
-			let vertical = currentOrientation === 'portrait' ? beta : gamma
-			if (os !== 'ios') vertical = beta
-			if (inverted) vertical = 0 - vertical
-			if (vertical > 60) vertical = 60
-			else if (vertical < 10) vertical = 10
-			x = ((vertical - 10) / 50) * 0.2 - 0.1
+		let val = currentOrientation === 'portrait' ? gamma : beta
+		if (os !== 'ios') val = gamma
+		if (inverted) val = 0 - val
+		if (val < 0) y = Math.max(-25, val) / 50
+		else y = Math.min(25, val) / 50
 
-			dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x }})
+		let vertical = currentOrientation === 'portrait' ? beta : gamma
+		if (os !== 'ios') vertical = beta
+		if (inverted) vertical = 0 - vertical
+		if (vertical > 60) vertical = 60
+		else if (vertical < 10) vertical = 10
+		x = ((vertical - 10) / 50) * 0.2 - 0.1
+
+		dispatch({ type: 'SET_ROTATION', rotation: { y: y, x: x }})
 
 
-			setOrientation({
-				alpha: alpha,
-				beta: beta,
-				gamma: gamma
-			})
+		setOrientation({
+			alpha: alpha,
+			beta: beta,
+			gamma: gamma
 		})
 	}
 

@@ -44,7 +44,7 @@ function App() {
     return (
         <div className="App" onMouseMove={_.throttle(handleMouseMove, 10)}>
             <BrowserRouter>
-                {/*<Landing />*/}
+                <Landing />
                 <DevPane />
                 <Header />
                 {/*<Nav />*/}
