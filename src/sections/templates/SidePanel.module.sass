@@ -1,0 +1,54 @@
+.wrapper
+	margin-top: 50vh
+	height: 200vh
+
+.panel
+	position: fixed
+	top: 90px
+	left: 80px
+	padding: 50px
+	width: calc(50vw - 80px - 100px)
+	height: calc(100vh - 90px - 50px - 100px)
+	background: white
+	border: solid 5px black
+	border-radius: 15px
+	opacity: 0
+	transform: translateX(-100%)
+	transition: 0.5s cubic-bezier(0.9, 0, 0.1, 1)
+	pointer-events: none
+
+	h2
+		margin: 0 0 20px
+		padding: 0
+		font-size: 40px
+		font-weight: bold
+		line-height: 1.0em
+		text-transform: uppercase
+
+	img
+		position: relative
+		left: -50px
+		width: calc(100% + 100px)
+		filter: saturate(0)
+
+	&.active
+		opacity: 1
+		transform: translateX(0)
+
+@media all and (max-width: 760px)
+
+	.wrapper
+		margin-top: 200vh
+
+	.panel
+		top: auto
+		bottom: 40px
+		padding: 30px
+		left: 35px
+		width: calc(100% - 40px - 80px)
+		height: calc(100vh - 130px - 70px)
+		border-radius: 10px
+
+		img
+			left: -30px
+			width: calc(100% + 60px)

@@ -3,6 +3,7 @@ import TitleTemplate from "../../sections/templates/Title"
 import IntroTemplate from "../../sections/templates/Intro"
 import ScrollProgress from "../../components/ScrollProgress"
 import {useDispatch} from "react-redux";
+import SidePanelTemplate from "../../sections/templates/SidePanel"
 
 export default function InspirationMuseumPage() {
 
@@ -29,6 +30,14 @@ export default function InspirationMuseumPage() {
 				{/*<ScrollProgress />*/}
 				<TitleTemplate title={"Inspiration Museum"} object={"rhino"}/>
 				<IntroTemplate goals={goals} />
+				<SidePanelTemplate
+					title={"Create the 3D environment"}
+					content={"Make a good 3D environment and fill it with key imagery"}
+					/>
+				<SidePanelTemplate
+					title={"Load all the photos into it"}
+					content={"Make a good 3D environment and fill it with key imagery"}
+				/>
 			</div>
 		</div>
 	)
