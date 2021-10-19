@@ -10,7 +10,7 @@ export default function HomePage() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		setCameraPosition(0, 18, 18, 0, 0, -2)
+		setCameraPosition(0, 10, 18, 0, 0, -2)
 		dispatch({ type: 'SET_OBJECT', object: 'none' })
 		dispatch({ type: 'SET_TITLE', title: ''})
 		dispatch({ type: 'SET_PROGRESS_BAR', active: false })
@@ -20,9 +20,7 @@ export default function HomePage() {
 	return (
 		<div className={s.wrapper}>
 			<Link to={"/projects/ar-immersion-booth"}>AR Immersion Booth</Link>
-			{/*<a className={s.disabled}>Inspiration Museum</a>*/}
 			<Link to={"/projects/inspiration-museum"}>Inspiration Museum</Link>
-			{/*<a className={s.disabled}>Learn More</a>*/}
 			<Link to={"/info"}>Learn More</Link>
 		</div>
 	)
