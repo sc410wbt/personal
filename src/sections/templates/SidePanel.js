@@ -6,7 +6,7 @@ import cx from "classnames"
 
 import s from './SidePanel.module.sass'
 
-export default function SidePanelTemplate({ title, theme, content, object, cameraPosition }) {
+export default function SidePanelTemplate({ title, theme, cover, content, object, cameraPosition }) {
 
 	const dispatch = useDispatch()
 	const [ref, inView] = useInView()
@@ -25,8 +25,11 @@ export default function SidePanelTemplate({ title, theme, content, object, camer
 		<section ref={sectionRef}>
 			<div className={s.wrapper} ref={ref} />
 			<div className={cx(s.panel, { [s.active]: inView })}>
+				<div className={s.cover}>
+					{}
+				</div>
 				<h2>{title}</h2>
-				<div>{content}</div>
+				<div className={s.content}>{content}</div>
 			</div>
 		</section>
 	)

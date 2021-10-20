@@ -6,9 +6,9 @@
 	position: fixed
 	top: 90px
 	left: 80px
-	padding: 50px
-	width: calc(50vw - 80px - 100px)
-	height: calc(100vh - 90px - 50px - 100px)
+	padding: 0
+	width: calc(50vw - 80px)
+	height: calc(100vh - 90px - 50px)
 	background: white
 	border: solid 5px black
 	border-radius: 15px
@@ -17,13 +17,20 @@
 	transition: 0.5s cubic-bezier(0.9, 0, 0.1, 1)
 	pointer-events: none
 
+	.cover
+		height: 400px
+		background: #333
+
 	h2
-		margin: 0 0 20px
+		margin: 50px 50px 30px
 		padding: 0
 		font-size: 40px
 		font-weight: bold
 		line-height: 1.0em
 		text-transform: uppercase
+
+	.content
+		margin: 30px 50px 0
 
 	img
 		position: relative
