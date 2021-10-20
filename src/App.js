@@ -32,6 +32,7 @@ function App() {
     }
 
     function handleMouseMove(e) {
+        if (windowWidth < 760) return
         let y = e.clientX / windowWidth
         let x = e.clientY / windowHeight
         let rotation = {
