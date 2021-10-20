@@ -5,6 +5,8 @@ import cx from 'classnames'
 
 import {setCameraPosition} from "../../Environment"
 
+import chevronImg from '../../images/chevron.png'
+
 import s from './Title.module.sass'
 
 export default function TitleTemplate({ title, tags, object }) {
@@ -34,7 +36,7 @@ export default function TitleTemplate({ title, tags, object }) {
 		<div className={s.wrapper}>
 			<div style={{ position: 'absolute', top: '50px' }} ref={ref} />
 			<div className={cx(s.more, { [s.active]: inView })}>
-				scroll down
+				<img src={chevronImg} />
 			</div>
 			{/*<div className={s.bg} />*/}
 			<h1 className={cx({ [s.active]: inView })}>
