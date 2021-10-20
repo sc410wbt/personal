@@ -25,13 +25,20 @@ export default function SidePanelTemplate({ title, theme, cover, content, object
 		<section ref={sectionRef}>
 			<div className={s.wrapper} ref={ref} />
 			<div className={cx(s.panel, { [s.active]: inView })}>
-				<div className={s.cover}>
-					{}
-				</div>
+				<Cover src={cover} />
 				<h2>{title}</h2>
 				<div className={s.content}>{content}</div>
 			</div>
 		</section>
 	)
 
+}
+
+function Cover({ src }) {
+	if (!src) return null
+	return (
+		<div className={s.cover}>
+			...
+		</div>
+	)
 }
