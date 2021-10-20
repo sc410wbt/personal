@@ -14,14 +14,21 @@ export function addTitle(title) {
 	let textGeom = new THREE.TextGeometry(title.toUpperCase(), {
 		font: testFont,
 		size: 0.6,
-		height: 0.05,
+		height: 0.15,
 	})
-	let text = new THREE.Mesh(textGeom, new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide }))
+	let text = new THREE.Mesh(textGeom, new THREE.MeshPhysicalMaterial({
+		color: 0x222222,
+		roughness: 0,
+		// metalness: 0.7,
+		metallicness: 1,
+		specularIntensity: 1
+		// side: THREE.DoubleSide
+	}))
 
 	let measureBox = new THREE.Box3().setFromObject(text)
 	let textWidth = Math.abs(measureBox.min.x - measureBox.max.x)
-	text.position.set( -(textWidth/2), 0.1, 8.5)
-	text.rotation.set(-Math.PI / 2, 0, 0)
+	text.position.set( -(textWidth/2), 0.3, 8.5)
+	text.rotation.set(0, 0, 0)
 	titleGroup.rotation.set(0, 0, 0)
 	titleGroup.add(text)
 }

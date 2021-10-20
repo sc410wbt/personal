@@ -626,9 +626,9 @@ export default function Environment() {
 		stage.add(ambientLight)
 
 		dLight = new THREE.DirectionalLight(0xFFFFFF, 1)
-		dLight.position.set(0, 10, 0)
+		dLight.position.set(0, 3, 9.5)
 		dLight.castShadow = enableShadows
-		stage.add(dLight)
+		scene.add(dLight)
 	}
 
 	function animate() {
