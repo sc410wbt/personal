@@ -53,8 +53,8 @@ function ARBoothPage() {
 					title={"Measure Everything"}
 					content={<div>
 						Develop structure for a booth taking into account physical space as well and degrees of arc and camera field of view
-						<img src={technicalDrawing} />
 					</div>}
+					cover={technicalDrawing}
 					object={"phone"}
 					/>
 				{/*<StageSection />*/}

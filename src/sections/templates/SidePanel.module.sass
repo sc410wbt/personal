@@ -15,11 +15,15 @@
 	opacity: 0
 	transform: translateX(-100%)
 	transition: 0.5s cubic-bezier(0.9, 0, 0.1, 1)
+	overflow: hidden
 	pointer-events: none
 
 	.cover
-		height: 400px
+		//height: 400px
 		background: #333
+
+		img
+			width: 100%
 
 	h2
 		margin: 50px 50px 30px
@@ -32,11 +36,11 @@
 	.content
 		margin: 30px 50px 0
 
-	img
-		position: relative
-		left: -50px
-		width: calc(100% + 100px)
-		filter: saturate(0)
+	//img
+	//	position: relative
+	//	left: -50px
+	//	width: calc(100% + 100px)
+	//	filter: saturate(0)
 
 	&.active
 		opacity: 1
@@ -50,14 +54,17 @@
 	.panel
 		top: auto
 		bottom: 40px
-		padding: 30px
 		left: 35px
-		width: calc(100% - 40px - 80px)
-		height: calc(100vh - 130px - 70px)
+		width: calc(100% - 40px - 20px)
+		height: calc(100vh - 130px - 10px)
 		border-radius: 10px
 
 		h2
+			margin: 20px
 			font-size: 30px
+
+		.content
+			margin: 20px
 
 		img
 			left: -30px

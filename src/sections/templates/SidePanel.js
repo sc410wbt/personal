@@ -38,7 +38,7 @@ function Cover({ src }) {
 	if (!src) return null
 	return (
 		<div className={s.cover}>
-			...
+			<img src={src} />
 		</div>
 	)
 }

@@ -6,6 +6,8 @@ import {useDispatch} from "react-redux";
 import SidePanelTemplate from "../../sections/templates/SidePanel"
 import BlankTemplate from "../../sections/templates/Blank"
 
+import lobbyImage from '../../media/projects/InspirationMuseum/musuem-lobby.jpg'
+
 export default function InspirationMuseumPage() {
 
 	const goals = [
@@ -40,6 +42,7 @@ export default function InspirationMuseumPage() {
 						<p>Make a good 3D environment and fill it with key imagery</p>
 						<div style={{ fontWeight: 'bold' }}>more project details to come</div>
 					</div>}
+					cover={lobbyImage}
 					object={"pillar"}
 					/>
 				{/*<SidePanelTemplate*/}
