@@ -10,11 +10,7 @@ export default function InfoPage() {
 	const [ref, inView] = useInView()
 
 	useEffect(() => {
-		if (inView) {
-			dispatch({ type: 'SET_OBJECT', object: 'globe' })
-		} else {
-			dispatch({ type: 'SET_OBJECT', object: 'none' })
-		}
+		dispatch({ type: 'SET_OBJECT', object: inView ? 'globe' : 'none' })
 	}, [inView])
 
 	return (
